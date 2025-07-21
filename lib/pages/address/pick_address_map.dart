@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_bella/base/custom_button.dart';
-import 'package:project_bella/controllers/location_controller.dart';
+import 'package:project_satya/base/custom_button.dart';
+import 'package:project_satya/controllers/location_controller.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/pages/address/widget/search_location_dialogue_page.dart';
-import 'package:project_bella/routes/route_helper.dart';
-import 'package:project_bella/utils/colors.dart';
-import 'package:project_bella/utils/dimensions.dart';
+import 'package:project_satya/pages/address/widget/search_location_dialogue_page.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'package:project_satya/utils/dimensions.dart';
 
 class PickAddressMap extends StatefulWidget {
   final bool fromSignup;

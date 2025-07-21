@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bella/utils/colors.dart';
+import 'package:project_satya/utils/colors.dart';
 import '../utils/dimensions.dart';
 
 class CustomLoader extends StatelessWidget {

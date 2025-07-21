@@ -1,5 +1,5 @@
-import 'package:project_bella/data/api/api_client.dart';
-import 'package:project_bella/utils/app_constants.dart';
+import 'package:project_satya/data/api/api_client.dart';
+import 'package:project_satya/utils/app_constants.dart';
 import 'package:get/get.dart';
 class UserRepo{
   final ApiClient apiClient;

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:project_bella/utils/app_constants.dart';
+import 'package:project_satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/cart_model.dart';

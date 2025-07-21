@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bella/utils/dimensions.dart';
+import 'package:project_satya/utils/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;

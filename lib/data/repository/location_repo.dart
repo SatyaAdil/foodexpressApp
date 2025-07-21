@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_bella/models/address_model.dart';
-import 'package:project_bella/utils/app_constants.dart';
+import 'package:project_satya/models/address_model.dart';
+import 'package:project_satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_client.dart';

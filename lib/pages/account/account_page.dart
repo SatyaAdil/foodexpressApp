@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:project_bella/base/custom_loader.dart';
-import 'package:project_bella/controllers/auth_controller.dart';
-import 'package:project_bella/controllers/cart_controller.dart';
-import 'package:project_bella/controllers/location_controller.dart';
-import 'package:project_bella/controllers/user_controller.dart';
-import 'package:project_bella/routes/route_helper.dart';
-import 'package:project_bella/widgets/app_icon.dart';
-import 'package:project_bella/widgets/big_text.dart';
+import 'package:project_satya/base/custom_loader.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_satya/controllers/user_controller.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/widgets/app_icon.dart';
+import 'package:project_satya/widgets/big_text.dart';
 
 import '../../base/custom_app_bar.dart';
 import '../../utils/colors.dart';

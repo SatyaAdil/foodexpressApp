@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/controllers/cart_controller.dart';
-import 'package:project_bella/controllers/popular_product_controller.dart';
-import 'package:project_bella/routes/route_helper.dart';
-import 'package:project_bella/utils/colors.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/controllers/popular_product_controller.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/colors.dart';
 import 'controllers/recommended_product_controller.dart';
 import 'helper/dependencies.dart' as dep;
 

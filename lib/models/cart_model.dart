@@ -1,4 +1,4 @@
-import 'package:project_bella/models/products_model.dart';
+import 'package:project_satya/models/products_model.dart';
 
 class CartModel {
   int? id;

@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:project_bella/controllers/auth_controller.dart';
-import 'package:project_bella/controllers/order_controller.dart';
-import 'package:project_bella/data/repository/auth_repo.dart';
-import 'package:project_bella/data/repository/order_repo.dart';
-import 'package:project_bella/data/repository/popular_product_repo.dart';
-import 'package:project_bella/utils/app_constants.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/order_controller.dart';
+import 'package:project_satya/data/repository/auth_repo.dart';
+import 'package:project_satya/data/repository/order_repo.dart';
+import 'package:project_satya/data/repository/popular_product_repo.dart';
+import 'package:project_satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/cart_controller.dart';
 import '../controllers/location_controller.dart';
