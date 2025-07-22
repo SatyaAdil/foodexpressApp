@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../base/custom_app_bar.dart';
 import '../../models/order_model.dart';
@@ -12,9 +10,10 @@ import '../../utils/dimensions.dart';
 
 class PaymentPage extends StatefulWidget {
   final OrderModel orderModel;
-  PaymentPage({required this.orderModel});
+  const PaymentPage({super.key, required this.orderModel});
 
   @override
+  // ignore: library_private_types_in_public_api
   _PaymentPageState createState() => _PaymentPageState();
 }
 
@@ -51,7 +50,7 @@ class _PaymentPageState extends State<PaymentPage> {
           backgroundColor: AppColors.mainColor,
         ),*/
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: Dimensions.screenWidth,
             child: Stack(
               children: [
@@ -67,19 +66,15 @@ class _PaymentPageState extends State<PaymentPage> {
                     //_controller.future.catchError(onError)
                   },
                   onProgress: (int progress) {
-                    print("WebView is loading (progress : $progress%)");
                   },
                   onPageStarted: (String url) {
-                    print('Page started loading: $url');
                     setState(() {
                       _isLoading = true;
                     });
-                    print("printing urls "+url.toString());
                     _redirect(url);
 
                   },
                   onPageFinished: (String url) {
-                    print('Page finished loading: $url');
                     setState(() {
                       _isLoading = false;
                     });
@@ -89,7 +84,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),
                 _isLoading ? Center(
                   child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-                ) : SizedBox.shrink(),
+                ) : const SizedBox.shrink(),
               ],
             ),
           ),
@@ -99,20 +94,18 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   void _redirect(String url) {
-    print("redirect");
     if(_canRedirect) {
-      bool _isSuccess = url.contains('success') && url.contains(AppConstants.BASE_URL);
-      bool _isFailed = url.contains('fail') && url.contains(AppConstants.BASE_URL);
-      bool _isCancel = url.contains('cancel') && url.contains(AppConstants.BASE_URL);
-      if (_isSuccess || _isFailed || _isCancel) {
+      bool isSuccess = url.contains('success') && url.contains(AppConstants.BASE_URL);
+      bool isFailed = url.contains('fail') && url.contains(AppConstants.BASE_URL);
+      bool isCancel = url.contains('cancel') && url.contains(AppConstants.BASE_URL);
+      if (isSuccess || isFailed || isCancel) {
         _canRedirect = false;
       }
-      if (_isSuccess) {
+      if (isSuccess) {
         Get.offNamed(RouteHelper.getOrderSuccessPage(widget.orderModel.id.toString(), 'success'));
-      } else if (_isFailed || _isCancel) {
+      } else if (isFailed || isCancel) {
         Get.offNamed(RouteHelper.getOrderSuccessPage(widget.orderModel.id.toString(), 'fail'));
       }else{
-        print("Encountered problem");
       }
     }
   }
@@ -122,7 +115,6 @@ class _PaymentPageState extends State<PaymentPage> {
       controllerGlobal.goBack();
       return Future.value(false);
     } else {
-      print("app exited");
       return true;
       // return Get.dialog(PaymentFailedDialog(orderID: widget.orderModel.id.toString()));
     }

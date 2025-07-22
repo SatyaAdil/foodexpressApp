@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:project_satya/base/custom_loader.dart';
-import 'package:project_satya/controllers/auth_controller.dart';
-import 'package:project_satya/controllers/cart_controller.dart';
-import 'package:project_satya/controllers/location_controller.dart';
-import 'package:project_satya/controllers/user_controller.dart';
-import 'package:project_satya/routes/route_helper.dart';
-import 'package:project_satya/widgets/app_icon.dart';
-import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_Satya/base/custom_loader.dart';
+import 'package:project_Satya/controllers/auth_controller.dart';
+import 'package:project_Satya/controllers/cart_controller.dart';
+import 'package:project_Satya/controllers/location_controller.dart';
+import 'package:project_Satya/controllers/user_controller.dart';
+import 'package:project_Satya/routes/route_helper.dart';
+import 'package:project_Satya/widgets/app_icon.dart';
+import 'package:project_Satya/widgets/big_text.dart';
 
 import '../../base/custom_app_bar.dart';
 import '../../utils/colors.dart';
@@ -20,14 +20,15 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
-    if(_userLoggedIn){
+    bool userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if(userLoggedIn){
       Get.find<UserController>().getUserInfo();
     }
     return Scaffold(
-      appBar: CustomAppBar(title: "Profile",),
+      appBar: const CustomAppBar(title: "Profile",),
       body: GetBuilder<UserController>(builder: (userController){
-        return _userLoggedIn?(userController.isLoading?Container(
+        if (userLoggedIn) {
+          return (userController.isLoading?Container(
           width: double.maxFinite,
           margin: EdgeInsets.only(top: Dimensions.height20),
 
@@ -53,7 +54,7 @@ class AccountPage extends StatelessWidget {
                           iconSize: Dimensions.height10*5/2,
                           size: Dimensions.height10*5,),
 
-                        bigText: BigText(text: userController.userModel!.name,)
+                        bigText: BigText(text: userController.userModel!.name,), icon: null, text: ''
                         ,),
                       SizedBox(height: Dimensions.height20,),
                       //phone
@@ -64,7 +65,7 @@ class AccountPage extends StatelessWidget {
                           iconSize: Dimensions.height10*5/2,
                           size: Dimensions.height10*5,),
 
-                        bigText: BigText(text: userController.userModel!.phone,)
+                        bigText: BigText(text: userController.userModel!.phone,), icon: null, text: ''
                         ,),
                       SizedBox(height: Dimensions.height20,),
                       //email
@@ -75,12 +76,12 @@ class AccountPage extends StatelessWidget {
                           iconSize: Dimensions.height10*5/2,
                           size: Dimensions.height10*5,),
 
-                        bigText: BigText(text: userController.userModel!.email,)
+                        bigText: BigText(text: userController.userModel!.email,), icon: null, text: ''
                         ,),
                       SizedBox(height: Dimensions.height20,),
                       //address
                       GetBuilder<LocationController>(builder: (locationController){
-                        if(_userLoggedIn&&locationController.addressList.isEmpty){
+                        if(userLoggedIn&&locationController.addressList.isEmpty){
                           return GestureDetector(
                             onTap: (){
                               Get.offNamed(RouteHelper.getAddressPage());
@@ -92,7 +93,7 @@ class AccountPage extends StatelessWidget {
                                   iconSize: Dimensions.height10*5/2,
                                   size: Dimensions.height10*5,),
 
-                                bigText: BigText(text: "Fill in your address",)
+                                bigText: BigText(text: "Fill in your address",), icon: null,, text: '',
                             ),
                           );
                         }else{
@@ -107,7 +108,7 @@ class AccountPage extends StatelessWidget {
                                   iconSize: Dimensions.height10*5/2,
                                   size: Dimensions.height10*5,),
 
-                                bigText: BigText(text: "Your address",)
+                                bigText: BigText(text: "Your address",), icon: null,, text: '',
                             ),
                           );
                         }
@@ -146,7 +147,7 @@ class AccountPage extends StatelessWidget {
                             iconSize: Dimensions.height10*5/2,
                             size: Dimensions.height10*5,),
 
-                          bigText: BigText(text: "Logout",)
+                          bigText: BigText(text: "Logout",), icon: null, text: ''
                           ,),
                       ),
                       SizedBox(height: Dimensions.height20,),
@@ -159,8 +160,9 @@ class AccountPage extends StatelessWidget {
             ],
           ),
         ):
-        CustomLoader()):
-        Container(
+        CustomLoader());
+        } else {
+          return Container(
 
             child: Center(child:Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +173,7 @@ class AccountPage extends StatelessWidget {
               margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       fit: BoxFit.cover,
                       image: AssetImage(
                           "assets/image/signintocontinue.png"
@@ -198,6 +200,7 @@ class AccountPage extends StatelessWidget {
             )
           ],
         )));
+        }
       }),
     );
   }

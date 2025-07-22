@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double radius;
   final IconData? icon;
-   CustomButton({Key? key,
+   const CustomButton({Key? key,
      this.onPressed,
      required this.buttonText,
      this.transparent=false,
@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   final ButtonStyle _flatButton = TextButton.styleFrom(
+   final ButtonStyle flatButton = TextButton.styleFrom(
       backgroundColor: onPressed==null?Theme.of(context).disabledColor:transparent?Colors.transparent:Theme.of(context).primaryColor,
       minimumSize: Size(width==null?Dimensions.screenWidth:width!, height!=null?height!:50),
       padding: EdgeInsets.zero,
@@ -39,17 +39,17 @@ class CustomButton extends StatelessWidget {
         height: height??50,
         child: TextButton(
           onPressed: onPressed,
-          style: _flatButton,
+          style: flatButton,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               icon!=null?Padding(
                   padding: EdgeInsets.only(right: Dimensions.width10/2),
                 child: Icon(icon,color: transparent?Theme.of(context).primaryColor:Theme.of(context).cardColor),
-              ):SizedBox(),
+              ):const SizedBox(),
               Text(
                 buttonText,style: TextStyle(
-                  fontSize: fontSize!=null?fontSize:Dimensions.font16,
+                  fontSize: fontSize ?? Dimensions.font16,
                   color: transparent?Theme.of(context).primaryColor:Theme.of(context).cardColor)
               ) ,
             ],

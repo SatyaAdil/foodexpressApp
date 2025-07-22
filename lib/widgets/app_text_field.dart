@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 
+// ignore: must_be_immutable
 class AppTextField extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
@@ -29,7 +30,7 @@ class AppTextField extends StatelessWidget {
               BoxShadow(
                   blurRadius: 3,
                   spreadRadius: 1,
-                  offset: Offset(1, 1),
+                  offset: const Offset(1, 1),
                   color: Colors.grey.withOpacity(0.2)
               )
             ]
@@ -46,7 +47,7 @@ class AppTextField extends StatelessWidget {
             // focusedBorder
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimensions.radius15),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   width: 1.0,
                   color: Colors.white,
                 )
@@ -54,7 +55,7 @@ class AppTextField extends StatelessWidget {
             // enabledBoarder
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radius15),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 1.0,
                 color: Colors.white,
               ),

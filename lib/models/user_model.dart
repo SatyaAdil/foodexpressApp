@@ -1,25 +1,16 @@
-class UserModel{
-  int id;
-  String name;
-  String email;
-  String phone;
-  int orderCount;
+// lib/models/user_model.dart
+class UserModel {
+  final String name;
+  final String phone;
+  final String email;
 
   UserModel({
-    required this.id,
     required this.name,
-    required this.email,
     required this.phone,
-    required this.orderCount,
+    required this.email,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json){
-    return UserModel(
-      id:json['id'],
-      name: json['f_name'],
-      email:json['email'],
-      phone: json['phone'],
-      orderCount: json['order_count'],
-    );
+  static UserModel? fromjso(body) {
+    return null;
   }
 }

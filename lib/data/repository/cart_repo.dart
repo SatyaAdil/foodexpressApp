@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_Satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/cart_model.dart';
@@ -21,10 +21,10 @@ class CartRepo{
     convert objects to string because sharedpreferences only accepts String
     */
 
-    cartList.forEach((element){
+    for (var element in cartList) {
       element.time = time;
-      return cart.add(jsonEncode(element));
-    });
+      continue;
+    }
 
     sharedPreferences.setStringList(AppConstants.CART_LIST, cart);
     //print(sharedPreferences.getStringList(AppConstants.CART_LIST));
@@ -35,11 +35,13 @@ class CartRepo{
     List<String> carts=[];
     if(sharedPreferences.containsKey(AppConstants.CART_LIST)){
       carts = sharedPreferences.getStringList(AppConstants.CART_LIST)!;
-      print("inside getCartList"+carts.toString());
+      print("inside getCartList$carts");
     }
     List<CartModel> cartList=[];
 
-    carts.forEach((element)=>cartList.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in carts) {
+      cartList.add(CartModel.fromJson(jsonDecode(element)));
+    }
 
     return cartList;
   }
@@ -50,7 +52,9 @@ class CartRepo{
       cartHistory= sharedPreferences.getStringList(AppConstants.CART_HISTORY_LIST)!;
     }
     List<CartModel> cartListHistory=[];
-    cartHistory.forEach((element) =>cartListHistory.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in cartHistory) {
+      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
+    }
     return cartListHistory;
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_satya/utils/colors.dart';
-import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/widgets/big_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: backButtonExist?IconButton(
           onPressed: ()=>onBackPressed!=null?onBackPressed!()
               :Navigator.pushReplacementNamed(context, "/initial"),
-          icon: Icon(Icons.arrow_back_ios)):SizedBox(),
+          icon: const Icon(Icons.arrow_back_ios)):const SizedBox(),
     );
   }
 

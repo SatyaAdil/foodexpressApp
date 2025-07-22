@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/data/repository/popular_product_repo.dart';
-import 'package:project_bella/utils/colors.dart';
+import 'package:project_Satya/data/repository/popular_product_repo.dart';
+import 'package:project_Satya/utils/colors.dart';
 import '../models/cart_model.dart';
 import '../models/products_model.dart';
 import 'cart_controller.dart';
@@ -79,7 +79,7 @@ class PopularProductController extends GetxController{
     //if exits
     //get from storage _intCartItems=3
     //print("exist or not " + exist.toString());
-    if (exist);{
+    if (exist) {}{
       _inCartItems = _cart.getQuantity(product);
     }
     //print("the quantity in the cart it "+_inCartItems.toString());
@@ -92,7 +92,7 @@ class PopularProductController extends GetxController{
       _inCartItems = _cart.getQuantity(product);
 
       _cart.items.forEach((key, value) {
-        print("The id is "+value.id.toString()+" The quantity is "+value.quantity.toString());
+        print("The id is ${value.id} The quantity is ${value.quantity}");
       });
 
     update();

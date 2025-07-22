@@ -1,6 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/data/repository/user_repo.dart';
-import 'package:project_bella/models/user_model.dart';
+import 'package:project_Satya/data/repository/user_repo.dart';
+import 'package:project_Satya/models/user_model.dart';
 
 import '../models/response_model.dart';
 class UserController extends GetxController implements GetxService {
@@ -24,14 +25,18 @@ class UserController extends GetxController implements GetxService {
 
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
-    print("test"+response.body.toString());
+    if (kDebugMode) {
+      print("test${response.body}");
+    }
     if (response.statusCode == 200) {
-      _userModel = UserModel.fromJson(response.body);
+      _userModel = UserModel.fromjso(response.body);
       _isLoading=true;
       responseModel = ResponseModel(true, "Successfully");
     } else {
       responseModel = ResponseModel(false, response.statusText!);
-      print(response.statusText);
+      if (kDebugMode) {
+        print(response.statusText);
+      }
     }
     update();
     return responseModel;

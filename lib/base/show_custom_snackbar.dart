@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_Satya/widgets/big_text.dart';
 void showCustomSnackBar(
     String message, {bool isError=true,String title="Error"}){
     Get.snackbar(title, message,

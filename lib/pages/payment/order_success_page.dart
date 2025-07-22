@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';import 'package:project_bella/base/custom_button.dart';
-
+import 'package:project_Satya/base/custom_button.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
@@ -9,7 +8,7 @@ import '../../utils/dimensions.dart';
 class OrderSuccessPage extends StatelessWidget {
   final String orderID;
   final int status;
-   OrderSuccessPage({required this.orderID, required this.status});
+   const OrderSuccessPage({super.key, required this.orderID, required this.status});
 
   @override
   Widget build(BuildContext context) {

@@ -1,64 +1,40 @@
+// lib/controllers/auth_controller.dart
 import 'package:get/get.dart';
-import 'package:project_bella/data/repository/auth_repo.dart';
-import 'package:project_bella/models/signup_body_model.dart';
+import 'package:project_Satya/models/signup_body_model.dart';
+import '../models/user_model.dart';
 
-import '../models/response_model.dart';
+class AuthController extends GetxController {
+  final RxBool _isLoggedIn = false.obs;
+  final Rx<UserModel?> _user = Rx<UserModel?>(null);
 
-class AuthController extends GetxController implements GetxService {
-  final AuthRepo authRepo;
+  bool get isLoggedIn => _isLoggedIn.value;
+  UserModel? get user => _user.value;
 
-  AuthController({
-    required this.authRepo
-  });
+  bool? get isLoading => null;
 
-  bool _isLoading = false;
-
-  bool get isLoading => _isLoading;
-
-  Future<ResponseModel> registration(SignUpBody signUpBody) async {
-    _isLoading = true;
-    update();
-    Response response = await authRepo.registration(signUpBody);
-    late ResponseModel responseModel;
-    if (response.statusCode == 200) {
-      authRepo.saveUserToken(response.body["token"]);
-      print("My token is "+ response.body["token"]);
-      responseModel = ResponseModel(true, response.body["token"]);
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
-    }
-    _isLoading = false;
-    update();
-    return responseModel;
+  Future<void> getUserInfo() async {
+    // Simulasi fetch data
+    await Future.delayed(const Duration(seconds: 1));
+    _user.value = UserModel(
+      name: "John Doe",
+      phone: "+628123456789",
+      email: "johndoe@mail.com",
+    );
   }
 
-  Future<ResponseModel> login(String phone, String password) async {
-
-    _isLoading = true;
-    update();
-    Response response = await authRepo.login(phone, password);
-    late ResponseModel responseModel;
-    if (response.statusCode == 200) {
-
-      authRepo.saveUserToken(response.body["token"]);
-      responseModel = ResponseModel(true, response.body["token"]);
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
-    }
-    _isLoading = false;
-    update();
-    return responseModel;
+  Future<void> logout() async {
+    _isLoggedIn.value = false;
+    _user.value = null;
   }
 
-  void saveUserNumberAndPassword(String number, String password)  {
-   authRepo.saveUserNumberAndPassword(number, password);
+  void login(String phone, [String? password]) {
+    _isLoggedIn.value = true;
+    getUserInfo();
   }
 
-  bool userLoggedIn(){
-    return authRepo.userLoggedIn();
-  }
+  registration(SignUpBody signUpBody) {}
 
-  bool clearSharedData(){
-    return authRepo.clearSharedData();
-  }
+  bool userLoggedIn() {}
+
+  void clearSharedData() {}
 }

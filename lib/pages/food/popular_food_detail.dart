@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:project_bella/controllers/popular_product_controller.dart';
-import 'package:project_bella/pages/cart/cart_page.dart';
-import 'package:project_bella/utils/app_constants.dart';
-import 'package:project_bella/widgets/expandable_text_widget.dart';
+import 'package:project_Satya/controllers/popular_product_controller.dart';
+import 'package:project_Satya/utils/app_constants.dart';
+import 'package:project_Satya/widgets/expandable_text_widget.dart';
 import '../../controllers/cart_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
@@ -61,25 +59,26 @@ class PopularFoodDetail extends StatelessWidget {
                         }
                    },
                       child:
-                  AppIcon(icon: Icons.arrow_back_ios,)
+                  const AppIcon(icon: Icons.arrow_back_ios,)
                   ),
 
                 GetBuilder<PopularProductController>(builder: (controller){
                   return GestureDetector(
                     onTap: (){
-                      if (controller.totalItems>=1)
-                      Get.toNamed(RouteHelper.getCartPage());
+                      if (controller.totalItems>=1) {
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }
                     },
                     child: Stack(
                       children: [
-                        AppIcon(icon: Icons.shopping_cart_outlined,),
+                        const AppIcon(icon: Icons.shopping_cart_outlined, iconColor: null, iconSize: null,),
                         controller.totalItems>=1?
                         Positioned(
                           right:0, top:0,
 
                             child: AppIcon(icon: Icons.circle, size: 20,
                               iconColor: Colors.transparent,
-                              backgroundColor: AppColors.mainColor,),
+                              backgroundColor: AppColors.mainColor, iconSize: null,),
 
                         ):
                         Container(),
@@ -122,7 +121,7 @@ class PopularFoodDetail extends StatelessWidget {
                   children: [
                     AppColumn(text: product.name!),
                     SizedBox(height: Dimensions.height20,),
-                    BigText(text: "Introduce"),
+                    const BigText(text: "Introduce"),
                     SizedBox(height: Dimensions.height20,),
                     Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: product.description!))),
                   ],
@@ -177,12 +176,12 @@ class PopularFoodDetail extends StatelessWidget {
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
-
-                      child: BigText(text:"\Rs. ${product.price!} | Add to cart" , color: Colors.white,),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius20),
                       color: AppColors.mainColor
                   ),
+
+                      child: BigText(text:"\Rs. ${product.price!} | Add to cart" , color: Colors.white,),
                 ),
               )
             ],

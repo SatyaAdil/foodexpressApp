@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/models/products_model.dart';
+import 'package:project_Satya/models/products_model.dart';
 import '../data/repository/cart_repo.dart';
 import '../models/cart_model.dart';
 import '../utils/colors.dart';

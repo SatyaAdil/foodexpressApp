@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:project_satya/base/no_data_page.dart';
-import 'package:project_satya/controllers/cart_controller.dart';
-import 'package:project_satya/utils/app_constants.dart';
-import 'package:project_satya/utils/colors.dart';
-import 'package:project_satya/utils/dimensions.dart';
-import 'package:project_satya/widgets/app_icon.dart';
-import 'package:project_satya/widgets/big_text.dart';
-import 'package:project_satya/widgets/small_text.dart';
+import 'package:project_Satya/base/no_data_page.dart';
+import 'package:project_Satya/controllers/cart_controller.dart';
+import 'package:project_Satya/utils/app_constants.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
+import 'package:project_Satya/widgets/app_icon.dart';
+import 'package:project_Satya/widgets/big_text.dart';
+import 'package:project_Satya/widgets/small_text.dart';
 
 import '../../models/cart_model.dart';
 import '../../routes/route_helper.dart';
@@ -23,7 +23,7 @@ class CartHistory extends StatelessWidget {
     var getCartHistoryList = Get.find<CartController>()
         .getCartHistoryList().reversed.toList();
 
-    Map<String, int> cartItemsPerOrder = Map();
+    Map<String, int> cartItemsPerOrder = {};
 
     for (int i=0; i<getCartHistoryList.length; i++){
       if(cartItemsPerOrder.containsKey(getCartHistoryList[i].time)){
@@ -65,7 +65,7 @@ class CartHistory extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BigText(text: "Cart History",color: Colors.white,),
+                const BigText(text: "Cart History",color: Colors.white,),
                 AppIcon(icon: Icons.shopping_cart_outlined,
                   iconColor: AppColors.mainColor,
                   backgroundColor: AppColors.yellowColor,
@@ -74,8 +74,8 @@ class CartHistory extends StatelessWidget {
             ),
           ),
 
-          GetBuilder<CartController>(builder: (_cartController){
-            return _cartController.getCartHistoryList().length>0?
+          GetBuilder<CartController>(builder: (cartController){
+            return cartController.getCartHistoryList().length>0?
             Expanded(child:
             Container(
               margin: EdgeInsets.only(
@@ -123,14 +123,14 @@ class CartHistory extends StatelessWidget {
                                   ):Container();
                                 }),
                               ),
-                              Container(
+                              SizedBox(
                                 height: Dimensions.height20*4,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     SmallText(text: "Total",color: AppColors.titleColor),
-                                    BigText(text: itemsPerOrder[i].toString()+" Items",color: AppColors.titleColor,),
+                                    BigText(text: "${itemsPerOrder[i]} Items",color: AppColors.titleColor,),
                                     GestureDetector(
                                       onTap: (){
                                         var orderTime = cartOrderTimeToList();

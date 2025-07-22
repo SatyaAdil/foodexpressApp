@@ -1,0 +1,5447 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/colors.dart';
+import '../utils/dimensions.dart';
+import '../widgets/big_text.dart';
+
+class CommonTextButton extends StatelessWidget {
+  final String text;
+  const CommonTextButton({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+
+      child: Center(child: BigText(text: text , color: Colors.white,)),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 5),
+              blurRadius: 10,
+              color: AppColors.mainColor.withOpacity(0.3)
+          ),
+        ],
+          borderRadius: BorderRadius.circular(Dimensions.radius20),
+          color: AppColors.mainColor
+      ),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'package:project_satya/widgets/big_text.dart';
+
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final bool backButtonExist;
+  final Function? onBackPressed;
+  const CustomAppBar({Key? key,
+    required this.title,
+    this.backButtonExist=true,
+    this.onBackPressed
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: BigText(text: title, color: Colors.white,),
+      centerTitle: true,
+      backgroundColor: AppColors.mainColor,
+      elevation: 0,
+      leading: backButtonExist?IconButton(
+          onPressed: ()=>onBackPressed!=null?onBackPressed!()
+              :Navigator.pushReplacementNamed(context, "/initial"),
+          icon: Icon(Icons.arrow_back_ios)):SizedBox(),
+    );
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size(500, 55);
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:project_satya/utils/dimensions.dart';
+
+class CustomButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final String buttonText;
+  final bool transparent;
+  final EdgeInsets? margin;
+  final double? height;
+  final double? width;
+  final double? fontSize;
+  final double radius;
+  final IconData? icon;
+   CustomButton({Key? key,
+     this.onPressed,
+     required this.buttonText,
+     this.transparent=false,
+     this.margin,
+     this.height,
+     this.width,
+     this.fontSize,
+     this.radius=5,
+     this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+   final ButtonStyle _flatButton = TextButton.styleFrom(
+      backgroundColor: onPressed==null?Theme.of(context).disabledColor:transparent?Colors.transparent:Theme.of(context).primaryColor,
+      minimumSize: Size(width==null?Dimensions.screenWidth:width!, height!=null?height!:50),
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(radius)
+      )
+    );
+    return Center(
+      child: SizedBox(
+        width: width ?? Dimensions.screenWidth,
+        height: height??50,
+        child: TextButton(
+          onPressed: onPressed,
+          style: _flatButton,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              icon!=null?Padding(
+                  padding: EdgeInsets.only(right: Dimensions.width10/2),
+                child: Icon(icon,color: transparent?Theme.of(context).primaryColor:Theme.of(context).cardColor),
+              ):SizedBox(),
+              Text(
+                buttonText,style: TextStyle(
+                  fontSize: fontSize!=null?fontSize:Dimensions.font16,
+                  color: transparent?Theme.of(context).primaryColor:Theme.of(context).cardColor)
+              ) ,
+            ],
+          ) ,
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:project_satya/utils/colors.dart';
+import '../utils/dimensions.dart';
+
+class CustomLoader extends StatelessWidget {
+  const CustomLoader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: Dimensions.height20*5,
+        width: Dimensions.height20*5,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimensions.height20*5/2),
+          color: AppColors.mainColor
+        ),
+        alignment: Alignment.center,
+        child: CircularProgressIndicator(color: Colors.white,),
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class NoDataPage extends StatelessWidget {
+  final String text;
+  final String imgPath;
+  const NoDataPage({Key? key, required this.text,
+  this.imgPath="assets/image/empty_cart.png"
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Image.asset(
+          imgPath,
+          height: MediaQuery.of(context).size.height*0.22,
+          width: MediaQuery.of(context).size.width*0.22,
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height*0.03),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.height*0.0175,
+            color: Theme.of(context).disabledColor
+          ),
+          textAlign: TextAlign.center,
+        )
+      ],
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_satya/widgets/big_text.dart';
+void showCustomSnackBar(
+    String message, {bool isError=true,String title="Error"}){
+    Get.snackbar(title, message,
+    titleText: BigText(text: title, color: Colors.white,),
+      messageText: Text(message, style: const TextStyle(
+        color: Colors.white,
+      )
+      ),
+        colorText: Colors.white,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.redAccent
+    );
+}
+import 'package:get/get.dart';
+import 'package:satya/data/repository/auth_repo.dart';
+import 'package:satya/models/signup_body_model.dart';
+
+import '../models/response_model.dart';
+
+class AuthController extends GetxController implements GetxService {
+  final AuthRepo authRepo;
+
+  AuthController({
+    required this.authRepo
+  });
+
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  Future<ResponseModel> registration(SignUpBody signUpBody) async {
+    _isLoading = true;
+    update();
+    Response response = await authRepo.registration(signUpBody);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      authRepo.saveUserToken(response.body["token"]);
+      print("My token is "+ response.body["token"]);
+      responseModel = ResponseModel(true, response.body["token"]);
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> login(String phone, String password) async {
+
+    _isLoading = true;
+    update();
+    Response response = await authRepo.login(phone, password);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+
+      authRepo.saveUserToken(response.body["token"]);
+      responseModel = ResponseModel(true, response.body["token"]);
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void saveUserNumberAndPassword(String number, String password)  {
+   authRepo.saveUserNumberAndPassword(number, password);
+  }
+
+  bool userLoggedIn(){
+    return authRepo.userLoggedIn();
+  }
+
+  bool clearSharedData(){
+    return authRepo.clearSharedData();
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:satya/models/products_model.dart';
+import '../data/repository/cart_repo.dart';
+import '../models/cart_model.dart';
+import '../utils/colors.dart';
+
+class CartController extends GetxController{
+  final CartRepo cartRepo;
+  CartController({required this.cartRepo});
+  Map<int, CartModel> _items={};
+
+  Map<int, CartModel> get items=>_items;
+
+  /*
+  only for storage and sharedpreferences
+  */
+  List<CartModel> storageItems=[];
+
+
+  void addItem(ProductModel product, int quantity){
+    var totalQuantity=0;
+    if(_items.containsKey(product.id!)){
+      _items.update(product.id!, (value) {
+
+        totalQuantity=value.quantity!+quantity;
+
+        return CartModel(
+              id: value.id,
+              name: value.name,
+              price:value.price,
+              img:value.img,
+              quantity:value.quantity!+quantity,
+              isExist:true,
+              time:DateTime.now().toString(),
+              product: product,
+        );
+
+      });
+
+      if(totalQuantity<=0){
+        _items.remove(product.id);
+      }
+    }else{
+    if(quantity>0){
+      _items.putIfAbsent(product.id!, () {
+        return CartModel(
+          id: product.id,
+          name: product.name,
+          price:product.price,
+          img:product.img,
+          quantity:quantity,
+          isExist:true,
+          time:DateTime.now().toString(),
+          product: product,
+        );}
+      );
+    }else{
+      Get.snackbar("Item count", "You should at least add an item in the cart!" ,
+      backgroundColor: AppColors.mainColor,
+          colorText: Colors.white,
+        );
+      }
+    }
+
+  cartRepo.addToCartList(getItems);
+
+    update();
+
+  }
+
+  bool existInCart(ProductModel product){
+    if (_items.containsKey(product.id)){
+      return true;
+    }
+    return false;
+  }
+
+  int getQuantity(ProductModel product){
+    var quantity=0;
+    if(_items.containsKey(product.id)){
+      _items.forEach((key, value) {
+        if(key==product.id){
+          quantity = value.quantity!;
+        }
+      });
+    }
+    return quantity;
+  }
+
+  int get totalItems{
+    var totalQuantity=0;
+    _items.forEach((key, value) {
+      totalQuantity+= value.quantity!;
+    });
+    return totalQuantity;
+  }
+
+    List<CartModel> get getItems{
+    return _items.entries.map((e) {
+      return e.value;
+    }).toList();
+  }
+
+  int get totalAmount{
+    var total=0;
+
+    _items.forEach((key, value) {
+      total += value.quantity!*value.price!;
+    });
+    return total;
+  }
+
+  List <CartModel> getCartData(){
+    setCart = cartRepo.getCartList();
+    return storageItems;
+  }
+
+  set setCart(List<CartModel> items){
+    storageItems=items;
+    //print("Lenght of cart items"+storageItems.length.toString());
+    for(int i=0; i<storageItems.length;i++){
+      _items.putIfAbsent(storageItems[i].product!.id!, () => storageItems[i]);
+    }
+  }
+  void addToHistory(){
+    cartRepo.addToCartHistoryList();
+    clear();
+  }
+
+  void clear() {
+    _items = {};
+    update();
+  }
+
+  List<CartModel> getCartHistoryList(){
+    return cartRepo.getCartHistoryList();
+  }
+
+  set setItems(Map<int, CartModel> setItems){
+        _items = {};
+        _items = setItems;
+  }
+
+  void addToCartList(){
+    cartRepo.addToCartList(getItems);
+    update();
+  }
+
+  void clearCartHistory(){
+    cartRepo.clearCartHistory();
+    update();
+  }
+  void removeCartSharedPreference(){
+    cartRepo.removeCartSharedPreference();
+  }
+}
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:satya/data/api/api_checker.dart';
+import 'package:satya/data/repository/location_repo.dart';
+import 'package:satya/models/response_model.dart';
+import '../models/address_model.dart';
+import 'package:google_maps_webservice/src/places.dart';
+
+class LocationController extends GetxController implements GetxService{
+  LocationRepo locationRepo;
+  LocationController({required this.locationRepo});
+  bool _loading = false;
+  late Position _position;
+  late Position _pickPosition;
+  Placemark _placemark = Placemark();
+  Placemark _pickPlacemark = Placemark();
+  Placemark get placemark=>_placemark;
+  Placemark get pickPlacemark=> _pickPlacemark;
+  List <AddressModel> _addressList=[];
+  List<AddressModel> get addressList => _addressList;
+  late List<AddressModel> _allAddressList;
+  List<AddressModel> get allAddressList=>_allAddressList;
+  final List<String> _addressTypeList=["home", "office", "others"];
+  List <String> get addressTypeList=>_addressTypeList;
+  int _addressTypeIndex=0;
+  int get addressTypeIndex => _addressTypeIndex;
+
+
+  late GoogleMapController _mapController;
+  GoogleMapController get mapController=>_mapController;
+
+  bool _updateAddressData=true;
+  bool _changeAddress=true;
+
+  bool get loading => _loading;
+  Position get position => _position;
+  Position get pickPosition => _pickPosition;
+  /*
+  for service zone
+   */
+  bool _isLoading = false;
+  bool get isLoading=>_isLoading;
+  /*
+  whether the user is in service zone or not
+   */
+  bool _inZone = false;
+  bool get inZone =>_inZone;
+  /*
+  showing and hiding the button as map loads
+   */
+  bool _buttonDisabled=true;
+  bool get buttonDisabled => _buttonDisabled;
+
+  /*
+  save the google map suggestion for address
+   */
+ List<Prediction> _predictionList= [];
+
+ /*
+ debug purpose
+  */
+  Future<void> getCurrentLocation(bool fromAddress,
+  {required GoogleMapController mapController,
+  LatLng? defaultLatLng, bool notify = true}) async {
+    _isLoading = true;
+    if(notify){
+      update();
+    }
+    AddressModel _addressModel;
+    late Position _myPosition;
+    Position _test;
+  }
+
+  void setMapController (GoogleMapController mapController){
+    _mapController=mapController;
+  }
+
+  void updatePosition(CameraPosition position, bool fromAddress) async {
+    if(_updateAddressData){
+      _loading=true;
+      update();
+      try{
+        if(fromAddress){
+          _position=Position(
+            latitude: position.target.latitude,
+            longitude: position.target.longitude,
+            timestamp: DateTime.now(),
+            heading: 1, accuracy: 1, altitude: 1, speedAccuracy: 1, speed: 1,
+          );
+        }else{
+          _pickPosition=Position(
+            latitude: position.target.latitude,
+            longitude: position.target.longitude,
+            timestamp: DateTime.now(),
+            heading: 1, accuracy: 1, altitude: 1, speedAccuracy: 1, speed: 1,
+          );
+        }
+
+        ResponseModel _responseModel =
+            await getZone(position.target.latitude.toString(), position.target.longitude.toString(), false);
+        /*
+        if button value is false we are in the service area;
+         */
+        _buttonDisabled = !_responseModel.isSuccess;
+        if(_changeAddress){
+          String _address = await getAddressfromGeocode(
+            LatLng(
+              position.target.latitude,
+              position.target.longitude
+            )
+          );
+          fromAddress?_placemark=Placemark(name: _address):
+          _pickPlacemark=Placemark(name: _address);
+
+        }else{
+          _changeAddress =true;
+        }
+      }catch(e){
+        print(e);
+      }
+      _loading=false;
+      update();
+    }else{
+      _updateAddressData=true;
+    }
+  }
+
+  Future<String> getAddressfromGeocode(LatLng latlng) async {
+    String _address = "Unknown Location Found";
+    Response response = await locationRepo.getAddressfromGeocode(latlng);
+    if (response.body["status"]=='OK'){
+      _address = response.body["results"][0]['formatted_address'].toString();
+      //print("Printing Address "+_address);
+
+    }else{
+      print("Error getting the google api");
+    }
+      update();
+    return _address;
+  }
+
+  late Map<String, dynamic> _getAddress;
+  Map get getAddress=>_getAddress;
+
+  AddressModel getUserAddress(){
+    late AddressModel _addressModel;
+    /*
+    converting map using jsonDecode
+     */
+    _getAddress = jsonDecode(locationRepo.getUserAddress());
+    try{
+        _addressModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
+    }catch(e){
+      print(e);
+    }
+    return _addressModel;
+  }
+
+  void setAddressTypeIndex(int index){
+    _addressTypeIndex=index;
+    update();
+  }
+
+  Future<ResponseModel>addAddress(AddressModel addressModel) async {
+    _loading=true;
+    update();
+    Response response=await locationRepo.addAddress(addressModel);
+    ResponseModel responseModel;
+    if(response.statusCode==200){
+      await getAddressList();
+      String message = response.body["message"];
+      responseModel = ResponseModel(true, message);
+      await saveUserAddress(addressModel);
+    }else{
+      print("Couldn't save the address");
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    update();
+    return responseModel;
+  }
+
+  Future<void> getAddressList() async {
+    Response response = await locationRepo.getAllAddress();
+    if(response.statusCode==200){
+      _addressList=[];
+      _allAddressList=[];
+      response.body.forEach((address){
+        _addressList.add(AddressModel.fromJson(address));
+        _allAddressList.add(AddressModel.fromJson(address));
+      });
+    }else{
+      _addressList=[];
+      _allAddressList=[];
+    }
+    update();
+  }
+  Future<bool> saveUserAddress(AddressModel addressModel) async {
+    String userAddress = jsonEncode(addressModel.toJson());
+    return await locationRepo.saveUserAddress(userAddress);
+  }
+  void clearAddressList(){
+    _addressList=[];
+    _allAddressList=[];
+    update();
+  }
+
+  String getUserAddressFromLocalStorage(){
+    return locationRepo.getUserAddress();
+  }
+
+  void setAddAddressData(){
+    _position=_pickPosition;
+    _placemark=_pickPlacemark;
+    _updateAddressData=false;
+    update();
+  }
+
+  Future<ResponseModel> getZone(String lat, String lng, bool markerLoad) async {
+    late ResponseModel _responseModel;
+    if(markerLoad){
+      _loading=true;
+    }else{
+      _isLoading=true;
+    }
+    update();
+    Response response = await locationRepo.getZone(lat, lng);
+    if(response.statusCode==200){
+    _inZone=true;
+    _responseModel = ResponseModel(true, response.body["zone_id"].toString());
+    }else{
+      _inZone=false;
+      _responseModel = ResponseModel(true, response.statusText!);
+    }
+    if(markerLoad){
+      _loading=false;
+    }else{
+      _isLoading=false;
+    }
+
+    //print("Zone response code is "+response.statusCode.toString());//200, //404, //500
+
+    update();
+    return _responseModel;
+  }
+
+  Future<List<Prediction>> searchLocation(BuildContext context, String text) async {
+    if(text.isNotEmpty){
+      Response response = await locationRepo.searchLocation(text);
+      if(response.statusCode==200&&response.body['status']=='OK'){
+        _predictionList=[];
+        response.body['predictions'].forEach((prediction)
+        =>_predictionList.add(Prediction.fromJson(prediction)));
+      }else{
+        ApiChecker.checkApi(response);
+      }
+    }
+    return _predictionList;
+  }
+  setLocation(String placeID, String address, GoogleMapController mapController) async {
+    _loading=true;
+    update();
+    PlacesDetailsResponse detail;
+    Response response = await locationRepo.setLocation(placeID);
+    detail = PlacesDetailsResponse.fromJson(response.body);
+    _pickPosition = Position(
+      latitude : detail.result.geometry!.location.lat,
+      longitude : detail.result.geometry!.location.lng,
+      timestamp: DateTime.now(),
+      accuracy: 1,
+      altitude: 1,
+      heading: 1,
+      speed: 1,
+      speedAccuracy: 1
+    );
+    _pickPlacemark = Placemark(name:address);
+    _changeAddress = false;
+    if(!mapController.isNull){
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(
+          detail.result.geometry!.location.lat,
+          detail.result.geometry!.location.lng,
+        ), zoom: 17)
+      ));
+    }
+    _loading = false;
+    update();
+  }
+}
+import 'package:get/get.dart';
+import 'package:satya/models/order_model.dart';
+import 'package:satya/models/place_order_model.dart';
+import '../data/repository/order_repo.dart';
+
+class OrderController extends GetxController implements GetxService{
+  OrderRepo orderRepo;
+  OrderController({required this.orderRepo});
+  bool _isLoading=false;
+  late List<OrderModel> _currentOrderList;
+  late List<OrderModel> _historyOrderList;
+
+  bool get isLoading=> _isLoading;
+  List<OrderModel> get currentOrderList => _currentOrderList;
+  List<OrderModel> get historyOrderList => _historyOrderList;
+
+  int _paymentIndex=0;
+  int get paymentIndex=>_paymentIndex;
+
+  String _orderType = "delivery";
+  String get orderType=> _orderType;
+
+  String _foodNote = " ";
+  String get foodNote => _foodNote;
+
+  Future<void> placeOrder(PlaceOrderBody placeOrder,Function callback)async{
+    _isLoading=true;
+  Response response = await  orderRepo.placeOrder(placeOrder);
+  if(response.statusCode==200){
+    _isLoading = false;
+    String message = response.body['message'];
+    String orderID=response.body ['order_id'].toString();
+    callback(true, message, orderID);
+  }else{
+    callback(false, response.statusText!, '-1');
+  }
+  }
+  Future<void> getOrderList()async {
+    _isLoading = true;
+    Response response = await orderRepo.getOrderList();
+    if(response.statusCode==200){
+      _historyOrderList = [];
+      _currentOrderList = [];
+      response.body.forEach((order){
+              OrderModel orderModel = OrderModel.fromJson(order);
+              if(orderModel.orderStatus=='pending'||
+                  orderModel.orderStatus=='accepted'||
+                  orderModel.orderStatus=='processing'||
+                  orderModel.orderStatus=='handover'||
+                  orderModel.orderStatus=='picked_up'
+              ){
+                  _currentOrderList.add(orderModel);
+              }else{
+                _historyOrderList.add(orderModel);
+              }
+          }
+      );
+    }else{
+    _historyOrderList=[];
+    _currentOrderList=[];
+    }
+    _isLoading=false;
+    update();
+  }
+
+  void setPaymentIndex(int index){
+    _paymentIndex=index;
+    update();
+  }
+
+  void setDeliveryType(String type){
+    _orderType = type;
+    update();
+  }
+
+  void setFoodNote(String note){
+    _foodNote=note;
+  }
+}
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:satya/data/repository/popular_product_repo.dart';
+import 'package:satya/utils/colors.dart';
+import '../models/cart_model.dart';
+import '../models/products_model.dart';
+import 'cart_controller.dart';
+
+class PopularProductController extends GetxController{
+  final PopularProductRepo popularProductRepo;
+  PopularProductController({required this.popularProductRepo});
+  List<ProductModel> _popularProductList=[];
+  List<ProductModel> get popularProductList =>_popularProductList;
+  late CartController _cart;
+
+  bool _isLoaded = false;
+  bool get isLoaded=>_isLoaded;
+
+  int _quantity=0;
+  int get quantity=>_quantity;
+  int _inCartItems=0;
+  int get inCartItems=>_inCartItems+_quantity;
+
+  Future<void> getPopularProductList()async {
+    Response response = await popularProductRepo.getPopularProductList();
+    if(response.statusCode==200){
+      _popularProductList=[];
+      _popularProductList.addAll(Product.fromJson(response.body).products);
+      _isLoaded=true;
+      update();
+    }else{
+
+    }
+  }
+
+
+  void setQuantity(bool isIncrement){
+    if(isIncrement){
+      //print("number of items"+_quantity.toString());
+      _quantity=checkQuantity(_quantity+1);
+    }else{
+      //print("decrement" +_quantity.toString());
+      _quantity=checkQuantity(_quantity-1);
+    }
+    update();
+  }
+
+  int checkQuantity(int quantity){
+    if((_inCartItems+quantity)<0){
+      Get.snackbar("Item count", "You can't reduce more!" ,
+        backgroundColor: AppColors.mainColor,
+        colorText: Colors.white,
+      );
+      if(_inCartItems>0){
+        _quantity = -_inCartItems;
+        return _quantity;
+      }
+      return 0;
+    }else if (_inCartItems+quantity>9){
+      Get.snackbar("Item count", "You can't add more!" ,
+        backgroundColor: AppColors.mainColor,
+        colorText: Colors.white,
+      );
+      return 9;
+    }else{
+      return quantity;
+    }
+  }
+
+
+  void initProduct(ProductModel product,CartController cart) {
+    _quantity = 0;
+    _inCartItems = 0;
+    _cart = cart;
+    var exist = false;
+    exist = _cart.existInCart(product);
+    //if exits
+    //get from storage _intCartItems=3
+    //print("exist or not " + exist.toString());
+    if (exist);{
+      _inCartItems = _cart.getQuantity(product);
+    }
+    //print("the quantity in the cart it "+_inCartItems.toString());
+  }
+
+  void addItem(ProductModel product){
+      _cart.addItem(product, _quantity);
+
+      _quantity=0;
+      _inCartItems = _cart.getQuantity(product);
+
+      _cart.items.forEach((key, value) {
+        print("The id is "+value.id.toString()+" The quantity is "+value.quantity.toString());
+      });
+
+    update();
+  }
+
+  int get totalItems{
+    return _cart.totalItems;
+  }
+  List<CartModel> get getItems{
+    return _cart.getItems;
+  }
+}
+import 'package:get/get.dart';
+import '../data/repository/recommended_product_repo.dart';
+import '../models/products_model.dart';
+
+class RecommendedProductController extends GetxController{
+  final RecommendedProductRepo recommendedProductRepo;
+  RecommendedProductController({required this.recommendedProductRepo});
+  List<ProductModel> _recommendedProductList=[];
+  List<ProductModel> get recommendedProductList =>_recommendedProductList;
+
+  bool _isLoaded = false;
+  bool get isLoaded=>_isLoaded;
+
+  Future<void> getRecommendedProductList()async {
+    Response response = await recommendedProductRepo.getRecommendedProductList();
+    if(response.statusCode==200){
+      _recommendedProductList=[];
+      _recommendedProductList.addAll(Product.fromJson(response.body).products);
+      //print("got products");
+      _isLoaded=true;
+      update();
+    }else{
+      print(" could not get products recommended");
+
+
+    }
+  }
+}
+import 'package:get/get.dart';
+import 'package:satya/data/repository/user_repo.dart';
+import 'package:satya/models/user_model.dart';
+
+import '../models/response_model.dart';
+class UserController extends GetxController implements GetxService {
+  final UserRepo userRepo;
+
+  UserController({
+    required this.userRepo
+  });
+
+  bool _isLoading = false;
+  //old one
+  //late UserModel _userModel;
+  //new one
+  UserModel? _userModel;
+
+  bool get isLoading => _isLoading;
+  UserModel? get userModel => _userModel;
+
+
+  Future<ResponseModel> getUserInfo() async {
+
+    Response response = await userRepo.getUserInfo();
+    late ResponseModel responseModel;
+    print("test"+response.body.toString());
+    if (response.statusCode == 200) {
+      _userModel = UserModel.fromJson(response.body);
+      _isLoading=true;
+      responseModel = ResponseModel(true, "Successfully");
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+      print(response.statusText);
+    }
+    update();
+    return responseModel;
+  }
+}
+import 'package:get/get.dart';
+import 'package:project_satya/base/show_custom_snackbar.dart';
+import 'package:project_satya/routes/route_helper.dart';
+
+class ApiChecker {
+  static void checkApi(Response response) {
+    if (response.statusCode == 401) {
+      Get.offNamed(RouteHelper.getSignInPage());
+    } else {
+      showCustomSnackBar(response.statusText!);
+    }
+  }
+}
+
+import 'package:get/get.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+class ApiClient extends GetConnect implements GetxService{
+  late String token;
+  final String appBaseUrl;
+  late SharedPreferences sharedPreferences;
+
+  late Map<String, String> _mainHeaders;
+
+  ApiClient({ required this.appBaseUrl, required this.sharedPreferences}){
+    baseUrl = appBaseUrl;
+    token = sharedPreferences.getString(AppConstants.TOKEN)??"";
+    timeout = Duration(seconds: 30);
+    _mainHeaders={
+      'Content-type':'application/json; charset=UTF-8',
+      'Authorization' : 'Bearer $token',
+
+    };
+  }
+
+  void updateHeader(String token){
+    _mainHeaders={
+      'Content-type':'application/json; charset=UTF-8',
+      'Authorization' : 'Bearer $token',
+    };
+  }
+
+  Future<Response> getData(String uri, {Map<String, String>? headers}) async {
+    try{
+      Response response = await get(uri,
+      headers: headers??_mainHeaders
+      );
+      return response;
+    }catch(e){
+      return Response(statusCode: 1, statusText: e.toString());
+    }
+  }
+  Future <Response> postData(String uri, dynamic body) async {
+    print(body.toString());
+    try{
+      Response response = await post(uri, body, headers: _mainHeaders);
+      print(response.toString());
+      return response;
+    }catch(e){
+      print(e.toString());
+      return Response(statusCode: 1, statusText: e.toString());
+    }
+  }
+}
+import 'package:get/get.dart';
+import 'package:project_satya/models/signup_body_model.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../api/api_client.dart';
+
+class AuthRepo{
+  final ApiClient apiClient;
+  final SharedPreferences sharedPreferences;
+  AuthRepo({
+    required this.apiClient,
+    required this.sharedPreferences,
+});
+
+  Future <Response> registration(SignUpBody signUpBody) async{
+    return await apiClient.postData(AppConstants.REGISTRATION_URI, signUpBody.toJson());
+  }
+
+  bool userLoggedIn ()  {
+    return  sharedPreferences.containsKey(AppConstants.TOKEN);
+  }
+
+  Future<String> getUserToken() async {
+    return await sharedPreferences.getString(AppConstants.TOKEN)??"None";
+  }
+
+  Future <Response> login(String phone, String password) async{
+    return await apiClient.postData(AppConstants.LOGIN_URI, {"phone":phone, "password":password});
+  }
+
+  Future<bool>saveUserToken(String token) async {
+    apiClient.token = token;
+    apiClient.updateHeader(token);
+    return await sharedPreferences.setString(AppConstants.TOKEN, token);
+  }
+
+  Future<void> saveUserNumberAndPassword(String number, String password) async {
+    try{
+      await sharedPreferences.setString(AppConstants.PHONE, number);
+      await sharedPreferences.setString(AppConstants.PASSWORD, password);
+    }catch(e){
+      throw e;
+    }
+  }
+
+  bool clearSharedData(){
+    sharedPreferences.remove(AppConstants.TOKEN);
+    sharedPreferences.remove(AppConstants.PASSWORD);
+    sharedPreferences.remove(AppConstants.PHONE);
+    apiClient.token='';
+    apiClient.updateHeader('');
+
+    return true;
+  }
+
+}
+import 'dart:convert';
+
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/cart_model.dart';
+
+class CartRepo{
+  final SharedPreferences sharedPreferences;
+  CartRepo ({required this.sharedPreferences});
+
+  List<String> cart=[];
+  List <String> cartHistory=[];
+
+  void addToCartList(List<CartModel> cartList){
+    //sharedPreferences.remove(AppConstants.CART_LIST);
+    //sharedPreferences.remove(AppConstants.CART_HISTORY_LIST);
+    var time = DateTime.now().toString();
+    cart=[];
+    /*
+    convert objects to string because sharedpreferences only accepts String
+    */
+
+    cartList.forEach((element){
+      element.time = time;
+      return cart.add(jsonEncode(element));
+    });
+
+    sharedPreferences.setStringList(AppConstants.CART_LIST, cart);
+    //print(sharedPreferences.getStringList(AppConstants.CART_LIST));
+    //getCartList();
+  }
+
+  List <CartModel> getCartList(){
+    List<String> carts=[];
+    if(sharedPreferences.containsKey(AppConstants.CART_LIST)){
+      carts = sharedPreferences.getStringList(AppConstants.CART_LIST)!;
+      print("inside getCartList"+carts.toString());
+    }
+    List<CartModel> cartList=[];
+
+    carts.forEach((element)=>cartList.add(CartModel.fromJson(jsonDecode(element))));
+
+    return cartList;
+  }
+
+  List<CartModel> getCartHistoryList(){
+    if(sharedPreferences.containsKey(AppConstants.CART_HISTORY_LIST)){
+      //cartHistory=[];
+      cartHistory= sharedPreferences.getStringList(AppConstants.CART_HISTORY_LIST)!;
+    }
+    List<CartModel> cartListHistory=[];
+    cartHistory.forEach((element) =>cartListHistory.add(CartModel.fromJson(jsonDecode(element))));
+    return cartListHistory;
+  }
+
+  void addToCartHistoryList(){
+    if(sharedPreferences.containsKey(AppConstants.CART_HISTORY_LIST)){
+      cartHistory = sharedPreferences.getStringList(AppConstants.CART_HISTORY_LIST)!;
+    }
+    for(int i=0; i<cart.length; i++){
+    cartHistory.add(cart[i]);
+    }
+
+    cart=[];
+    sharedPreferences.setStringList(AppConstants.CART_HISTORY_LIST, cartHistory);
+  }
+
+  void removeCart(){
+    cart=[];
+    sharedPreferences.remove(AppConstants.CART_LIST);
+  }
+
+  void clearCartHistory(){
+    removeCart();
+    cartHistory=[];
+    sharedPreferences.remove(AppConstants.CART_HISTORY_LIST);
+  }
+  void removeCartSharedPreference(){
+    sharedPreferences.remove(AppConstants.CART_LIST);
+    sharedPreferences.remove(AppConstants.CART_HISTORY_LIST);
+
+  }
+}
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_satya/models/address_model.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../api/api_client.dart';
+
+class LocationRepo{
+  final ApiClient apiClient;
+  final SharedPreferences sharedPreferences;
+  LocationRepo({required this.apiClient, required this.sharedPreferences});
+
+  Future<Response> getAddressfromGeocode(LatLng latLng) async {
+    return await apiClient.getData('${AppConstants.GEOCODE_URI}'
+      '?lat=${latLng.latitude}&lng=${latLng.longitude}'
+    );
+  }
+
+  String getUserAddress(){
+    return sharedPreferences.getString(AppConstants.USER_ADDRESS)??"";
+  }
+  Future<Response> addAddress(AddressModel addressModel)async{
+    return await apiClient.postData(AppConstants.ADD_USER_ADDRESS, addressModel.toJson());
+  }
+
+  Future<Response> getAllAddress() async {
+    return await apiClient.getData(AppConstants.ADDRESS_LIST_URI);
+  }
+
+  Future<bool> saveUserAddress(String address) async {
+    apiClient.updateHeader(sharedPreferences.getString(AppConstants.TOKEN)!);
+    return await sharedPreferences.setString(AppConstants.USER_ADDRESS, address);
+  }
+
+  Future<Response> getZone(String lat, String lng) async {
+    return await apiClient.getData('${AppConstants.ZONE_URI}?lat=$lat&lng=$lng');
+  }
+
+  Future<Response> searchLocation(String text) async {
+    return await apiClient.getData('${AppConstants.SEARCH_LOCATION_URI}?search_text=$text');
+  }
+
+  Future<Response> setLocation(String placeID) async {
+    return await apiClient.getData('${AppConstants.PLACE_DETAILS_URI}?placeid=$placeID');
+  }
+}
+import 'package:project_satya/models/place_order_model.dart';
+import 'package:project_satya/utils/app_constants.dart';
+
+import '../api/api_client.dart';
+import 'package:get/get.dart';
+class OrderRepo{
+  final ApiClient apiClient;
+  OrderRepo({required this.apiClient});
+
+  Future<Response> placeOrder(PlaceOrderBody placeOrder)async{
+    return await apiClient.postData(AppConstants.PLACE_ORDER_URI, placeOrder.toJson());
+  }
+  Future<Response> getOrderList()async{
+    return await apiClient.getData(AppConstants.ORDER_LIST_URI);
+  }
+}
+
+import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import '../api/api_client.dart';
+
+
+class PopularProductRepo extends GetxService{
+  final ApiClient apiClient;
+  PopularProductRepo({required this.apiClient});
+
+  Future <Response> getPopularProductList() async{
+    return await apiClient.getData(AppConstants.POPULAR_PRODUCT_URI);
+
+  }
+}
+import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import '../api/api_client.dart';
+
+
+class RecommendedProductRepo extends GetxService{
+  final ApiClient apiClient;
+  RecommendedProductRepo({required this.apiClient});
+
+  Future <Response> getRecommendedProductList() async{
+    return await apiClient.getData(AppConstants.RECOMMENDED_PRODUCT_URI);
+
+  }
+}
+import 'package:project_satya/data/api/api_client.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:get/get.dart';
+class UserRepo{
+  final ApiClient apiClient;
+  UserRepo({required this.apiClient});
+
+  Future<Response>getUserInfo() async {
+    return await apiClient.getData(AppConstants.USER_INFO_URI);
+  }
+}
+import 'package:get/get.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/order_controller.dart';
+import 'package:project_satya/data/repository/auth_repo.dart';
+import 'package:project_satya/data/repository/order_repo.dart';
+import 'package:project_satya/data/repository/popular_product_repo.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../controllers/cart_controller.dart';
+import '../controllers/location_controller.dart';
+import '../controllers/popular_product_controller.dart';
+import '../controllers/recommended_product_controller.dart';
+import '../controllers/user_controller.dart';
+import '../data/api/api_client.dart';
+import '../data/repository/cart_repo.dart';
+import '../data/repository/location_repo.dart';
+import '../data/repository/recommended_product_repo.dart';
+import '../data/repository/user_repo.dart';
+
+
+Future<void> init()async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  Get.lazyPut(() => sharedPreferences);
+
+  //api client
+  Get.lazyPut(()=>ApiClient(appBaseUrl:AppConstants.BASE_URL, sharedPreferences:Get.find()));
+  Get.lazyPut(()=>AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(()=>UserRepo(apiClient: Get.find()));
+
+  //repos
+  Get.lazyPut(()=>PopularProductRepo(apiClient:Get.find()));
+  Get.lazyPut(()=>RecommendedProductRepo(apiClient:Get.find()));
+  Get.lazyPut(()=>CartRepo(sharedPreferences:Get.find()));
+  Get.lazyPut(()=>LocationRepo(apiClient:Get.find(), sharedPreferences: Get.find()));
+  Get.lazyPut(()=>OrderRepo(apiClient:Get.find()));
+
+
+
+
+  //controllers
+  Get.lazyPut(()=>AuthController(authRepo: Get.find()));
+  Get.lazyPut(()=>UserController(userRepo: Get.find()));
+  Get.lazyPut(()=>PopularProductController(popularProductRepo:Get.find()));
+  Get.lazyPut(()=>RecommendedProductController(recommendedProductRepo:Get.find()));
+  Get.lazyPut(()=>CartController(cartRepo: Get.find()));
+  Get.lazyPut(()=>LocationController(locationRepo: Get.find()));
+  Get.lazyPut(()=>OrderController(orderRepo: Get.find()));
+
+
+
+}
+class AddressModel{
+  late int? _id;
+  late String _addressType;
+  late String? _contactPersonName;
+  late String? _contactPersonNumber;
+  late String _address;
+  late String _latitude;
+  late String _longitude;
+
+  AddressModel({
+    id,
+    required addressType,
+    contactPersonName,
+    contactPersonNumber,
+    address,
+    latitude,
+    longitude
+}){
+    _id=id;
+    _addressType=addressType;
+    _contactPersonName=contactPersonName;
+    _contactPersonNumber=contactPersonNumber;
+    _longitude=longitude;
+    _latitude=latitude;
+    _address=address;
+  }
+  String get address=>_address;
+  String get addressType=>_addressType;
+  String? get contactPersonName=>_contactPersonName;
+  String? get contactPersonNumber=>_contactPersonNumber;
+  String get latitude => _latitude;
+  String get longitude => _longitude;
+
+  AddressModel.fromJson(Map<String, dynamic>json){
+    _id=json['id'];
+    _addressType=json["address_type"]??"";
+    _contactPersonNumber=json["contact_person_number"]??"";
+    _contactPersonName=json["contact_person_name"]??"";
+    _address=json["address"];
+    _latitude=json["latitude"];
+    _longitude=json["longitude"];
+
+  }
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data=Map<String, dynamic>();
+    data['id']=this._id;
+    data['address_type']=this._addressType;
+    data['contact_person_number']=this._contactPersonNumber;
+    data['contact_person_name']=this._contactPersonName;
+    data['address']=this.address;
+    data['longitude']=this._longitude;
+    data['latitude']=this._latitude;
+    return data;
+  }
+}
+import 'package:project_satya/models/products_model.dart';
+
+class CartModel {
+  int? id;
+  String? name;
+  int? price;
+  String? img;
+  int? quantity;
+  bool? isExist;
+  String? time;
+  ProductModel? product;
+
+  CartModel({this.id,
+    this.name,
+    this.price,
+    this.img,
+    this.quantity,
+    this.isExist,
+    this.time,
+    this.product,
+  });
+
+  CartModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    price = json['price'];
+    img = json['img'];
+    quantity = json['quantity'];
+    isExist = json ['isExist'];
+    time = json ['time'];
+    product = ProductModel.fromJson(json['product']);
+  }
+
+  Map<String, dynamic> toJson(){
+    return{
+      "id":this.id,
+      "name":this.name,
+      "price":this.price,
+      "img":this.img,
+      "quantity":this.quantity,
+      "isExist":this.isExist,
+      "time":this.time,
+      "product":this.product!.toJson(),
+
+    };
+  }
+
+}
+import 'address_model.dart';
+
+class OrderModel {
+  late int id;
+  late int userId;
+  double? orderAmount;
+  String? orderStatus;
+
+  String? paymentStatus;
+  double? totalTaxAmount;
+  String? orderNote;
+  String? createdAt;
+  String? updatedAt;
+  double? deliveryCharge;
+  String? scheduleAt;
+  String? otp;
+  String? pending;
+  String? accepted;
+  String? confirmed;
+  String? processing;
+  String? handover;
+  String? pickedUp;
+  String? delivered;
+  String? canceled;
+  String? refundRequested;
+  String? refunded;
+  int? scheduled;
+  String? failed;
+  int? detailsCount;
+
+  AddressModel? deliveryAddress;
+
+  OrderModel(
+      { required this.id,
+        required this.userId,
+        this.orderAmount,
+        this.paymentStatus,
+        this.orderNote,
+        this.createdAt,
+        this.updatedAt,
+        this.deliveryCharge,
+        this.scheduleAt,
+        this.otp,
+        this.orderStatus,
+        this.pending,
+        this.accepted,
+        this.confirmed,
+        this.processing,
+        this.handover,
+        this.pickedUp,
+        this.delivered,
+        this.canceled,
+        this.scheduled,
+        this.failed,
+        this.detailsCount,
+        this.deliveryAddress,
+      });
+
+  OrderModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    orderAmount = json['order_amount'].toDouble();
+    paymentStatus = json['payment_status']??"pending";
+    totalTaxAmount =100.0;
+    orderNote = json['order_note'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    orderStatus=json['order_status'];
+    deliveryCharge = 100.0;
+    scheduleAt = json['schedule_at']??"";
+    otp = json['otp'];
+    pending = json['pending']??"";
+    accepted = json['accepted']??"";
+    confirmed = json['confirmed']??"";
+    processing = json['processing']??"";
+    handover = json['handover']??"";
+    pickedUp = json['picked_up']??"";
+    delivered = json['delivered']??"";
+    canceled = json['canceled']??"";
+    scheduled = json['scheduled'];
+    failed = json['failed']??"";
+    detailsCount = json['details_count'];
+
+    deliveryAddress = (json['delivery_address'] != null
+        ? new AddressModel.fromJson(json['delivery_address'])
+        : null)!;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    data['order_amount'] = this.orderAmount;
+
+    data['payment_status'] = this.paymentStatus;
+    data['total_tax_amount'] = this.totalTaxAmount;
+    data['order_note'] = this.orderNote;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['delivery_charge'] = this.deliveryCharge;
+    data['schedule_at'] = this.scheduleAt;
+    data['otp'] = this.otp;
+    data['pending'] = this.pending;
+    data['accepted'] = this.accepted;
+    data['confirmed'] = this.confirmed;
+    data['processing'] = this.processing;
+    data['handover'] = this.handover;
+    data['picked_up'] = this.pickedUp;
+    data['delivered'] = this.delivered;
+    data['canceled'] = this.canceled;
+    data['refund_requested'] = this.refundRequested;
+    data['refunded'] = this.refunded;
+    data['scheduled'] = this.scheduled;
+    data['failed'] = this.failed;
+    data['details_count'] = this.detailsCount;
+    if (this.deliveryAddress != null) {
+      data['delivery_address'] = this.deliveryAddress?.toJson();
+    }
+    return data;
+  }
+}
+import 'cart_model.dart';
+
+class PlaceOrderBody {
+  List<CartModel>? _cart;
+  late double _orderAmount;
+  late String _orderNote;
+  late double _distance;
+  late String _address;
+  late String _latitude;
+  late String _longitude;
+  late  String _contactPersonName;
+  late String _contactPersonNumber;
+  late String _orderType;
+  late String _paymentMethod;
+
+  PlaceOrderBody(
+      {required List<CartModel> cart,
+        required double orderAmount,
+        required double distance,
+        required String scheduleAt,
+        required String orderNote,
+        required String address,
+        required String latitude,
+        required String longitude,
+        required String contactPersonName,
+        required String contactPersonNumber,
+        required String orderType,
+        required String paymentMethod,
+
+      }){
+    this._cart = cart;
+    this._orderAmount = orderAmount;
+    this._orderNote = orderNote;
+    this._distance = distance;
+    this._address = address;
+    this._latitude = latitude;
+    this._longitude = longitude;
+    this._contactPersonName = contactPersonName;
+    this._contactPersonNumber = contactPersonNumber;
+    this._orderType = orderType;
+    this._paymentMethod = paymentMethod;
+  }
+
+  List<CartModel> get cart => _cart!;
+
+  double get orderAmount => _orderAmount;
+
+  String get orderNote => _orderNote;
+
+  double get distance => _distance;
+
+  String get address => _address;
+  String get latitude => _latitude;
+  String get longitude => _longitude;
+  String get contactPersonName => _contactPersonName;
+  String get contactPersonNumber => _contactPersonNumber;
+
+  PlaceOrderBody.fromJson(Map<String, dynamic> json) {
+    if (json['cart'] != null) {
+      _cart = [];
+      json['cart'].forEach((v) {
+        _cart!.add(new CartModel.fromJson(v));
+      });
+    }
+
+    _orderAmount = json['order_amount'];
+
+    _orderNote = json['order_note'];
+
+    _distance = json['distance'];
+
+    _address = json['address'];
+    _latitude = json['latitude'];
+    _longitude = json['longitude'];
+    _contactPersonName = json['contact_person_name'];
+    _contactPersonNumber = json['contact_person_number'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    if (this._cart != null) {
+      data['cart'] = this._cart!.map((v) => v.toJson()).toList();
+    }
+    data['order_amount'] = this._orderAmount;
+    data['order_note'] = this._orderNote;
+    data['distance'] = this._distance;
+    data['address'] = this._address;
+    data['latitude'] = this._latitude;
+    data['longitude'] = this._longitude;
+    data['contact_person_name'] = this._contactPersonName;
+    data['contact_person_number'] = this._contactPersonNumber;
+    data['order_type'] = this._orderType;
+    data['payment_method'] = this._paymentMethod;
+    return data;
+  }
+
+}
+class Product {
+  int? _totalSize;
+  int? _typeId;
+  int? _offset;
+  late List<ProductModel> _products;
+  List<ProductModel> get products=>_products;
+
+  Product({required totalSize, required typeId, required offset, required products}){
+    this._totalSize=totalSize;
+    this._totalSize=totalSize;
+    this._typeId=typeId;
+    this._offset=offset;
+    this._products=products;
+  }
+
+  Product.fromJson(Map<String, dynamic> json) {
+    _totalSize = json['total_size'];
+    _typeId = json['type_id'];
+    _offset = json['offset'];
+    if (json['products'] != null) {
+      _products = <ProductModel>[];
+      json['products'].forEach((v) {
+        _products.add(ProductModel.fromJson(v));
+      });
+    }
+  }
+
+}
+
+class ProductModel {
+  int? id;
+  String? name;
+  String? description;
+  int? price;
+  int? stars;
+  String? img;
+  String? location;
+  String? createdAt;
+  String? updatedAt;
+  int? typeId;
+
+  ProductModel(
+      {this.id,
+        this.name,
+        this.description,
+        this.price,
+        this.stars,
+        this.img,
+        this.location,
+        this.createdAt,
+        this.updatedAt,
+        this.typeId});
+
+  ProductModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    price = json['price'];
+    stars = json['stars'];
+    img = json['img'];
+    location = json['location'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    typeId = json['type_id'];
+  }
+
+  Map<String, dynamic> toJson(){
+    return{
+      "id":this.id,
+      "name":this.name,
+      "price":this.price,
+      "img":this.img,
+      "createdAt":this.createdAt,
+      "location":this.location,
+      "updatedAt":this.updatedAt,
+      "typeId":this.typeId,
+    };
+  }
+}
+class ResponseModel{
+  bool _isSuccess;
+  String _message;
+  ResponseModel(this._isSuccess, this._message);
+  String get message => _message;
+  bool get isSuccess => _isSuccess;
+}
+class SignUpBody{
+  String name;
+  String phone;
+  String email;
+  String password;
+  SignUpBody({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.password,
+  });
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data["f_name"] = this.name;
+    data["phone"] = this.phone;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    return data;
+  }
+}
+class UserModel{
+  int id;
+  String name;
+  String email;
+  String phone;
+  int orderCount;
+
+  UserModel({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.orderCount,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json){
+    return UserModel(
+      id:json['id'],
+      name: json['f_name'],
+      email:json['email'],
+      phone: json['phone'],
+      orderCount: json['order_count'],
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:project_satya/base/custom_loader.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_satya/controllers/user_controller.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/widgets/app_icon.dart';
+import 'package:project_satya/widgets/big_text.dart';
+
+import '../../base/custom_app_bar.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/account_widget.dart';
+
+class AccountPage extends StatelessWidget {
+  const AccountPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool _userLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if(_userLoggedIn){
+      Get.find<UserController>().getUserInfo();
+    }
+    return Scaffold(
+      appBar: CustomAppBar(title: "Profile",),
+      body: GetBuilder<UserController>(builder: (userController){
+        return _userLoggedIn?(userController.isLoading?Container(
+          width: double.maxFinite,
+          margin: EdgeInsets.only(top: Dimensions.height20),
+
+          child: Column(
+            children: [
+              //profile icon
+              AppIcon(icon: Icons.person,
+                backgroundColor: AppColors.mainColor,
+                iconColor: Colors.white,
+                iconSize: Dimensions.height45+Dimensions.height30,
+                size: Dimensions.height15*10,),
+              SizedBox(height: Dimensions.height30,),
+
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      //name
+                      AccountWidget(
+                        appIcon :AppIcon(icon: Icons.person,
+                          backgroundColor: AppColors.mainColor,
+                          iconColor: Colors.white,
+                          iconSize: Dimensions.height10*5/2,
+                          size: Dimensions.height10*5,),
+
+                        bigText: BigText(text: userController.userModel!.name,)
+                        ,),
+                      SizedBox(height: Dimensions.height20,),
+                      //phone
+                      AccountWidget(
+                        appIcon :AppIcon(icon: Icons.phone,
+                          backgroundColor: AppColors.yellowColor,
+                          iconColor: Colors.white,
+                          iconSize: Dimensions.height10*5/2,
+                          size: Dimensions.height10*5,),
+
+                        bigText: BigText(text: userController.userModel!.phone,)
+                        ,),
+                      SizedBox(height: Dimensions.height20,),
+                      //email
+                      AccountWidget(
+                        appIcon :AppIcon(icon: Icons.email,
+                          backgroundColor: AppColors.yellowColor,
+                          iconColor: Colors.white,
+                          iconSize: Dimensions.height10*5/2,
+                          size: Dimensions.height10*5,),
+
+                        bigText: BigText(text: userController.userModel!.email,)
+                        ,),
+                      SizedBox(height: Dimensions.height20,),
+                      //address
+                      GetBuilder<LocationController>(builder: (locationController){
+                        if(_userLoggedIn&&locationController.addressList.isEmpty){
+                          return GestureDetector(
+                            onTap: (){
+                              Get.offNamed(RouteHelper.getAddressPage());
+                            },
+                            child: AccountWidget(
+                                appIcon :AppIcon(icon: Icons.location_on,
+                                  backgroundColor: AppColors.yellowColor,
+                                  iconColor: Colors.white,
+                                  iconSize: Dimensions.height10*5/2,
+                                  size: Dimensions.height10*5,),
+
+                                bigText: BigText(text: "Fill in your address",)
+                            ),
+                          );
+                        }else{
+                          return GestureDetector(
+                            onTap: (){
+                              Get.offNamed(RouteHelper.getAddressPage());
+                            },
+                            child: AccountWidget(
+                                appIcon :AppIcon(icon: Icons.location_on,
+                                  backgroundColor: AppColors.yellowColor,
+                                  iconColor: Colors.white,
+                                  iconSize: Dimensions.height10*5/2,
+                                  size: Dimensions.height10*5,),
+
+                                bigText: BigText(text: "Your address",)
+                            ),
+                          );
+                        }
+                      }),
+                      SizedBox(height: Dimensions.height20,),
+                      //message
+                      AccountWidget(
+                        appIcon :AppIcon(icon: Icons.message_outlined,
+                          backgroundColor: Colors.redAccent,
+                          iconColor: Colors.white,
+                          iconSize: Dimensions.height10*5/2,
+                          size: Dimensions.height10*5,),
+
+                        bigText: BigText(text: "Messages",)
+                        ,),
+                      SizedBox(height: Dimensions.height20,),
+
+                      //logout
+                      GestureDetector(
+                        onTap: (){
+                          if(Get.find<AuthController>().userLoggedIn()){
+                            Get.find<AuthController>().clearSharedData();
+                            Get.find<CartController>().clear();
+                            Get.find<CartController>().clearCartHistory();
+                            Get.find<LocationController>().clearAddressList();
+                            Get.offNamed(RouteHelper.getSignInPage());
+                          }else{
+                            print("you logged out");
+                          }
+
+                        },
+                        child: AccountWidget(
+                          appIcon :AppIcon(icon: Icons.logout,
+                            backgroundColor: Colors.redAccent,
+                            iconColor: Colors.white,
+                            iconSize: Dimensions.height10*5/2,
+                            size: Dimensions.height10*5,),
+
+                          bigText: BigText(text: "Logout",)
+                          ,),
+                      ),
+                      SizedBox(height: Dimensions.height20,),
+
+                    ],
+                  ),
+                ),
+              )
+
+            ],
+          ),
+        ):
+        CustomLoader()):
+        Container(
+
+            child: Center(child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: double.maxFinite,
+              height: Dimensions.height20*8,
+              margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                          "assets/image/signintocontinue.png"
+                      )
+                  )
+              ),
+            ),
+            GestureDetector(
+              onTap:(){
+              Get.toNamed(RouteHelper.getSignInPage());
+            },
+              child: Container(
+
+                width: double.maxFinite,
+                height: Dimensions.height20*5,
+                margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+
+                ),
+                child: Center(child: BigText(text: "Sign in",color: Colors.white,size: Dimensions.font26,)),
+              ),
+            )
+          ],
+        )));
+      }),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_satya/utils/dimensions.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_webservice/src/places.dart';
+
+class LocationDialogue extends StatelessWidget {
+  final GoogleMapController mapController;
+  const LocationDialogue({Key? key, required this.mapController}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController _controller = TextEditingController();
+    return Container(
+      padding: EdgeInsets.all(Dimensions.width10),
+      alignment: Alignment.topCenter,
+      child: Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimensions.radius20/2),
+        ),
+        child: SizedBox(
+          width: Dimensions.screenWidth,
+          child: TypeAheadField(
+            textFieldConfiguration: TextFieldConfiguration(
+              controller: _controller,
+              textInputAction: TextInputAction.search,
+              autofocus: true,
+              textCapitalization: TextCapitalization.words,
+              keyboardType: TextInputType.streetAddress,
+              decoration: InputDecoration(
+                hintText: "search location",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    style: BorderStyle.none, width: 0
+                  ),
+                ),
+                hintStyle: Theme.of(context).textTheme.headline2?.copyWith(
+                    color: Theme.of(context).disabledColor,
+                    fontSize: Dimensions.font16
+                )
+              )
+            ),
+            onSuggestionSelected: (Prediction suggestion)  {
+               Get.find<LocationController>().setLocation(suggestion.placeId!, suggestion.description!, mapController);
+               Get.back();
+            },
+            /*
+            as we type, it gives suggestions
+             */
+            suggestionsCallback: (pattern) async {
+              return await Get.find<LocationController>().searchLocation(context, pattern);
+            },
+            itemBuilder: (context, Prediction suggestion) {
+              return Padding(
+                padding: EdgeInsets.all(Dimensions.width10),
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on),
+                    Expanded(
+                        child: Text(
+                          suggestion.description!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headline2?.copyWith(
+                            color: Theme.of(context).textTheme.bodyText1?.color,
+                            fontSize: Dimensions.font16
+                          ),
+                        ))
+                  ],
+                ),
+              );
+            },
+
+          ),
+        ),
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_satya/controllers/user_controller.dart';
+import 'package:project_satya/models/address_model.dart';
+import 'package:project_satya/pages/address/pick_address_map.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_satya/widgets/app_text_field.dart';
+import 'package:project_satya/widgets/big_text.dart';
+
+import '../../base/custom_app_bar.dart';
+import '../../widgets/app_icon.dart';
+
+class AddAddressPage extends StatefulWidget {
+  const AddAddressPage({Key? key}) : super(key: key);
+
+  @override
+  State<AddAddressPage> createState() => _AddAddressPageState();
+}
+
+class _AddAddressPageState extends State<AddAddressPage> {
+
+  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _contactPersonName=TextEditingController();
+  final TextEditingController _contactPersonNumber=TextEditingController();
+  late bool _isLogged;
+  CameraPosition _cameraPosition = const CameraPosition(target: LatLng(
+      7.0873505, 79.8952425
+  ), zoom: 17);
+  late LatLng _initialPosition = LatLng(
+      7.0873505, 79.8952425
+  );
+
+  @override
+  void initState(){
+    super.initState();
+    _isLogged= Get.find<AuthController>().userLoggedIn();
+    if(_isLogged&&Get.find<UserController>().userModel==null){
+      Get.find<UserController>().getUserInfo();
+    }
+    if(Get.find<LocationController>().addressList.isNotEmpty){
+
+      if(Get.find<LocationController>().getUserAddressFromLocalStorage()==""){
+        Get.find<LocationController>().saveUserAddress(Get.find<LocationController>().addressList.last);
+      }
+      Get.find<LocationController>().getUserAddress();
+      _cameraPosition=CameraPosition(target: LatLng(
+        double.parse(Get.find<LocationController>().getAddress["latitude"]),
+        double.parse(Get.find<LocationController>().getAddress["longitude"])
+      ));
+      _initialPosition=LatLng(
+          double.parse(Get.find<LocationController>().getAddress["latitude"]),
+          double.parse(Get.find<LocationController>().getAddress["longitude"])
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: "Address"
+      ),
+      body: GetBuilder<UserController>(builder: (userController){
+                if(userController.userModel!=null&&_contactPersonName.text.isEmpty){
+          _contactPersonName.text = '${userController.userModel?.name}';
+          _contactPersonNumber.text ='${userController.userModel?.phone}';
+          if(Get.find<LocationController>().addressList.isNotEmpty){
+              _addressController.text =  Get.find<LocationController>().getUserAddress().address;
+          }
+        }
+        return GetBuilder<LocationController>(builder: (locationController){
+          _addressController.text = '${locationController.placemark.name??''}'
+              '${locationController.placemark.locality??''}'
+              '${locationController.placemark.postalCode??''}'
+              '${locationController.placemark.country??''}';
+          print("address in my view is "+_addressController.text);
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 140,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          width: 2,color: AppColors.mainColor
+                      )
+                  ),
+                  child: Stack(
+                    children: [
+                      GoogleMap(initialCameraPosition:
+                      CameraPosition(target: _initialPosition, zoom: 17),
+                        onTap: (latlng){
+                              Get.toNamed(RouteHelper.getPickAddressPage(),
+                              arguments: PickAddressMap(
+                                  fromSignup: false,
+                                  fromAddress: true,
+                                  googleMapController: locationController.mapController,
+                              )
+
+                              );
+                        },
+
+                        zoomControlsEnabled: false,
+                        compassEnabled: false,
+                        indoorViewEnabled: true,
+                        mapToolbarEnabled: false,
+                        myLocationEnabled: true,
+                        onCameraIdle: (){
+                          locationController.updatePosition(_cameraPosition, true);
+
+                        },
+                        onCameraMove: ((position)=>_cameraPosition=position),
+                        onMapCreated: (GoogleMapController controller){
+                          locationController.setMapController(controller);
+                          if(Get.find<LocationController>().addressList.isEmpty){
+
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height20),
+                  child: SizedBox(height: 50, child: ListView.builder(
+                    shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: locationController.addressTypeList.length,
+                      itemBuilder: (context, index){
+                   return InkWell(
+                     onTap: (){
+                      locationController.setAddressTypeIndex(index);
+                     },
+                     child: Container(
+                       padding: EdgeInsets.symmetric(horizontal: Dimensions.width20,
+                       vertical: Dimensions.height10),
+                        margin: EdgeInsets.only(right: Dimensions.width10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20/4),
+                          color: Theme.of(context).cardColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey[200]!,
+                              spreadRadius: 1,
+                              blurRadius: 5
+                            )
+                          ]
+                        ),
+                       child: Icon(
+                             index==0?Icons.home_filled:index==1?Icons.work:Icons.location_on,
+                             color: locationController.addressTypeIndex==index?
+                             AppColors.mainColor:Theme.of(context).disabledColor,
+                           ),
+                     ),
+                   ) ;
+            }),),
+                ),
+                SizedBox(height: Dimensions.height20,),
+                Padding(
+                  padding: EdgeInsets.only(left: Dimensions.width20),
+                  child: BigText(text: "Delivery address"),
+                ),
+                SizedBox(height: Dimensions.height10,),
+                AppTextField(textController: _addressController, hintText: "Your address", icon: Icons.map),
+                SizedBox(height: Dimensions.height20,),
+                Padding(
+                  padding: EdgeInsets.only(left: Dimensions.width20),
+                  child: BigText(text: "Contact name"),
+                ),
+                SizedBox(height: Dimensions.height10,),
+                AppTextField(textController: _contactPersonName, hintText: "Your name", icon: Icons.person),
+                SizedBox(height: Dimensions.height20,),
+                Padding(
+                  padding: EdgeInsets.only(left: Dimensions.width20),
+                  child: BigText(text: "Your number"),
+                ),
+                SizedBox(height: Dimensions.height10,),
+                AppTextField(textController: _contactPersonNumber, hintText: "Your phone", icon: Icons.phone)
+
+              ],
+            ),
+          );
+        });
+      }),
+        bottomNavigationBar: GetBuilder<LocationController>(builder: (locationController){
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: Dimensions.height20*8,
+                padding: EdgeInsets.only(top: Dimensions.height30, bottom: Dimensions.height30,
+                    left: Dimensions.width20, right: Dimensions.width20),
+                decoration: BoxDecoration(
+                    color: AppColors.buttonBackgroundColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.radius20*2),
+                      topRight: Radius.circular(Dimensions.radius20*2),
+                    )
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    GestureDetector(
+                      onTap: (){
+                        AddressModel _addressModel =AddressModel(
+                          addressType: locationController.addressTypeList[locationController.addressTypeIndex],
+                          contactPersonName: _contactPersonName.text,
+                          contactPersonNumber: _contactPersonNumber.text,
+                          address: _addressController.text,
+                          latitude: locationController.position.latitude.toString(),
+                          longitude: locationController.position.longitude.toString(),
+                        );
+                      locationController.addAddress(_addressModel).then((response){
+                        if(response.isSuccess){
+                          Get.toNamed(RouteHelper.getInitial());
+                          Get.snackbar("Address", "Added Successfully");
+                        }else{
+                          Get.snackbar("Address", "Couldn't save address");
+                        }
+                      });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                        child: BigText(text:"Save address" , color: Colors.white,size: 26,),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                            color: AppColors.mainColor
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
+
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_satya/base/custom_button.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:get/get.dart';
+import 'package:project_satya/pages/address/widget/search_location_dialogue_page.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'package:project_satya/utils/dimensions.dart';
+
+class PickAddressMap extends StatefulWidget {
+  final bool fromSignup;
+  final bool fromAddress;
+  final GoogleMapController? googleMapController;
+  const PickAddressMap({Key? key, required this.fromSignup, required this.fromAddress,
+    this.googleMapController
+  }) : super(key: key);
+
+  @override
+  _PickAddressMapState createState() => _PickAddressMapState();
+}
+
+class _PickAddressMapState extends State<PickAddressMap> {
+  late LatLng _initialPosition;
+  late GoogleMapController _mapController;
+  late CameraPosition _cameraPosition;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(Get.find<LocationController>().addressList.isEmpty){
+      _initialPosition=LatLng(7.0873505, 79.8952425);
+      _cameraPosition=CameraPosition(target: _initialPosition, zoom: 17);
+    }else{
+      if(Get.find<LocationController>().addressList.isNotEmpty){
+        _initialPosition=LatLng(
+            double.parse(Get.find<LocationController>().getAddress["latitude"]),
+            double.parse(Get.find<LocationController>().getAddress["longitude"]));
+        _cameraPosition=CameraPosition(target: _initialPosition, zoom: 17);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<LocationController>(builder: (locationController){
+      return Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: SizedBox(
+              width: double.maxFinite,
+              child: Stack(
+                children: [
+                  GoogleMap(initialCameraPosition: CameraPosition(
+                      target: _initialPosition, zoom: 17
+                  ),
+                    zoomControlsEnabled: false,
+                    onCameraMove: (CameraPosition cameraPosition){
+                      _cameraPosition=cameraPosition;
+                    },
+                    onCameraIdle: (){
+                      Get.find<LocationController>().updatePosition(_cameraPosition, false);
+                    },
+                    onMapCreated: (GoogleMapController mapController){
+                    _mapController = mapController;
+                    if(!widget.fromAddress){
+
+                    }
+                    },
+
+                  ),
+                  Center(
+                    child: !locationController.loading?Image.asset("assets/image/pick_marker.png",
+                    height: 50, width: 50,
+                    ):CircularProgressIndicator()
+                  ),
+                  /*
+                  showing and selecting address
+                   */
+                  Positioned(
+                    top: Dimensions.height45,
+                    left: Dimensions.width20,
+                    right: Dimensions.width20,
+                    child: InkWell(
+                      onTap: ()=>Get.dialog(LocationDialogue(mapController: _mapController)),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.mainColor,
+                          borderRadius: BorderRadius.circular(Dimensions.radius20/2),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.location_on, size: 25,color: AppColors.yellowColor),
+                            Expanded(child: Text(
+                              '${locationController.pickPlacemark.name??''}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: Dimensions.font16
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                            SizedBox(width: Dimensions.width10,),
+                            Icon(Icons.search, size: 25, color:AppColors.yellowColor,)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      bottom: 80,
+                      left: Dimensions.width20,
+                      right: Dimensions.width20,
+                      child:  locationController.isLoading?Center(child: CircularProgressIndicator(),):CustomButton(
+
+                        buttonText: locationController.inZone? widget.fromAddress?'Pick Address':'Pick Location':'Service is not available in your area',
+                        onPressed: (locationController.buttonDisabled||locationController.loading)?null:(){
+                          if(locationController.pickPosition.latitude!=0&&
+                              locationController.pickPlacemark.name!=null){
+                            if(widget.fromAddress){
+                              if(widget.googleMapController!=null){
+                                print("Now you can clicked on this");
+                                widget.googleMapController!.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(
+                                  locationController.pickPosition.latitude,
+                                  locationController.pickPosition.longitude,
+                                ))));
+                                locationController.setAddAddressData();
+                              }
+                              //Get.back() creates update problem
+                              //list, a value
+                              Get.toNamed(RouteHelper.getAddressPage());
+                            }
+                          }
+                        },
+
+                      )
+
+
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+  }
+}
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:satya/base/custom_loader.dart';
+import 'package:satya/pages/auth/sign_up_page.dart';
+import 'package:satya/utils/colors.dart';
+import 'package:satya/utils/dimensions.dart';
+import 'package:satya/widgets/app_text_field.dart';
+import 'package:satya/widgets/big_text.dart';
+
+import '../../base/show_custom_snackbar.dart';
+import '../../controllers/auth_controller.dart';
+import '../../routes/route_helper.dart';
+
+class SignInPage extends StatelessWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var phoneController = TextEditingController();
+    var passwordController = TextEditingController();
+    void _login(AuthController authController){
+
+      String phone = phoneController.text.trim();
+      String password = passwordController.text.trim();
+
+      if(phone.isEmpty){
+        showCustomSnackBar("Type in your phone number", title: "phone number");
+
+      }else if(password.isEmpty){
+        showCustomSnackBar("Type in your password", title: "password");
+
+      }else if(password.length<6){
+        showCustomSnackBar("Password cannot be less than six characters", title: "Password");
+
+      }else{
+
+
+        authController.login(phone, password).then((status){
+          if(status.isSuccess){
+            Get.toNamed(RouteHelper.getInitial());
+          }else{
+            showCustomSnackBar(status.message);
+          }
+        });
+      }
+    }
+
+    return Scaffold(
+        backgroundColor: Colors.white,
+
+        body: GetBuilder<AuthController>(builder: (authController){
+          return !authController.isLoading? SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: Dimensions.screenHeight*0.05,),
+                //app logo
+                Container(
+                  height: Dimensions.screenHeight*0.25,
+                  child: Center(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 80,
+                      backgroundImage: AssetImage(
+                          "assets/image/Bella verona 1.png"
+                      ),
+                    ),
+                  ),
+                ),
+                //welcome
+                Container(
+                  margin: EdgeInsets.only(left: Dimensions.width20),
+                  width: double.maxFinite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hello",
+                        style: TextStyle(
+                            fontSize: Dimensions.font20*3+Dimensions.font20/2,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        "Sign in to your account",
+                        style: TextStyle(
+                            fontSize: Dimensions.font20,
+                            //fontWeight: FontWeight.bold
+                            color: Colors.grey[500]
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: Dimensions.height20,),
+
+                //Your phone
+                AppTextField(textController: phoneController,
+                    hintText: "Phone",
+                    icon: Icons.phone),
+                SizedBox(height: Dimensions.height20,),
+                //Your password
+                AppTextField(textController: passwordController,
+                    hintText: "Password",
+                    icon: Icons.password_sharp, isObscure:true),
+
+                SizedBox(height: Dimensions.height20,),
+                //tag line
+                Row(children: [
+                  Expanded(child: Container()),
+                  RichText(
+                      text: TextSpan(
+                          text: "Sign in to your account",
+                          style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: Dimensions.font20
+                          )
+                      )),
+                  SizedBox(width: Dimensions.width20,)
+                ],),
+
+                SizedBox(height: Dimensions.screenHeight*0.05,),
+                //Sign in
+                GestureDetector(
+                  onTap:(){
+                    _login(authController);
+                  },
+                  child: Container(
+                    width: Dimensions.screenWidth/2,
+                    height: Dimensions.screenHeight/13,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius30),
+                      color: AppColors.mainColor,
+                    ),
+                    child: Center(
+                      child: BigText(
+                        text: "Sign In",
+                        size: Dimensions.font20+Dimensions.font20/2,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: Dimensions.screenHeight*0.05,),
+                //sign up options
+                RichText(text: TextSpan(
+                    text: "Don\'t have an account?",
+                    style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: Dimensions.font20
+                    ),
+                    children: [
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()..onTap=()=>Get.to(()=>SignUpPage(), transition: Transition.fade),
+                          text: " Create",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.mainBlackColor,
+                              fontSize: Dimensions.font20
+                          ))
+                    ]
+                )),
+
+
+              ],
+            ),
+          ):CustomLoader();
+        })
+    );
+  }
+}
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:satya/base/custom_loader.dart';
+import 'package:satya/models/signup_body_model.dart';
+import 'package:satya/routes/route_helper.dart';
+import 'package:satya/utils/colors.dart';
+import 'package:satya/utils/dimensions.dart';
+import 'package:satya/widgets/app_text_field.dart';
+import 'package:satya/widgets/big_text.dart';
+
+import '../../base/show_custom_snackbar.dart';
+import '../../controllers/auth_controller.dart';
+
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
+    var nameController = TextEditingController();
+    var phoneController = TextEditingController();
+    var signUpImages = [
+      "t.png",
+      "f.png",
+      "g.png",
+    ];
+    void _registration(AuthController authController){
+
+      String name = nameController.text.trim();
+      String phone = phoneController.text.trim();
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+
+      if(name.isEmpty){
+        showCustomSnackBar("Type in your name", title: "Name");
+
+      }else if(phone.isEmpty){
+        showCustomSnackBar("Type in your phone number", title: "Phone number");
+
+      }else if(email.isEmpty){
+        showCustomSnackBar("Type in your email address", title: "Email address");
+
+      }else if(!GetUtils.isEmail(email)){
+        showCustomSnackBar("Type in a valid email address", title: "Valid email address");
+
+      }else if(password.isEmpty){
+        showCustomSnackBar("Type in your password", title: "password");
+
+      }else if(password.length<6){
+        showCustomSnackBar("Password cannot be less than six characters", title: "Password");
+
+      }else{
+
+        SignUpBody signUpBody = SignUpBody(
+            name: name,
+            phone: phone,
+            email: email,
+            password: password);
+        authController.registration(signUpBody).then((status){
+          if(status.isSuccess){
+          print("Success registration");
+          Get.offNamed(RouteHelper.getInitial());
+          }else{
+           showCustomSnackBar(status.message);
+          }
+        });
+      }
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+
+        body: GetBuilder<AuthController>(builder: (_authController){
+          return !_authController.isLoading?SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: Dimensions.screenHeight*0.05,),
+                //app logo
+                Container(
+                  height: Dimensions.screenHeight*0.25,
+                  child: Center(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 80,
+                      backgroundImage: AssetImage(
+                          "assets/image/Bella verona 1.png"
+                      ),
+                    ),
+                  ),
+                ),
+                //Your email
+                AppTextField(textController: emailController,
+                    hintText: "Email",
+                    icon: Icons.email),
+                SizedBox(height: Dimensions.height20,),
+                //Your password
+                AppTextField(textController: passwordController,
+                    hintText: "Password",
+                    icon: Icons.password_sharp, isObscure: true,),
+                SizedBox(height: Dimensions.height20,),
+                //Your name
+                AppTextField(textController: nameController,
+                    hintText: "Name",
+                    icon: Icons.person),
+                SizedBox(height: Dimensions.height20,),
+                //Your phone
+                AppTextField(textController: phoneController,
+                    hintText: "Phone",
+                    icon: Icons.phone),
+                SizedBox(height: Dimensions.height20,),
+
+                //sign up button
+                GestureDetector(
+                  onTap: (){
+                    _registration(_authController);
+                  },
+                  child: Container(
+                    width: Dimensions.screenWidth/2,
+                    height: Dimensions.screenHeight/13,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius30),
+                      color: AppColors.mainColor,
+                    ),
+                    child: Center(
+                      child: BigText(
+                        text: "Sign Up",
+                        size: Dimensions.font20+Dimensions.font20/2,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: Dimensions.height10,),
+                //tag line
+                RichText(text: TextSpan(
+                    recognizer: TapGestureRecognizer()..onTap=()=>Get.back(),
+                    text: "Have an account already?",
+                    style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: Dimensions.font20
+                    )
+                )),
+
+                SizedBox(height: Dimensions.screenHeight*0.05,),
+                //sign up options
+                RichText(text: TextSpan(
+                    text: "Sign up using on of the following methods",
+                    style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: Dimensions.font16
+                    )
+                )),
+                Wrap(
+                  children: List.generate(3, (index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      radius: Dimensions.radius30,
+                      backgroundImage: AssetImage(
+                          "assets/image/"+signUpImages[index]
+                      ),
+                    ),
+                  )),
+
+                )
+
+              ],
+            ),
+          ):const CustomLoader();
+        })
+    );
+
+
+  }
+}
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:project_satya/base/no_data_page.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_satya/widgets/app_icon.dart';
+import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_satya/widgets/small_text.dart';
+
+import '../../models/cart_model.dart';
+import '../../routes/route_helper.dart';
+
+class CartHistory extends StatelessWidget {
+  const CartHistory({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var getCartHistoryList = Get.find<CartController>()
+        .getCartHistoryList().reversed.toList();
+
+    Map<String, int> cartItemsPerOrder = Map();
+
+    for (int i=0; i<getCartHistoryList.length; i++){
+      if(cartItemsPerOrder.containsKey(getCartHistoryList[i].time)){
+        cartItemsPerOrder.update(getCartHistoryList[i].time!, (value)=>++value);
+      }else{
+        cartItemsPerOrder.putIfAbsent(getCartHistoryList[i].time!,()=>1);
+      }
+    }
+
+    List<int> cartItemsPerOrderToList(){
+      return cartItemsPerOrder.entries.map((e)=>e.value).toList();
+    }
+    List<String> cartOrderTimeToList(){
+      return cartItemsPerOrder.entries.map((e)=>e.key).toList();
+    }
+
+    List <int> itemsPerOrder = cartItemsPerOrderToList();
+
+    var listCounter=0;
+    Widget timeWidget(int index){
+      var outputDate = DateTime.now().toString();
+      if (index<getCartHistoryList.length){
+        DateTime parseDate = DateFormat("yyyy-MM-dd HH:mm:ss").parse(getCartHistoryList[listCounter].time!);
+        var inputDate = DateTime.parse(parseDate.toString());
+        var outputFormat = DateFormat("MM/dd/yyyy hh:mm a");
+        outputDate = outputFormat.format(inputDate);
+      }
+      return BigText(text:outputDate);
+    }
+
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: Dimensions.height10*10,
+            color: AppColors.mainColor,
+            width: double.maxFinite,
+            padding: EdgeInsets.only(top: Dimensions.height45),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                BigText(text: "Cart History",color: Colors.white,),
+                AppIcon(icon: Icons.shopping_cart_outlined,
+                  iconColor: AppColors.mainColor,
+                  backgroundColor: AppColors.yellowColor,
+                )
+              ],
+            ),
+          ),
+
+          GetBuilder<CartController>(builder: (_cartController){
+            return _cartController.getCartHistoryList().length>0?
+            Expanded(child:
+            Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.height20,
+                  left: Dimensions.width20,
+                  right: Dimensions.width20
+              ),
+              child:MediaQuery.removePadding(
+                  removeTop: true,
+                  context: context, child: ListView(
+                children: [
+                  for(int i=0; i<itemsPerOrder.length; i++)
+                    Container(
+                      height: Dimensions.height30*4,
+                      margin: EdgeInsets.only(bottom: Dimensions.height20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          timeWidget(listCounter),
+
+                          SizedBox(height: Dimensions.height10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Wrap(
+                                direction: Axis.horizontal,
+                                children: List.generate(itemsPerOrder[i], (index){
+                                  if(listCounter<getCartHistoryList.length){
+                                    listCounter++;
+                                  }
+                                  return index<=2?Container(
+                                      height: Dimensions.height20*4,
+                                      width: Dimensions.height20*4,
+                                      margin: EdgeInsets.only(right: Dimensions.width10/2),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(Dimensions.radius15/2),
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image:NetworkImage(
+                                                  AppConstants.BASE_URL+AppConstants.UPLOAD_URL+getCartHistoryList[listCounter-1].img!
+                                              )
+                                          )
+                                      )
+                                  ):Container();
+                                }),
+                              ),
+                              Container(
+                                height: Dimensions.height20*4,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    SmallText(text: "Total",color: AppColors.titleColor),
+                                    BigText(text: itemsPerOrder[i].toString()+" Items",color: AppColors.titleColor,),
+                                    GestureDetector(
+                                      onTap: (){
+                                        var orderTime = cartOrderTimeToList();
+                                        Map<int, CartModel> moreOrder={};
+                                        for(int j=0; j<getCartHistoryList.length; j++){
+                                          if(getCartHistoryList[j].time==orderTime[i]){
+                                            moreOrder.putIfAbsent(getCartHistoryList[j].id!, () =>
+                                                CartModel.fromJson(jsonDecode(jsonEncode(getCartHistoryList[j])))
+                                            );
+                                          }
+                                        }
+                                        Get.find<CartController>().setItems = moreOrder;
+                                        Get.find<CartController>().addToCartList();
+                                        Get.toNamed(RouteHelper.getCartPage());
+                                      },
+                                      child:  Container(
+                                        padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.height10/2),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(Dimensions.radius15/3),
+                                            border: Border.all(width: 1, color: AppColors.mainColor)
+                                        ),
+                                        child: SmallText(text: "one more ", color: AppColors.mainColor,),
+                                      ),
+                                    )
+                                  ],
+                                ),
+
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+
+                ],
+              ))
+              ,
+            )):
+            SizedBox(
+              height: MediaQuery.of(context).size.height/1.5,
+                child: const Center(
+                  child: NoDataPage(text: "You didn't buy anything so far!",
+                    imgPath: "assets/image/empty_box.png",),
+                ));
+          })
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:project_satya/base/show_custom_snackbar.dart';
+import 'package:project_satya/controllers/auth_controller.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_satya/controllers/order_controller.dart';
+import 'package:project_satya/controllers/popular_product_controller.dart';
+import 'package:project_satya/models/place_order_model.dart';
+import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_satya/utils/styles.dart';
+import 'package:project_satya/widgets/app_icon.dart';
+import 'package:project_satya/widgets/app_text_field.dart';
+import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_satya/widgets/small_text.dart';
+
+import '../../base/common_text_button.dart';
+import '../../base/no_data_page.dart';
+import '../../controllers/recommended_product_controller.dart';
+import '../../controllers/user_controller.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import 'package:get/get.dart';
+
+import '../order/delivery_options.dart';
+import '../order/payment_option_button.dart';
+
+
+class CartPage extends StatelessWidget {
+  const CartPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController _noteController = TextEditingController();
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned(
+              top: Dimensions.width20*3,
+              left: Dimensions.width20,
+              right: Dimensions.width20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppIcon(icon: Icons.arrow_back_ios,
+                      iconColor: Colors.white,
+                    backgroundColor: AppColors.mainColor,
+                    iconSize: Dimensions.iconSize24,
+                  ),
+                  SizedBox(width: Dimensions.width20*5,),
+                  GestureDetector(
+                    onTap: (){
+                      Get.toNamed(RouteHelper.getInitial());
+                    },
+                    child: AppIcon(icon: Icons.home_sharp,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColors.mainColor,
+                      iconSize: Dimensions.iconSize24,
+                    ),
+                  ),
+                  AppIcon(icon: Icons.shopping_cart,
+                    iconColor: Colors.white,
+                    backgroundColor: AppColors.mainColor,
+                    iconSize: Dimensions.iconSize24,
+                  )
+
+                ],
+
+          )),
+
+          GetBuilder<CartController>(builder: (_cartController){
+            return _cartController.getItems.length>0?Positioned(
+                top: Dimensions.height20*5,
+                left: Dimensions.width20,
+                right: Dimensions.width20,
+                bottom: 0,
+                child: Container(
+                  margin: EdgeInsets.only(top:Dimensions.height15),
+                  //color: Colors.red,
+                  child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: GetBuilder<CartController>(builder: (cartController){
+                        var _cartList = cartController.getItems;
+                        return ListView.builder(
+                            itemCount: _cartList.length,
+                            itemBuilder: (_, index){
+                              return Container(
+                                  width: double.maxFinite,
+                                  height: Dimensions.height20*5,
+                                  child: Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: (){
+                                          var popularIndex = Get.find<PopularProductController>()
+                                              .popularProductList
+                                              .indexOf(_cartList[index].product!);
+                                          if(popularIndex>=0){
+                                            Get.toNamed(RouteHelper.getPopularFood(popularIndex, "cartpage"));
+                                          }else{
+                                            var recommendedIndex = Get.find<RecommendedProductController>()
+                                                .recommendedProductList
+                                                .indexOf(_cartList[index].product!);
+                                            if(recommendedIndex<0){
+                                              Get.snackbar("History product", "Product review is not available for history product!" ,
+                                                backgroundColor: AppColors.mainColor,
+                                                colorText: Colors.white,
+                                              );
+                                            }else{
+                                              Get.toNamed(RouteHelper.getRecommendedFood(recommendedIndex, "cartpage"));
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          width: Dimensions.height20*5,
+                                          height: Dimensions.height20*5,
+                                          margin: EdgeInsets.only(bottom: Dimensions.height10),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(
+                                                      AppConstants.BASE_URL+AppConstants.UPLOAD_URL+cartController.getItems[index].img!
+                                                  )
+                                              ),
+                                              borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                              color: Colors.white
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: Dimensions.width10,),
+                                      Expanded(child: Container(
+                                        height: Dimensions.height20*5,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            BigText(text: cartController.getItems[index].name!, color: Colors.black54,),
+                                            SmallText(text: "Spicy",),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                BigText(text: cartController.getItems[index].price.toString(), color: Colors.redAccent,),
+                                                Container(
+                                                  padding: EdgeInsets.only(top: Dimensions.height10, bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                                      color: Colors.white
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      GestureDetector(
+                                                          onTap: (){
+                                                            cartController.addItem(_cartList[index].product!, -1);
+                                                            print("being tapped");
+                                                          },
+                                                          child: Icon(Icons.remove, color: AppColors.signColor,)),
+                                                      SizedBox(width: Dimensions.width10/2,),
+                                                      BigText(text: _cartList[index].quantity.toString()), //popularProduct.inCartItems.toString()),
+                                                      SizedBox(width: Dimensions.width10/2,),
+                                                      GestureDetector(
+                                                          onTap: (){
+                                                            cartController.addItem(_cartList[index].product!, 1);
+                                                            print("being tapped 2");
+                                                          },
+                                                          child: Icon(Icons.add, color: AppColors.signColor,)),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ))
+                                    ],
+                                  )
+                              );
+                            });
+                      })
+                  ),
+                )):NoDataPage(text:"Your cart is empty!");
+          })
+        ],
+      ),
+        bottomNavigationBar: GetBuilder<OrderController>(builder: (orderController){
+          _noteController.text = orderController.foodNote;
+          return GetBuilder<CartController>(builder: (cartController){
+            return Container(
+              height: Dimensions.bottomHeightBar+50,
+              padding: EdgeInsets.only(top: Dimensions.height10,
+                  bottom: Dimensions.height10, left: Dimensions.width20,
+                  right: Dimensions.width20),
+              decoration: BoxDecoration(
+                  color: AppColors.buttonBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimensions.radius20*2),
+                    topRight: Radius.circular(Dimensions.radius20*2),
+                  )
+              ),
+              child: cartController.getItems.length>0?Column(
+                children: [
+                  InkWell(
+                    onTap: ()=>showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        context: context,
+                        builder: (_){
+                          return Column(
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*0.9,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(Dimensions.radius20),
+
+                                          topRight: Radius.circular(Dimensions.radius20),
+
+                                        )
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 520,
+                                          padding:EdgeInsets.only(
+                                            left: Dimensions.width20,
+                                            right: Dimensions.width20,
+                                            top: Dimensions.height20,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children:  [
+                                              const PaymentOptionButton(
+                                                icon: Icons.money,
+                                                title: 'cash on delivery',
+                                                subTitle: 'You pay after getting the delivery',
+                                                index: 0,
+                                              ),
+                                              SizedBox(height: Dimensions.height10,),
+                                              const PaymentOptionButton(
+                                                icon: Icons.paypal_outlined,
+                                                title: 'digital payment',
+                                                subTitle: 'Safer and faster way of payment',
+                                                index: 1,
+                                              ),
+                                              SizedBox(height: Dimensions.height10,),
+                                              Text('Delivery options', style: robotoMedium,),
+                                              DeliveryOptions(
+                                                value: "delivery",
+                                                title: "Home delivery",
+                                                amount: double.parse(Get.find<CartController>().totalAmount.toString()),
+                                                isFree: false,
+                                              ),
+                                              SizedBox(height: Dimensions.height10,),
+                                              const DeliveryOptions(
+                                                value: "take away",
+                                                title: "Take away",
+                                                amount: 10.0,
+                                                isFree: true,
+                                              ),
+                                              SizedBox(height: Dimensions.height20,),
+                                              Text('Additional info', style: robotoMedium,),
+                                              AppTextField(textController: _noteController,
+                                                hintText: '',
+                                                icon: Icons.note,
+                                                maxLines: true,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                    ).whenComplete(() => orderController.setFoodNote(_noteController.text.trim())),
+                    child: const SizedBox(
+                      width: double.maxFinite,
+                      child: CommonTextButton(text:"Payment options"),
+                    ),
+                  ),
+                  SizedBox(height: Dimensions.height10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Dimensions.radius20),
+                            color: Colors.white
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(width: Dimensions.width10/2,),
+                            BigText(text: "\Rs." +cartController.totalAmount.toString()),
+                            SizedBox(width: Dimensions.width10/2,),
+
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: (){
+                            if (Get.find<AuthController>().userLoggedIn()){
+
+                              if(Get.find<LocationController>().addressList.isEmpty){
+                                Get.toNamed(RouteHelper.getAddressPage());
+                              }else{
+                                var location = Get.find<LocationController>().getUserAddress();
+                                var cart = Get.find<CartController>().getItems;
+                                var user = Get.find<UserController>().userModel;
+                                PlaceOrderBody placeOrder = PlaceOrderBody(
+                                  cart: cart,
+                                  orderAmount: 100.0,
+                                  orderNote: orderController.foodNote,
+                                  address: location.address,
+                                  latitude: location.latitude,
+                                  longitude: location.longitude,
+                                  contactPersonName: user!.name,
+                                  contactPersonNumber: user!.phone,
+                                  scheduleAt: '',distance: 10.0,
+                                  orderType: orderController.orderType,
+                                  paymentMethod: orderController.paymentIndex==0?'cash_on_delivery':'digital_payment',
+                                );
+                                Get.find<OrderController>().placeOrder(
+                                    placeOrder,
+                                    _callback
+                                );
+                              }
+                            }else{
+                              Get.toNamed(RouteHelper.getSignInPage());
+                            }
+
+                          },
+                          child: CommonTextButton(text: "Check out")
+                      )
+                    ],
+                  ),
+                ],
+              ):Container(),
+            );
+          },);
+        })
+    );
+  }
+
+  void _callback(bool isSuccess, String message, String orderID){
+    if(isSuccess){
+      Get.find<CartController>().clear();
+      Get.find<CartController>().removeCartSharedPreference();
+      Get.find<CartController>().addToHistory();
+      if(Get.find<OrderController>().paymentIndex==0){
+        Get.offNamed(RouteHelper.getOrderSuccessPage(orderID, "success"));
+      }else{
+        Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+
+      }
+    }else{
+      showCustomSnackBar(message);
+    }
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:satya/controllers/popular_product_controller.dart';
+import 'package:satya/pages/cart/cart_page.dart';
+import 'package:satya/utils/app_constants.dart';
+import 'package:satya/widgets/expandable_text_widget.dart';
+import '../../controllers/cart_controller.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/app_column.dart';
+import '../../widgets/app_icon.dart';
+import '../../widgets/big_text.dart';
+import '../home/main_food_page.dart';
+
+class PopularFoodDetail extends StatelessWidget {
+  final int pageId;
+  final String page;
+  const PopularFoodDetail({Key? key,required this.pageId, required this.page}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var product= Get.find<PopularProductController>().popularProductList[pageId];
+    Get.find<PopularProductController>().initProduct(product,Get.find<CartController>());
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          //background image
+          Positioned(
+              left: 0,
+              right: 0,
+                child: Container(
+                  width: double.maxFinite,
+                  height: Dimensions.popularFoodImgSize,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!
+                      )
+                    )
+                  ),
+
+          )),
+          //icon widgets
+          Positioned(
+              left: Dimensions.width20,
+              right: Dimensions.width20,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap:(){
+                        if(page=="cartpage"){
+                          Get.toNamed(RouteHelper.getCartPage());
+                        }else{
+                          Get.toNamed(RouteHelper.getInitial());
+                        }
+                   },
+                      child:
+                  AppIcon(icon: Icons.arrow_back_ios,)
+                  ),
+
+                GetBuilder<PopularProductController>(builder: (controller){
+                  return GestureDetector(
+                    onTap: (){
+                      if (controller.totalItems>=1)
+                      Get.toNamed(RouteHelper.getCartPage());
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined,),
+                        controller.totalItems>=1?
+                        Positioned(
+                          right:0, top:0,
+
+                            child: AppIcon(icon: Icons.circle, size: 20,
+                              iconColor: Colors.transparent,
+                              backgroundColor: AppColors.mainColor,),
+
+                        ):
+                        Container(),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right:3, top:3,
+                          child: BigText(text:Get.find<PopularProductController>().totalItems.toString(),
+                            size: 12, color: Colors.white,
+                          ),
+                        ):
+                        Container()
+
+
+                      ],
+                    ),
+                  );
+                })
+
+                ],
+
+          )),
+          //introduction of food
+          Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              top: Dimensions.popularFoodImgSize-20,
+              child: Container(
+
+                padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20, top: Dimensions.height20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(Dimensions.radius20),
+                    topLeft: Radius.circular(Dimensions.radius20),
+                  ),
+                  color: Colors.white
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppColumn(text: product.name!),
+                    SizedBox(height: Dimensions.height20,),
+                    BigText(text: "Introduce"),
+                    SizedBox(height: Dimensions.height20,),
+                    Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: product.description!))),
+                  ],
+                ),
+
+              ))
+          
+
+        ],
+      ),
+      bottomNavigationBar: GetBuilder<PopularProductController>(builder: (popularProduct){
+        return Container(
+          height: Dimensions.bottomHeightBar,
+          padding: EdgeInsets.only(top: Dimensions.height30, bottom: Dimensions.height30, left: Dimensions.width20, right: Dimensions.width20),
+          decoration: BoxDecoration(
+              color: AppColors.buttonBackgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(Dimensions.radius20*2),
+                topRight: Radius.circular(Dimensions.radius20*2),
+              )
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                    color: Colors.white
+                ),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                        onTap: (){
+                          popularProduct.setQuantity(false);
+                        },
+                        child: Icon(Icons.remove, color: AppColors.signColor,)),
+                    SizedBox(width: Dimensions.width10/2,),
+                    BigText(text: popularProduct.inCartItems.toString()),
+                    SizedBox(width: Dimensions.width10/2,),
+                    GestureDetector(
+                        onTap: (){
+                            popularProduct.setQuantity(true);
+                        },
+                        child: Icon(Icons.add, color: AppColors.signColor,)),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  popularProduct.addItem(product);
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+
+                      child: BigText(text:"\Rs. ${product.price!} | Add to cart" , color: Colors.white,),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius20),
+                      color: AppColors.mainColor
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:satya/controllers/popular_product_controller.dart';
+import 'package:satya/controllers/recommended_product_controller.dart';
+import 'package:satya/utils/app_constants.dart';
+import 'package:satya/widgets/app_icon.dart';
+import 'package:satya/widgets/big_text.dart';
+import 'package:satya/widgets/expandable_text_widget.dart';
+import 'package:get/get.dart';
+import '../../controllers/cart_controller.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../cart/cart_page.dart';
+
+
+class RecommendedFoodDetail extends StatelessWidget {
+  final int pageId;
+  final String page;
+  const RecommendedFoodDetail({Key? key, required this.pageId, required this.page}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var product = Get.find<RecommendedProductController>().recommendedProductList[pageId];
+    Get.find<PopularProductController>().initProduct(product,Get.find<CartController>());
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 70,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: (){
+
+                    if(page=="cartpage"){
+                      Get.toNamed(RouteHelper.getCartPage());
+                    }else{
+                      Get.toNamed(RouteHelper.getInitial());
+                    }                  },
+                  child: AppIcon(icon: Icons.clear),
+                ),
+                //AppIcon(icon: Icons.shopping_cart_outlined),
+                GetBuilder<PopularProductController>(builder: (controller){
+                  return GestureDetector(
+                    onTap: (){
+                      if (controller.totalItems>=1)
+                        Get.toNamed(RouteHelper.getCartPage());
+                    },
+                    child: Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined,),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right:0, top:0,
+                          
+                            child: AppIcon(icon: Icons.circle, size: 20,
+                              iconColor: Colors.transparent,
+                              backgroundColor: AppColors.mainColor,),
+
+                        ):
+                        Container(),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right:3, top:3,
+                          child: BigText(text:Get.find<PopularProductController>().totalItems.toString(),
+                            size: 12, color: Colors.white,
+                          ),
+                        ):
+                        Container()
+
+                      ],
+                    ),
+                  );
+                })
+
+              ],
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Container(
+
+                child: Center(child: BigText(size: Dimensions.font26, text: product.name!)),
+                width: double.maxFinite,
+                padding: EdgeInsets.only(top: 5, bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.radius20),
+                      topRight: Radius.circular(Dimensions.radius20)
+                )
+                ),
+              ) ,
+            ),
+            pinned: true,
+            backgroundColor: AppColors.yellowColor,
+            expandedHeight: 350,
+            flexibleSpace: FlexibleSpaceBar(
+                background: Image.network(
+                AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!,
+                width: double.maxFinite,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Container(
+                  child : ExpandableTextWidget(text: product.description!,),
+                  margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                )
+              ],
+            )
+          ),
+        ],
+      ),
+      bottomNavigationBar: GetBuilder<PopularProductController>(builder: (controller){
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                left: Dimensions.width20*2.5,
+                right : Dimensions.width20*2.5,
+                top:  Dimensions.height10,
+                bottom: Dimensions.height10,
+
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                      onTap: (){
+                        controller.setQuantity(false);
+                      },
+                      child: AppIcon(
+                          iconSize: Dimensions.iconSize24,
+                          iconColor:Colors.white,
+                          backgroundColor: AppColors.mainColor,
+                          icon: Icons.remove)
+                  ),
+                  BigText(text: "\Rs.${product.price!} X  ${controller.inCartItems} " , color: AppColors.mainBlackColor,size: Dimensions.font26,),
+                  GestureDetector(
+                      onTap: (){
+                        controller.setQuantity(true);
+                      },
+                      child: AppIcon(
+                          iconSize: Dimensions.iconSize24,
+                          iconColor:Colors.white,
+                          backgroundColor: AppColors.mainColor,
+                          icon: Icons.add)
+                  )
+
+                ],
+              ),
+            ),
+            Container(
+              height: Dimensions.bottomHeightBar,
+              padding: EdgeInsets.only(top: Dimensions.height30, bottom: Dimensions.height30, left: Dimensions.width20, right: Dimensions.width20),
+              decoration: BoxDecoration(
+                  color: AppColors.buttonBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Dimensions.radius20*2),
+                    topRight: Radius.circular(Dimensions.radius20*2),
+                  )
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.radius20),
+                        color: Colors.white
+                    ),
+                    child: Icon(
+                      Icons.favorite,
+                      color: AppColors.mainColor,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      controller.addItem(product);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
+                      child: BigText(text:"\Rs. ${product.price!} Add to cart" , color: Colors.white,),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimensions.radius20),
+                          color: AppColors.mainColor
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      }),
+    );
+  }
+}
+import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:satya/controllers/popular_product_controller.dart';
+import 'package:satya/models/products_model.dart';
+import 'package:satya/utils/app_constants.dart';
+import 'package:satya/widgets/big_text.dart';
+import 'package:satya/widgets/small_text.dart';
+import '../../controllers/recommended_product_controller.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '../../widgets/app_column.dart';
+import '/widgets/icon_and_text_widget.dart';
+
+class FoodPageBody extends StatefulWidget {
+  const FoodPageBody({Key? key}) : super(key: key);
+
+  @override
+  State<FoodPageBody> createState() => _FoodPageBodyState();
+}
+
+class _FoodPageBodyState extends State<FoodPageBody> {
+  PageController pageController = PageController(viewportFraction: 0.85);
+  var _currPageValue=0.0;
+  double _scaleFactor=0.8;
+  double _height=Dimensions.pageViewContainer;
+
+  @override
+  void initState(){
+    super.initState();
+    pageController.addListener(() {
+      setState(() {
+        _currPageValue=pageController.page!;
+
+      });
+    });
+  }
+
+  @override
+  void dispose(){
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        //slider section
+        GetBuilder<PopularProductController>(builder: (popularProducts){
+          return popularProducts.isLoaded?Container(
+            //color: Colors.redAccent,
+            height: Dimensions.pageView,
+
+              child: PageView.builder(
+                  controller: pageController,
+                  itemCount: popularProducts.popularProductList.length,
+                  itemBuilder: (context, position){
+                    return _buildPageItem(position, popularProducts.popularProductList[position]);
+                  }),
+
+          ):CircularProgressIndicator(
+            color: AppColors.mainColor,
+          );
+        }),
+        //dots
+        GetBuilder<PopularProductController>(builder: (popularProducts){
+          return DotsIndicator(
+            dotsCount: popularProducts.popularProductList.isEmpty?1:popularProducts.popularProductList.length,
+            position: _currPageValue,
+            decorator: DotsDecorator(
+              activeColor: AppColors.mainColor,
+              size: const Size.square(9.0),
+              activeSize: const Size(18.0, 9.0),
+              activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+            ),
+          );
+        }),
+        //Popular text
+        SizedBox(height: Dimensions.height30,),
+        Container(
+          margin: EdgeInsets.only(left: Dimensions.width30),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              BigText(text: "Recommended"),
+              SizedBox(width: Dimensions.width10,),
+              Container(
+                margin: const EdgeInsets.only(bottom: 1),
+                child: BigText(text: ".", color: Colors.black26,),
+              ),
+              SizedBox(width: Dimensions.width10,),
+              Container(
+                margin: const EdgeInsets.only(bottom: 2),
+                child: SmallText(text: "Food pairing",),
+              )
+
+            ],
+          ),
+        ),
+        //recommended food
+        //list of food and images
+
+          GetBuilder<RecommendedProductController>(builder: (recommendedProduct){
+            return recommendedProduct.isLoaded?ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: recommendedProduct.recommendedProductList.length,
+                itemBuilder: (context, index){
+                  return GestureDetector(
+                    onTap: (){
+                      Get.toNamed(RouteHelper.getRecommendedFood(index, "home"));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20, bottom: Dimensions.height10),
+                      child: Row(
+                        children: [
+                          //image section
+                          Container(
+                            width:Dimensions.listViewImgSize,
+                            height: Dimensions.listViewImgSize,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                color: Colors.white38,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        AppConstants.BASE_URL+AppConstants.UPLOAD_URL+recommendedProduct.recommendedProductList[index].img!
+                                    )
+                                )
+                            ),
+                          ),
+                          //text container
+                          Expanded(
+                            child: Container(
+                              height: Dimensions.listViewTextContSize,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(Dimensions.radius20),
+                                  bottomRight: Radius.circular(Dimensions.radius20),
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: Dimensions.width10, right: Dimensions.width10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    BigText(text:recommendedProduct.recommendedProductList[index].name!),
+                                    SizedBox(height: Dimensions.height10,),
+                                    SmallText(text: "Bella Additional Special"),
+                                    SizedBox(height: Dimensions.height10,),
+
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        IconAndTextWidget(icon: Icons.circle_sharp,
+                                            text: "Normal",
+                                            iconColor: AppColors.iconColor1),
+                                        IconAndTextWidget(icon: Icons.location_on,
+                                            text: "1.7km",
+                                            iconColor: AppColors.mainColor),
+                                        IconAndTextWidget(icon: Icons.access_time_rounded,
+                                            text: "32min",
+                                            iconColor: AppColors.iconColor2),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }):CircularProgressIndicator(
+              color: AppColors.mainColor,
+            );
+          })
+        
+      ],
+    );
+  }
+  Widget _buildPageItem(int index, ProductModel popularProduct){
+    Matrix4 matrix = new Matrix4.identity();
+    if(index==_currPageValue.floor()){
+      var currScale = 1-(_currPageValue-index)*(1-_scaleFactor);
+      var currTrans = _height*(1-currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+
+    }else if(index ==_currPageValue.floor()+1){
+      var currScale = _scaleFactor+(_currPageValue-index+1)*(1-_scaleFactor);
+      var currTrans = _height*(1-currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+
+    }else if(index ==_currPageValue.floor()-1){
+      var currScale = 1-(_currPageValue-index)*(1-_scaleFactor);
+      var currTrans = _height*(1-currScale)/2;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1);
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, currTrans, 0);
+
+    }else{
+      var currScale=0.8;
+      matrix = Matrix4.diagonal3Values(1, currScale, 1)..setTranslationRaw(0, _height*(1-_scaleFactor)/2, 1);
+    }
+
+    return Transform(
+      transform: matrix,
+      child: Stack(
+        children: [
+          GestureDetector(
+            onTap: (){
+
+              Get.toNamed(RouteHelper.getPopularFood(index, "home"));
+            },
+            child: Container(
+              height: Dimensions.pageViewContainer,
+              margin: EdgeInsets.only(left: Dimensions.width10, right: Dimensions.width10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: index.isEven?Color(0xFF69c5df):Color(0xFF9294cc),
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                            AppConstants.BASE_URL+AppConstants.UPLOAD_URL+popularProduct.img!
+                      )
+                  )
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: Dimensions.pageViewTextContainer,
+              margin: EdgeInsets.only(left: Dimensions.width30, right: Dimensions.width30, bottom: Dimensions.height30),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
+                  color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFFe8e8e8),
+                    blurRadius: 5.0,
+                    offset: Offset(0, 5)
+                  ),
+                  BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(-5, 0)
+                  ),
+                  BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(5, 0)
+                  )
+                ]
+              ),
+              child: Container(
+                padding: EdgeInsets.only(top: Dimensions.height15, left: 15, right: 15),
+                child: AppColumn(text:popularProduct.name!),
+              ),
+
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:satya/pages/auth/sign_up_page.dart';
+import 'package:satya/pages/cart/cart_history.dart';
+import 'package:satya/pages/order/order_page.dart';
+import 'package:satya/utils/colors.dart';
+
+import '../account/account_page.dart';
+import '../auth/sign_in_page.dart';
+import 'main_food_page.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex=0;
+  //late PersistentTabController _controller;
+
+
+  List pages=[
+    MainFoodPage(),
+    OrderPage(),
+    CartHistory(),
+    AccountPage(),
+  ];
+  void onTapNav(int index){
+setState(() {
+  _selectedIndex=index;
+});  }
+
+/*  @override
+  void initState(){
+    super.initState();
+    _controller = PersistentTabController(initialIndex: 0);
+  }*/
+
+/*  List<Widget> _buildScreens() {
+    return [
+      MainFoodPage(),
+      Container(child: Center(child: Text("Next page"))),
+      Container(child: Center(child: Text("Next next page"))),
+      Container(child: Center(child: Text("Next next next page"))),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.home),
+        title: ("Home"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.archivebox_fill),
+        title: ("Archive"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.cart_fill),
+        title: ("Cart"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.person),
+        title: ("Person"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+    ];
+  }*/
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppColors.mainColor,
+        unselectedItemColor: Colors.amberAccent,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedFontSize: 0.0,
+        unselectedFontSize: 0.0,
+        currentIndex: _selectedIndex,
+        onTap: onTapNav,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "home"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.archive),
+              label: "history"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: "cart"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "me"
+          ),
+        ],
+      ),
+    );
+  }
+
+/*  @override
+  Widget build(BuildContext context) {
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.white, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.white,
+      ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle: NavBarStyle.simple, // Choose the nav bar style with this property.
+    );
+  }*/
+
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../controllers/popular_product_controller.dart';
+import '../../controllers/recommended_product_controller.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+import '/widgets/big_text.dart';
+import '/widgets/small_text.dart';
+import 'food_page_body.dart';
+
+class MainFoodPage extends StatefulWidget {
+  const MainFoodPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainFoodPage> createState() => _MainFoodPageState();
+}
+
+class _MainFoodPageState extends State<MainFoodPage> {
+  Future<void> _loadResources() async {
+    await Get.find<PopularProductController>().getPopularProductList();
+    await Get.find<RecommendedProductController>().getRecommendedProductList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+        child:Column(
+      children: [
+        //Showing the header
+        Container(
+          child: Container(
+            margin: EdgeInsets.only(top:Dimensions.height45, bottom: Dimensions.height15),
+            padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    BigText(text:"Bella Verona", color:AppColors.mainColor),
+                    Row(
+                      children: [
+                        SmallText(text: "Ja ela", color: Colors.black54,),
+                        Icon(Icons.arrow_drop_down_rounded)
+
+                      ],
+                    )
+
+                  ],
+                ),
+                Center(
+                  child: Container(
+                    width: Dimensions.height45,
+                    height: Dimensions.height45,
+                    child: Icon(Icons.search, color: Colors.white, size: Dimensions.iconSize24),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(Dimensions.radius15),
+                      color: AppColors.mainColor,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        //Showing the body
+        Expanded(child: SingleChildScrollView(
+          child: FoodPageBody(),
+        )),
+      ],
+    ),
+        onRefresh: _loadResources);
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:satya/controllers/order_controller.dart';
+import 'package:satya/utils/styles.dart';
+import 'package:get/get.dart';
+import '../../utils/dimensions.dart';
+
+class DeliveryOptions extends StatelessWidget {
+  final String value;
+  final String title;
+  final double amount;
+  final bool isFree;
+  const DeliveryOptions({Key? key,
+    required this.value,
+    required this.title,
+    required this.amount,
+    required this.isFree
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<OrderController>(builder: (orderController){
+      return Row(
+        children: [
+          Radio(
+            onChanged: (String? value)=>orderController.setDeliveryType(value!),
+            groupValue: orderController.orderType,
+            value: value,
+            activeColor: Theme.of(context).primaryColor,
+          ),
+          SizedBox(width: Dimensions.width10/2,),
+          Text(title, style: robotoRegular,),
+          SizedBox(width: Dimensions.width10/2,),
+          Text(
+            '(${(value=='take away' ||isFree)?'free':'\Rs.${amount/10}'})',
+            style: robotoMedium,
+          )
+        ],
+      );
+    });
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:satya/controllers/auth_controller.dart';
+import 'package:get/get.dart';
+import 'package:satya/pages/order/view_order.dart';
+import 'package:satya/utils/colors.dart';
+
+import '../../base/custom_app_bar.dart';
+import '../../controllers/order_controller.dart';
+import '../../utils/dimensions.dart';
+class OrderPage extends  StatefulWidget {
+  const OrderPage({Key? key}) : super(key: key);
+
+  @override
+  State<OrderPage> createState() => _OrderPageState();
+}
+
+class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
+
+  late TabController _tabController;
+  late bool _isLoggedIn;
+
+  @override
+  void initState(){
+    super.initState();
+    _isLoggedIn = Get.find<AuthController>().userLoggedIn();
+    if(_isLoggedIn){
+      _tabController = TabController(length: 2, vsync: this);
+      Get.find<OrderController>().getOrderList();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      appBar: CustomAppBar(title: "My orders"),
+      body: Column(
+        children: [
+          Container(
+            width: Dimensions.screenWidth,
+            child: TabBar(
+              indicatorColor: Theme.of(context).primaryColor,
+              indicatorWeight: 3,
+              controller: _tabController,
+              tabs: const [
+                Tab(text: "Current",),
+                Tab(text: "History",)
+            ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+                controller: _tabController,
+                children:const [
+                  ViewOrder(isCurrent:true),
+                    ViewOrder(isCurrent: false),
+                ]),
+          )
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:satya/controllers/order_controller.dart';
+import 'package:satya/utils/dimensions.dart';
+
+import '../../utils/colors.dart';
+
+class PaymentOptionButton extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subTitle;
+  final int index;
+  const PaymentOptionButton({Key? key,
+    required this.icon,
+    required this.title,
+    required this.subTitle,
+    required this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<OrderController>(builder:(orderController){
+      bool _selected = orderController.paymentIndex==index;
+      return InkWell(
+        onTap: ()=>orderController.setPaymentIndex(index),
+        child: Container(
+          padding: EdgeInsets.only(bottom: Dimensions.height10/2),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimensions.radius20/4),
+              color: Theme.of(context).cardColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[200]!, blurRadius: 5, spreadRadius: 1,
+                )
+              ]
+          ),
+          child: ListTile(
+            leading: Icon(
+              icon,
+              size: 40,
+              color: _selected?AppColors.mainColor:Theme.of(context).disabledColor,
+            ),
+            title: Text(title),
+            subtitle: Text(
+              subTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: _selected?Icon(Icons.check_circle, color: Theme.of(context).primaryColor,):null,
+          ),
+        ),
+      );
+    });
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:satya/base/custom_loader.dart';
+import 'package:satya/controllers/order_controller.dart';
+import 'package:satya/utils/colors.dart';
+import 'package:satya/utils/dimensions.dart';
+
+import '../../models/order_model.dart';
+import '../../utils/styles.dart';
+
+class ViewOrder extends StatelessWidget {
+  final bool isCurrent;
+  const ViewOrder({Key? key, required this.isCurrent}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GetBuilder<OrderController>(builder: (orderController){
+        if(orderController.isLoading==false){
+          late List<OrderModel> orderList;
+          if(orderController.currentOrderList.isNotEmpty){
+            orderList = isCurrent? orderController.currentOrderList.reversed.toList():
+            orderController.historyOrderList.reversed.toList();
+          }
+          return SizedBox(
+            width: Dimensions.screenWidth,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.width10/2, vertical: Dimensions.height10/2),
+              child:ListView.builder(
+                  itemCount: orderList.length,
+                  itemBuilder: (context, index){
+                    return InkWell(
+                      onTap: ()=>null,
+                      child: Column(
+                        children: [
+                          Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("order ID",),
+                                      SizedBox(width: Dimensions.width10/2,),
+                                      Text('#${orderList[index].id.toString()}')
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.mainColor,
+                                          borderRadius: BorderRadius.circular(Dimensions.radius20/4)
+                                        ),
+                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
+                                          child: Text('${orderList[index].orderStatus}',
+                                             style: TextStyle(
+                                                color: Theme.of(context).cardColor,
+                                             ),
+                                          ),
+
+
+                                      ),
+                                      SizedBox(height: Dimensions.height10/2),
+                                      InkWell(
+                                        onTap: ()=>null,
+                                        child: Container(
+                                         padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(Dimensions.radius20/4),
+                                            border: Border.all(width: 1, color: Theme.of(context).primaryColor)
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Image.asset("assets/image/tracking.png", height: 15, width: 15,color: Theme.of(context).primaryColor,),
+                                              SizedBox(width: Dimensions.width10/2,),
+                                              Text(
+                                                  "track order",)
+
+                                            ],
+                                          )
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )
+                          ),
+                          SizedBox(
+                            height: Dimensions.height10,
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          );
+        }else{
+          return CustomLoader();
+        }
+
+      }),
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';import 'package:satya/base/custom_button.dart';
+
+import '../../routes/route_helper.dart';
+import '../../utils/colors.dart';
+import '../../utils/dimensions.dart';
+
+class OrderSuccessPage extends StatelessWidget {
+  final String orderID;
+  final int status;
+   OrderSuccessPage({required this.orderID, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    if(status==0){
+      Future.delayed(const Duration(seconds: 1),(){
+
+      });
+    }
+    return Scaffold(
+      body: Center(
+        child: SizedBox(
+          width: Dimensions.screenWidth,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(status==1? Icons.check_circle_outline: Icons.warning_amber_outlined,size:Dimensions.height20*5,color: AppColors.mainColor,),
+
+              SizedBox(height: Dimensions.height30,),
+              Text(status == 1? 'You placed order successfully!':'your order failed',style: TextStyle(fontSize: Dimensions.font20),),
+              SizedBox(height: Dimensions.height20,),
+              Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.height20,vertical: Dimensions.height10),
+                child: Text(status==1? 'Successful order':'Failed order',
+                  style: TextStyle(
+                    fontSize: Dimensions.font20,
+                    color: Theme.of(context).disabledColor,
+
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(height: Dimensions.height10,),
+              Padding(padding: EdgeInsets.all(Dimensions.height10),
+                child: CustomButton(buttonText: 'Back to Home',onPressed:
+                    ()=>Get.offNamed(RouteHelper.initial),),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import '../../base/custom_app_bar.dart';
+import '../../models/order_model.dart';
+import '../../routes/route_helper.dart';
+import '../../utils/app_constants.dart';
+import '../../utils/dimensions.dart';
+
+class PaymentPage extends StatefulWidget {
+  final OrderModel orderModel;
+  PaymentPage({required this.orderModel});
+
+  @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  late String selectedUrl;
+  double value = 0.0;
+  bool _canRedirect = true;
+  bool _isLoading = true;
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
+  late WebViewController controllerGlobal;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
+    //WebView.platform = SurfaceAndroidWebView();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () => _exitApp(context),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: const CustomAppBar(
+          title: "Payment",
+        ),
+        /*appBar: AppBar(
+          title: Text("Payment"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed:()=> _exitApp(context),
+          ),
+          backgroundColor: AppColors.mainColor,
+        ),*/
+        body: Center(
+          child: Container(
+            width: Dimensions.screenWidth,
+            child: Stack(
+              children: [
+                WebView(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  initialUrl: selectedUrl,
+                  gestureNavigationEnabled: true,
+
+                  userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1',
+                  onWebViewCreated: (WebViewController webViewController) {
+                    _controller.future.then((value) => controllerGlobal = value);
+                    _controller.complete(webViewController);
+                    //_controller.future.catchError(onError)
+                  },
+                  onProgress: (int progress) {
+                    print("WebView is loading (progress : $progress%)");
+                  },
+                  onPageStarted: (String url) {
+                    print('Page started loading: $url');
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    print("printing urls "+url.toString());
+                    _redirect(url);
+
+                  },
+                  onPageFinished: (String url) {
+                    print('Page finished loading: $url');
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    _redirect(url);
+
+                  },
+                ),
+                _isLoading ? Center(
+                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+                ) : SizedBox.shrink(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _redirect(String url) {
+    print("redirect");
+    if(_canRedirect) {
+      bool _isSuccess = url.contains('success') && url.contains(AppConstants.BASE_URL);
+      bool _isFailed = url.contains('fail') && url.contains(AppConstants.BASE_URL);
+      bool _isCancel = url.contains('cancel') && url.contains(AppConstants.BASE_URL);
+      if (_isSuccess || _isFailed || _isCancel) {
+        _canRedirect = false;
+      }
+      if (_isSuccess) {
+        Get.offNamed(RouteHelper.getOrderSuccessPage(widget.orderModel.id.toString(), 'success'));
+      } else if (_isFailed || _isCancel) {
+        Get.offNamed(RouteHelper.getOrderSuccessPage(widget.orderModel.id.toString(), 'fail'));
+      }else{
+        print("Encountered problem");
+      }
+    }
+  }
+
+  Future<bool> _exitApp(BuildContext context) async {
+    if (await controllerGlobal.canGoBack()) {
+      controllerGlobal.goBack();
+      return Future.value(false);
+    } else {
+      print("app exited");
+      return true;
+      // return Get.dialog(PaymentFailedDialog(orderID: widget.orderModel.id.toString()));
+    }
+  }
+
+}
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/dimensions.dart';
+
+import '../../controllers/popular_product_controller.dart';
+import '../../controllers/recommended_product_controller.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin{
+
+ late  Animation<double> animation;
+ late AnimationController controller;
+
+ Future<void> _loadResources() async {
+   await Get.find<PopularProductController>().getPopularProductList();
+   await Get.find<RecommendedProductController>().getRecommendedProductList();
+ }
+
+ @override
+ void initState(){
+   super.initState();
+   _loadResources();
+   controller =  AnimationController(vsync: this,duration: const Duration(seconds: 3))..forward();
+   animation =  CurvedAnimation(parent: controller, curve: Curves.linear);
+
+   Timer(const Duration(seconds: 5), ()=>Get.offNamed(RouteHelper.getInitial()));
+
+ }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ScaleTransition(scale: animation,
+          child: Center(child: Image.asset("assets/image/Bella verona 1.png", width: Dimensions.splashImg,))),
+          Center(child: Image.asset("assets/image/Bella verona 2.png", width: Dimensions.splashImg,))
+        ],
+      ),
+    );
+  }
+}
+import 'package:get/get.dart';
+import 'package:project_Satya/pages/address/pick_address_map.dart';
+import 'package:project_Satya/pages/auth/sign_in_page.dart';
+import 'package:project_Satya/pages/cart/cart_page.dart';
+import 'package:project_Satya/pages/food/popular_food_detail.dart';
+import 'package:project_Satya/pages/food/recommended_food_detail.dart';
+import 'package:project_Satya/pages/home/home_page.dart';
+import 'package:project_Satya/pages/home/main_food_page.dart';
+import 'package:project_Satya/pages/payment/order_success_page.dart';
+import 'package:project_Satya/pages/payment/payment_page.dart';
+import 'package:project_Satya/pages/splash/splash_page.dart';
+import 'package:project_Satya/pages/address/add_address_page.dart';
+import 'package:project_Satya/models/order_model.dart';
+
+class RouteHelper {
+  static const String splashPage = "/splash-page";
+  static const String initial = "/";
+  static const String popularFood = "/popular-food";
+  static const String recommendedFood = "/recommended-food";
+  static const String cartPage = "/cart-page";
+  static const String signIn = "/sign-in";
+  static const String addAddress = "/add-address";
+  static const String pickAddressMap = "/pick-address";
+  static const String payment = '/payment';
+  static const String orderSuccess = '/order-successful';
+
+  // Getter route strings
+  static String getSplashPage() => splashPage;
+  static String getInitial() => initial;
+  static String getPopularFood(int pageId, String page) =>
+      '$popularFood?pageId=$pageId&page=$page';
+  static String getRecommendedFood(int pageId, String page) =>
+      '$recommendedFood?pageId=$pageId&page=$page';
+  static String getCartPage() => cartPage;
+  static String getSignInPage() => signIn;
+  static String getAddressPage() => addAddress;
+  static String getPickAddressPage() => pickAddressMap;
+  static String getPaymentPage(String id, int userID) =>
+      '$payment?id=$id&userID=$userID';
+  static String getOrderSuccessPage(String orderID, String status) =>
+      '$orderSuccess?id=$orderID&status=$status';
+
+  static List<GetPage> routes = [
+    GetPage(
+      name: splashPage,
+      page: () => SplashScreen(),
+    ),
+    GetPage(
+      name: initial,
+      page: () => HomePage(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: signIn,
+      page: () => SignInPage(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: popularFood,
+      page: () {
+        var pageId = Get.parameters['pageId'];
+        var page = Get.parameters["page"];
+        return PopularFoodDetail(
+          pageId: int.parse(pageId!),
+          page: page!,
+        );
+      },
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: recommendedFood,
+      page: () {
+        var pageId = Get.parameters['pageId'];
+        var page = Get.parameters["page"];
+        return RecommendedFoodDetail(
+          pageId: int.parse(pageId!),
+          page: page!,
+        );
+      },
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: cartPage,
+      page: () => CartPage(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: addAddress,
+      page: () => AddAddressPage(),
+    ),
+    GetPage(
+      name: pickAddressMap,
+      page: () {
+        PickAddressMap pickAddress = Get.arguments;
+        return pickAddress;
+      },
+    ),
+    GetPage(
+      name: payment,
+      page: () => PaymentPage(
+        orderModel: OrderModel(
+          id: int.parse(Get.parameters['id']!),
+          userId: int.parse(Get.parameters["userID"]!),
+        ),
+      ),
+    ),
+    GetPage(
+      name: orderSuccess,
+      page: () => OrderSuccessPage(
+        orderID: Get.parameters['id']!,
+        status:
+            Get.parameters["status"].toString().contains("success") ? 1 : 0,
+      ),
+    ),
+  ];
+}
+class AppConstants{
+  static const String APP_NAME = "DBFood";
+  static const int APP_VERSION = 1;
+
+  static const String BASE_URL ="http://10.0.2.2:8000";
+
+  static const String POPULAR_PRODUCT_URI= "/api/v1/products/popular";
+  static const String RECOMMENDED_PRODUCT_URI= "/api/v1/products/recommended";
+  //static const String DRINKS_URI= "/api/v1/products/drinks";
+  static const String UPLOAD_URL = "/uploads/";
+
+  //use and auth endpoints
+  static const String REGISTRATION_URI= "/api/v1/auth/register";
+  static const String LOGIN_URI= "/api/v1/auth/login";
+  static const String USER_INFO_URI = "/api/v1/customer/info";
+
+  //Location constraints
+  static const String USER_ADDRESS= "user-address";
+  static const String ADD_USER_ADDRESS= "/api/v1/customer/address/add";
+  static const String ADDRESS_LIST_URI= "/api/v1/customer/address/list";
+
+  //config
+  static const String GEOCODE_URI = '/api/v1/config/geocode-api';
+  static const String ZONE_URI = '/api/v1/config/get-zone-id';
+  static const String SEARCH_LOCATION_URI = '/api/v1/config/place-api-autocomplete';
+  static const String PLACE_DETAILS_URI = '/api/v1/config/place-api-details';
+
+  //orders
+  static const String PLACE_ORDER_URI = '/api/v1/customer/order/place';
+  static const String ORDER_LIST_URI = '/api/v1/customer/order/list';
+
+
+
+
+  static const String TOKEN = "";
+  static const String PHONE = "";
+  static const String PASSWORD = "";
+  static const String CART_LIST = "cart-list";
+  static const String CART_HISTORY_LIST = "cart-history-list";
+
+
+}
+import 'dart:ui';
+
+class AppColors{
+  static final Color textColor = const Color(0xFFccc7c5);
+  //static final Color mainColor = const Color(0xFF89dad0);
+  static final Color mainColor = const Color(0xff76cb8e);
+  //static final Color mainColor = const Color(0xFFfa7552);
+  //static final Color mainColor = const Color(0xff05c7b1);
+  //static final Color mainColor = const Color(0xffe06904);
+  static final Color iconColor1 = const Color(0xFFffd28d);
+  static final Color iconColor2 = const Color(0xFFfcab88);
+  static final Color paraColor = const Color(0xFF8f837f);
+  static final Color buttonBackgroundColor= const Color(0xFFf7f6f4);
+  static final Color signColor = const Color(0xFFa9a29f);
+  static final Color titleColor = const Color(0xFF5c524f);
+  static final Color mainBlackColor = const Color(0xFF332d2b);
+  //static final Color yellowColor = const Color(0xFFfa7552);
+  static final Color yellowColor = const Color(0xFFffd379);
+
+}
+import 'package:get/get.dart';
+class Dimensions{
+
+  static double screenHeight = Get.context!.height;
+  static double screenWidth = Get.context!.width;
+
+  static double pageView= screenHeight/2.135714285714286;
+  static double pageViewContainer= screenHeight/3.106493506493506;
+  static double pageViewTextContainer= screenHeight/5.695238095238095;
+
+  //dynamic height padding and margin
+  static double height10 = screenHeight/68.34285714285714;
+  static double height15 = screenHeight/45.56190476190476;
+  static double height20 = screenHeight/34.17142857142857;
+  static double height30 = screenHeight/22.78095238095238;
+  static double height45 = screenHeight/15.18730158730159;
+
+
+  //dynamic width padding and margin
+  static double width10 = screenHeight/68.34285714285714;
+  static double width15 = screenHeight/45.56190476190476;
+  static double width20 = screenHeight/34.17142857142857;
+  static double width30 = screenHeight/22.78095238095238;
+
+  //font size
+  static double font12 = screenHeight/62.71428571428571;
+  static double font16 = screenHeight/42.71428571428571;
+  static double font20 = screenHeight/34.17142857142857;
+  static double font26 = screenHeight/26.28571428571428;
+
+
+  //radius
+  static double radius15 = screenHeight/45.56190476190476;
+  static double radius20 = screenHeight/34.17142857142857;
+  static double radius30 = screenHeight/22.78095238095238;
+
+  //icon size
+  static double iconSize24 = screenHeight/28.47619047619048;
+  static double iconSize16 = screenHeight/42.71428571428571;
+
+
+  //list view size
+  static double listViewImgSize = screenWidth/3.428571428571428;
+  static double listViewTextContSize = screenWidth/4.114285714285714;
+
+  //popular food
+  static double popularFoodImgSize = screenHeight/1.95265306122449;
+
+  //bottom height
+  static double bottomHeightBar = screenHeight/5.695238095238095;
+
+  //splash screen dimensions
+  static double splashImg = screenHeight/3.38;
+}
+import 'package:flutter/material.dart';
+
+import 'package:project_satya/utils/dimensions.dart';
+
+final robotoRegular = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w400,
+  fontSize: Dimensions.font26,
+);
+
+final robotoMedium = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w500,
+  fontSize: Dimensions.font26,
+);
+
+final robotoBold = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w700,
+  fontSize: Dimensions.font26,
+);
+
+final robotoBlack = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w900,
+  fontSize: Dimensions.font26,
+);
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:satya/widgets/app_icon.dart';
+import 'package:satya/widgets/big_text.dart';
+
+import '../utils/dimensions.dart';
+
+class AccountWidget extends StatelessWidget {
+  AppIcon appIcon;
+  BigText bigText;
+  AccountWidget({Key? key, required this.appIcon, required this.bigText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left:Dimensions.width20,
+          top:Dimensions.width10,
+          bottom:Dimensions.width10
+      ),
+      child: Row(
+        children: [
+          appIcon,
+          SizedBox(width: Dimensions.width20),
+          bigText
+        ],
+      ),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+          BoxShadow(
+            blurRadius: 1,
+            offset: Offset(0, 2),
+            color: Colors.grey.withOpacity(0.2),
+          )
+        ]
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:project_satya/widgets/small_text.dart';
+
+import '../utils/colors.dart';
+import '../utils/dimensions.dart';
+import 'big_text.dart';
+import 'icon_and_text_widget.dart';
+
+class AppColumn extends StatelessWidget {
+  final String text;
+  const AppColumn({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        BigText(text: text, size: Dimensions.font26,),
+        SizedBox(height: Dimensions.height10,),
+        //comments section
+        Row(
+          children: [
+            Wrap(
+              children: List.generate(5, (index) => Icon(Icons.star, color: AppColors.mainColor, size: 15,)),
+            ),
+            SizedBox(width: 10,),
+            SmallText(text: "4.5"),
+            SizedBox(width: 10,),
+            SmallText(text: "1287"),
+            SizedBox(width: 10,),
+            SmallText(text: "comments")
+          ],
+        ),
+        //time and distance
+        SizedBox(height: Dimensions.height20,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconAndTextWidget(icon: Icons.circle_sharp,
+                text: "Normal",
+                iconColor: AppColors.iconColor1),
+            IconAndTextWidget(icon: Icons.location_on,
+                text: "1.7km",
+                iconColor: AppColors.mainColor),
+            IconAndTextWidget(icon: Icons.access_time_rounded,
+                text: "32min",
+                iconColor: AppColors.iconColor2),
+          ],
+        )
+
+      ],
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+
+class AppIcon extends StatelessWidget {
+  final IconData icon;
+  final Color backgroundColor;
+  final Color iconColor;
+  final double size;
+  final double iconSize;
+  const AppIcon({Key? key,
+  required this.icon,
+    this.backgroundColor=const Color(0xFFfcf4e4),
+    this.iconColor=const Color(0xFF756d54),
+    this.size=40,
+    this.iconSize=16
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size/2),
+        color: backgroundColor
+      ),
+      child: Icon(
+        icon,
+        color: iconColor,
+        size:iconSize
+      )
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/colors.dart';
+import '../utils/dimensions.dart';
+
+class AppTextField extends StatelessWidget {
+  final TextEditingController textController;
+  final String hintText;
+  final IconData icon;
+  bool isObscure;
+  bool maxLines;
+  AppTextField({Key? key,
+
+  required this.textController,
+  required this.hintText,
+  required this.icon,
+    this.isObscure=false,
+  this.maxLines=false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.only(left: Dimensions.height20, right: Dimensions.height20),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(Dimensions.radius15),
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                  offset: Offset(1, 1),
+                  color: Colors.grey.withOpacity(0.2)
+              )
+            ]
+        ),
+        child: TextField(
+          maxLines: maxLines?3:1,
+          obscureText: isObscure?true:false,
+          controller: textController,
+          decoration: InputDecoration(
+            //hint text
+            hintText: hintText,
+            //prefixIcon
+            prefixIcon: Icon(icon, color: AppColors.yellowColor,),
+            // focusedBorder
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimensions.radius15),
+                borderSide: BorderSide(
+                  width: 1.0,
+                  color: Colors.white,
+                )
+            ),
+            // enabledBoarder
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+              borderSide: BorderSide(
+                width: 1.0,
+                color: Colors.white,
+              ),
+            ),
+            // border
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimensions.radius15),
+
+            ),
+
+          ),
+        )
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import '../utils/dimensions.dart';
+
+class BigText extends StatelessWidget {
+   Color? color;
+  final String text;
+  double size;
+  TextOverflow overFlow;
+  BigText({Key? key, this.color = const Color(0xFF332d2b),
+    required this.text,
+    this.size=0,
+    this.overFlow=TextOverflow.ellipsis
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      maxLines: 1,
+      overflow: overFlow,
+      style: TextStyle(
+            fontFamily: 'Roboto',
+            color: color,
+            fontSize: size==0?Dimensions.font20:size,
+            fontWeight:FontWeight.w400
+      ),
+
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:project_satya/widgets/small_text.dart';
+
+import '../utils/colors.dart';
+import '../utils/dimensions.dart';
+
+class ExpandableTextWidget extends StatefulWidget {
+  final String text;
+  const ExpandableTextWidget({Key? key, required this.text}) : super(key: key);
+
+  @override
+  State<ExpandableTextWidget> createState() => _ExpandableTextWidgetState();
+}
+
+class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
+  late String firstHalf;
+  late String secondHalf;
+
+  bool hiddenText=true;
+
+  double textHeight = Dimensions.screenHeight/5.63;
+
+
+  @override
+  void initState(){
+    super.initState();
+    if(widget.text.length>textHeight){
+      firstHalf = widget.text.substring(0, textHeight.toInt());
+      secondHalf = widget.text.substring(textHeight.toInt()+1, widget.text.length);
+    } else{
+      firstHalf = widget.text;
+      secondHalf = "";
+    }
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: secondHalf.isEmpty?SmallText(color: AppColors.paraColor,size: Dimensions.font16,text: firstHalf):Column(
+        children: [
+          SmallText(height:1.8,color: AppColors.paraColor,size: Dimensions.font16,text: hiddenText?(firstHalf+"..."):(firstHalf+secondHalf)),
+          InkWell(
+            onTap: (){
+              setState(() {
+                hiddenText=!hiddenText;
+              });
+              
+            },
+            child: Row(
+              children: [
+                SmallText(text: "Show more", color: AppColors.mainColor,),
+                Icon(hiddenText?Icons.arrow_drop_down:Icons.arrow_drop_up, color: AppColors.mainColor,)
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+import 'package:project_satya/widgets/small_text.dart';
+
+import '../utils/dimensions.dart';
+
+
+class IconAndTextWidget extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final Color iconColor;
+  const IconAndTextWidget({Key? key,
+    required this.icon,
+    required this.text,
+    required this.iconColor}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: iconColor,size: Dimensions.iconSize24),
+        SizedBox(width: 5,),
+        SmallText(text: text,),
+      ],
+    );
+  }
+}
+import 'package:flutter/cupertino.dart';
+
+class SmallText extends StatelessWidget {
+  Color? color;
+  final String text;
+  double size;
+  double height;
+
+  SmallText({Key? key, this.color = const Color(0xFFccc7c5),
+    required this.text,
+    this.size=12,
+    this.height=1.2
+
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+          fontFamily: 'Roboto',
+          color: color,
+          fontSize: size,
+          height: height
+
+      ),
+
+    );
+  }
+}
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_satya/controllers/cart_controller.dart';
+import 'package:project_satya/controllers/popular_product_controller.dart';
+import 'package:project_satya/routes/route_helper.dart';
+import 'package:project_satya/utils/colors.dart';
+import 'controllers/recommended_product_controller.dart';
+import 'helper/dependencies.dart' as dep;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of the application.
+  @override
+  Widget build(BuildContext context) {
+    Get.find<CartController>().getCartData();
+
+
+    return GetBuilder<PopularProductController>(builder:  (_){
+      return GetBuilder<RecommendedProductController>(builder: (_){
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+
+          //home: const SignInPage(),
+          initialRoute: RouteHelper.getSplashPage(),
+          getPages: RouteHelper.routes,
+          theme: ThemeData(
+            primaryColor: AppColors.mainColor,
+            fontFamily: "lato",
+          ),
+        );
+      });
+    });
+  }
+}
+// This is a basic Flutter widget test.
+//
+// To perform an interaction with a widget in your test, use the WidgetTester
+// utility in the flutter_test package. For example, you can send tap and scroll
+// gestures. You can also use WidgetTester to find child widgets in the widget
+// tree, read text, and verify that the values of widget properties are correct.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:project_satya/main.dart';
+
+void main() {
+  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsOneWidget);
+  });
+}

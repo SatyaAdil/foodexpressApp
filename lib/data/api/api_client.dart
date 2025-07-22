@@ -1,6 +1,7 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_Satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class ApiClient extends GetConnect implements GetxService{
   late String token;
@@ -12,7 +13,7 @@ class ApiClient extends GetConnect implements GetxService{
   ApiClient({ required this.appBaseUrl, required this.sharedPreferences}){
     baseUrl = appBaseUrl;
     token = sharedPreferences.getString(AppConstants.TOKEN)??"";
-    timeout = Duration(seconds: 30);
+    timeout = const Duration(seconds: 30);
     _mainHeaders={
       'Content-type':'application/json; charset=UTF-8',
       'Authorization' : 'Bearer $token',
@@ -38,10 +39,11 @@ class ApiClient extends GetConnect implements GetxService{
     }
   }
   Future <Response> postData(String uri, dynamic body) async {
-    print(body.toString());
     try{
       Response response = await post(uri, body, headers: _mainHeaders);
-      print(response.toString());
+      if (kDebugMode) {
+        print(response.toString());
+      }
       return response;
     }catch(e){
       print(e.toString());

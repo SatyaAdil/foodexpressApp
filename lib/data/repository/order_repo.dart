@@ -1,5 +1,5 @@
-import 'package:project_satya/models/place_order_model.dart';
-import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_Satya/models/place_order_model.dart';
+import 'package:project_Satya/utils/app_constants.dart';
 
 import '../api/api_client.dart';
 import 'package:get/get.dart';

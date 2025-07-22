@@ -2,13 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:project_bella/base/custom_loader.dart';
-import 'package:project_bella/models/signup_body_model.dart';
-import 'package:project_bella/routes/route_helper.dart';
-import 'package:project_bella/utils/colors.dart';
-import 'package:project_bella/utils/dimensions.dart';
-import 'package:project_bella/widgets/app_text_field.dart';
-import 'package:project_bella/widgets/big_text.dart';
+import 'package:project_Satya/base/custom_loader.dart';
+import 'package:project_Satya/models/signup_body_model.dart';
+import 'package:project_Satya/routes/route_helper.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
+import 'package:project_Satya/widgets/app_text_field.dart';
+import 'package:project_Satya/widgets/big_text.dart';
 
 import '../../base/show_custom_snackbar.dart';
 import '../../controllers/auth_controller.dart';
@@ -27,7 +27,7 @@ class SignUpPage extends StatelessWidget {
       "f.png",
       "g.png",
     ];
-    void _registration(AuthController authController){
+    void registration(AuthController authController){
 
       String name = nameController.text.trim();
       String phone = phoneController.text.trim();
@@ -73,16 +73,16 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
 
-        body: GetBuilder<AuthController>(builder: (_authController){
-          return !_authController.isLoading?SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+        body: GetBuilder<AuthController>(builder: (authController){
+          return !authController.isLoading?SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 SizedBox(height: Dimensions.screenHeight*0.05,),
                 //app logo
-                Container(
+                SizedBox(
                   height: Dimensions.screenHeight*0.25,
-                  child: Center(
+                  child: const Center(
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 80,
@@ -116,7 +116,7 @@ class SignUpPage extends StatelessWidget {
                 //sign up button
                 GestureDetector(
                   onTap: (){
-                    _registration(_authController);
+                    registration(authController);
                   },
                   child: Container(
                     width: Dimensions.screenWidth/2,
@@ -160,7 +160,7 @@ class SignUpPage extends StatelessWidget {
                     child: CircleAvatar(
                       radius: Dimensions.radius30,
                       backgroundImage: AssetImage(
-                          "assets/image/"+signUpImages[index]
+                          "assets/image/${signUpImages[index]}"
                       ),
                     ),
                   )),
@@ -169,7 +169,7 @@ class SignUpPage extends StatelessWidget {
 
               ],
             ),
-          ):const CustomLoader();
+          ):CustomLoader();
         })
     );
 

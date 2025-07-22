@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bella/widgets/small_text.dart';
+import 'package:project_Satya/widgets/small_text.dart';
 
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
@@ -24,11 +24,11 @@ class AppColumn extends StatelessWidget {
             Wrap(
               children: List.generate(5, (index) => Icon(Icons.star, color: AppColors.mainColor, size: 15,)),
             ),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             SmallText(text: "4.5"),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             SmallText(text: "1287"),
-            SizedBox(width: 10,),
+            const SizedBox(width: 10,),
             SmallText(text: "comments")
           ],
         ),

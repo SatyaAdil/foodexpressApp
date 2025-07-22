@@ -1,5 +1,5 @@
-import 'package:project_satya/data/api/api_client.dart';
-import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_Satya/data/api/api_client.dart';
+import 'package:project_Satya/utils/app_constants.dart';
 import 'package:get/get.dart';
 class UserRepo{
   final ApiClient apiClient;

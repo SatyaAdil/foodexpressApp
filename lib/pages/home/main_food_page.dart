@@ -24,6 +24,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+        onRefresh: _loadResources,
         child:Column(
       children: [
         //Showing the header
@@ -67,7 +68,6 @@ class _MainFoodPageState extends State<MainFoodPage> {
           child: FoodPageBody(),
         )),
       ],
-    ),
-        onRefresh: _loadResources);
+    ));
   }
 }

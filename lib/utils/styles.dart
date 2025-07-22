@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 
 final robotoRegular = TextStyle(
   fontFamily: 'Roboto',

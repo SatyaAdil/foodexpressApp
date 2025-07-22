@@ -1,20 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:project_satya/base/show_custom_snackbar.dart';
-import 'package:project_satya/controllers/auth_controller.dart';
-import 'package:project_satya/controllers/cart_controller.dart';
-import 'package:project_satya/controllers/location_controller.dart';
-import 'package:project_satya/controllers/order_controller.dart';
-import 'package:project_satya/controllers/popular_product_controller.dart';
-import 'package:project_satya/models/place_order_model.dart';
-import 'package:project_satya/utils/app_constants.dart';
-import 'package:project_satya/utils/dimensions.dart';
-import 'package:project_satya/utils/styles.dart';
-import 'package:project_satya/widgets/app_icon.dart';
-import 'package:project_satya/widgets/app_text_field.dart';
-import 'package:project_satya/widgets/big_text.dart';
-import 'package:project_satya/widgets/small_text.dart';
+import 'package:project_Satya/base/show_custom_snackbar.dart';
+import 'package:project_Satya/controllers/auth_controller.dart';
+import 'package:project_Satya/controllers/cart_controller.dart';
+import 'package:project_Satya/controllers/location_controller.dart';
+import 'package:project_Satya/controllers/order_controller.dart';
+import 'package:project_Satya/controllers/popular_product_controller.dart';
+import 'package:project_Satya/models/place_order_model.dart';
+import 'package:project_Satya/utils/app_constants.dart';
+import 'package:project_Satya/utils/dimensions.dart';
+import 'package:project_Satya/utils/styles.dart';
+import 'package:project_Satya/widgets/app_icon.dart';
+import 'package:project_Satya/widgets/app_text_field.dart';
+import 'package:project_Satya/widgets/big_text.dart';
+import 'package:project_Satya/widgets/small_text.dart';
 
 import '../../base/common_text_button.dart';
 import '../../base/no_data_page.dart';
@@ -33,7 +31,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _noteController = TextEditingController();
+    final TextEditingController noteController = TextEditingController();
     return Scaffold(
       body: Stack(
         children: [
@@ -70,8 +68,8 @@ class CartPage extends StatelessWidget {
 
           )),
 
-          GetBuilder<CartController>(builder: (_cartController){
-            return _cartController.getItems.length>0?Positioned(
+          GetBuilder<CartController>(builder: (cartController){
+            return cartController.getItems.length>0?Positioned(
                 top: Dimensions.height20*5,
                 left: Dimensions.width20,
                 right: Dimensions.width20,
@@ -83,11 +81,11 @@ class CartPage extends StatelessWidget {
                       context: context,
                       removeTop: true,
                       child: GetBuilder<CartController>(builder: (cartController){
-                        var _cartList = cartController.getItems;
+                        var cartList = cartController.getItems;
                         return ListView.builder(
-                            itemCount: _cartList.length,
+                            itemCount: cartList.length,
                             itemBuilder: (_, index){
-                              return Container(
+                              return SizedBox(
                                   width: double.maxFinite,
                                   height: Dimensions.height20*5,
                                   child: Row(
@@ -96,13 +94,13 @@ class CartPage extends StatelessWidget {
                                         onTap: (){
                                           var popularIndex = Get.find<PopularProductController>()
                                               .popularProductList
-                                              .indexOf(_cartList[index].product!);
+                                              .indexOf(cartList[index].product!);
                                           if(popularIndex>=0){
                                             Get.toNamed(RouteHelper.getPopularFood(popularIndex, "cartpage"));
                                           }else{
                                             var recommendedIndex = Get.find<RecommendedProductController>()
                                                 .recommendedProductList
-                                                .indexOf(_cartList[index].product!);
+                                                .indexOf(cartList[index].product!);
                                             if(recommendedIndex<0){
                                               Get.snackbar("History product", "Product review is not available for history product!" ,
                                                 backgroundColor: AppColors.mainColor,
@@ -130,7 +128,7 @@ class CartPage extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(width: Dimensions.width10,),
-                                      Expanded(child: Container(
+                                      Expanded(child: SizedBox(
                                         height: Dimensions.height20*5,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,16 +150,16 @@ class CartPage extends StatelessWidget {
                                                     children: [
                                                       GestureDetector(
                                                           onTap: (){
-                                                            cartController.addItem(_cartList[index].product!, -1);
+                                                            cartController.addItem(cartList[index].product!, -1);
                                                             print("being tapped");
                                                           },
                                                           child: Icon(Icons.remove, color: AppColors.signColor,)),
                                                       SizedBox(width: Dimensions.width10/2,),
-                                                      BigText(text: _cartList[index].quantity.toString()), //popularProduct.inCartItems.toString()),
+                                                      BigText(text: cartList[index].quantity.toString()), //popularProduct.inCartItems.toString()),
                                                       SizedBox(width: Dimensions.width10/2,),
                                                       GestureDetector(
                                                           onTap: (){
-                                                            cartController.addItem(_cartList[index].product!, 1);
+                                                            cartController.addItem(cartList[index].product!, 1);
                                                             print("being tapped 2");
                                                           },
                                                           child: Icon(Icons.add, color: AppColors.signColor,)),
@@ -180,12 +178,12 @@ class CartPage extends StatelessWidget {
                             });
                       })
                   ),
-                )):NoDataPage(text:"Your cart is empty!");
+                )):const NoDataPage(text:"Your cart is empty!");
           })
         ],
       ),
         bottomNavigationBar: GetBuilder<OrderController>(builder: (orderController){
-          _noteController.text = orderController.foodNote;
+          noteController.text = orderController.foodNote;
           return GetBuilder<CartController>(builder: (cartController){
             return Container(
               height: Dimensions.bottomHeightBar+50,
@@ -263,7 +261,7 @@ class CartPage extends StatelessWidget {
                                               ),
                                               SizedBox(height: Dimensions.height20,),
                                               Text('Additional info', style: robotoMedium,),
-                                              AppTextField(textController: _noteController,
+                                              AppTextField(textController: noteController,
                                                 hintText: '',
                                                 icon: Icons.note,
                                                 maxLines: true,
@@ -279,7 +277,7 @@ class CartPage extends StatelessWidget {
                             ],
                           );
                         }
-                    ).whenComplete(() => orderController.setFoodNote(_noteController.text.trim())),
+                    ).whenComplete(() => orderController.setFoodNote(noteController.text.trim())),
                     child: const SizedBox(
                       width: double.maxFinite,
                       child: CommonTextButton(text:"Payment options"),
@@ -298,7 +296,7 @@ class CartPage extends StatelessWidget {
                         child: Row(
                           children: [
                             SizedBox(width: Dimensions.width10/2,),
-                            BigText(text: "\Rs." +cartController.totalAmount.toString()),
+                            BigText(text: "\Rs.${cartController.totalAmount}"),
                             SizedBox(width: Dimensions.width10/2,),
 
                           ],
@@ -322,7 +320,7 @@ class CartPage extends StatelessWidget {
                                   latitude: location.latitude,
                                   longitude: location.longitude,
                                   contactPersonName: user!.name,
-                                  contactPersonNumber: user!.phone,
+                                  contactPersonNumber: user.phone,
                                   scheduleAt: '',distance: 10.0,
                                   orderType: orderController.orderType,
                                   paymentMethod: orderController.paymentIndex==0?'cash_on_delivery':'digital_payment',
@@ -337,7 +335,7 @@ class CartPage extends StatelessWidget {
                             }
 
                           },
-                          child: CommonTextButton(text: "Check out")
+                          child: const CommonTextButton(text: "Check out")
                       )
                     ],
                   ),

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/controllers/order_controller.dart';
-import 'package:project_bella/utils/dimensions.dart';
+import 'package:project_Satya/controllers/order_controller.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 
 import '../../utils/colors.dart';
 
@@ -20,7 +19,7 @@ class PaymentOptionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OrderController>(builder:(orderController){
-      bool _selected = orderController.paymentIndex==index;
+      bool selected = orderController.paymentIndex==index;
       return InkWell(
         onTap: ()=>orderController.setPaymentIndex(index),
         child: Container(
@@ -38,7 +37,7 @@ class PaymentOptionButton extends StatelessWidget {
             leading: Icon(
               icon,
               size: 40,
-              color: _selected?AppColors.mainColor:Theme.of(context).disabledColor,
+              color: selected?AppColors.mainColor:Theme.of(context).disabledColor,
             ),
             title: Text(title),
             subtitle: Text(
@@ -46,7 +45,7 @@ class PaymentOptionButton extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            trailing: _selected?Icon(Icons.check_circle, color: Theme.of(context).primaryColor,):null,
+            trailing: selected?Icon(Icons.check_circle, color: Theme.of(context).primaryColor,):null,
           ),
         ),
       );

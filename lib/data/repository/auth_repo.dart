@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:project_satya/models/signup_body_model.dart';
-import 'package:project_satya/utils/app_constants.dart';
+import 'package:project_Satya/models/signup_body_model.dart';
+import 'package:project_Satya/utils/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_client.dart';
@@ -22,7 +22,7 @@ class AuthRepo{
   }
 
   Future<String> getUserToken() async {
-    return await sharedPreferences.getString(AppConstants.TOKEN)??"None";
+    return sharedPreferences.getString(AppConstants.TOKEN)??"None";
   }
 
   Future <Response> login(String phone, String password) async{
@@ -40,7 +40,7 @@ class AuthRepo{
       await sharedPreferences.setString(AppConstants.PHONE, number);
       await sharedPreferences.setString(AppConstants.PASSWORD, password);
     }catch(e){
-      throw e;
+      rethrow;
     }
   }
 

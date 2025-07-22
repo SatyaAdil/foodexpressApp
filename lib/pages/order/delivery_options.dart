@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bella/controllers/order_controller.dart';
-import 'package:project_bella/utils/styles.dart';
+import 'package:project_Satya/controllers/order_controller.dart';
+import 'package:project_Satya/utils/styles.dart';
 import 'package:get/get.dart';
 import '../../utils/dimensions.dart';
 
@@ -32,7 +32,7 @@ class DeliveryOptions extends StatelessWidget {
           Text(title, style: robotoRegular,),
           SizedBox(width: Dimensions.width10/2,),
           Text(
-            '(${(value=='take away' ||isFree)?'free':'\Rs.${amount/10}'})',
+            '(${(value=='take away' ||isFree)?'free':'Rs.${amount/10}'})',
             style: robotoMedium,
           )
         ],

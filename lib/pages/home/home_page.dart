@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:project_bella/pages/auth/sign_up_page.dart';
-import 'package:project_bella/pages/cart/cart_history.dart';
-import 'package:project_bella/pages/order/order_page.dart';
-import 'package:project_bella/utils/colors.dart';
+import 'package:project_Satya/pages/auth/sign_up_page.dart';
+import 'package:project_Satya/pages/cart/cart_history.dart';
+import 'package:project_Satya/pages/order/order_page.dart';
+import 'package:project_Satya/utils/colors.dart';
 
 import '../account/account_page.dart';
 import '../auth/sign_in_page.dart';
@@ -23,10 +23,10 @@ class _HomePageState extends State<HomePage> {
 
 
   List pages=[
-    MainFoodPage(),
+    const MainFoodPage(),
     OrderPage(),
     CartHistory(),
-    AccountPage(),
+    const AccountPage(),
   ];
   void onTapNav(int index){
 setState(() {

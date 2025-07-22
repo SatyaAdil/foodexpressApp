@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
-import 'package:project_bella/widgets/small_text.dart';
+import 'package:project_Satya/widgets/small_text.dart';
 
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
@@ -40,7 +40,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     return Container(
       child: secondHalf.isEmpty?SmallText(color: AppColors.paraColor,size: Dimensions.font16,text: firstHalf):Column(
         children: [
-          SmallText(height:1.8,color: AppColors.paraColor,size: Dimensions.font16,text: hiddenText?(firstHalf+"..."):(firstHalf+secondHalf)),
+          SmallText(height:1.8,color: AppColors.paraColor,size: Dimensions.font16,text: hiddenText?("$firstHalf..."):(firstHalf+secondHalf)),
           InkWell(
             onTap: (){
               setState(() {

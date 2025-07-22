@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:project_bella/models/order_model.dart';
-import 'package:project_bella/models/place_order_model.dart';
+import 'package:project_Satya/models/order_model.dart';
+import 'package:project_Satya/models/place_order_model.dart';
 import '../data/repository/order_repo.dart';
 
 class OrderController extends GetxController implements GetxService{

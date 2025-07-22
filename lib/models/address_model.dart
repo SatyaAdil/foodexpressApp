@@ -43,14 +43,14 @@ class AddressModel{
   }
 
   Map<String, dynamic> toJson(){
-    final Map<String, dynamic> data=Map<String, dynamic>();
-    data['id']=this._id;
-    data['address_type']=this._addressType;
-    data['contact_person_number']=this._contactPersonNumber;
-    data['contact_person_name']=this._contactPersonName;
-    data['address']=this.address;
-    data['longitude']=this._longitude;
-    data['latitude']=this._latitude;
+    final Map<String, dynamic> data=<String, dynamic>{};
+    data['id']=_id;
+    data['address_type']=_addressType;
+    data['contact_person_number']=_contactPersonNumber;
+    data['contact_person_name']=_contactPersonName;
+    data['address']=address;
+    data['longitude']=_longitude;
+    data['latitude']=_latitude;
     return data;
   }
 }

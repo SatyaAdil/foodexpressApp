@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_bella/controllers/popular_product_controller.dart';
-import 'package:project_bella/controllers/recommended_product_controller.dart';
-import 'package:project_bella/utils/app_constants.dart';
-import 'package:project_bella/widgets/app_icon.dart';
-import 'package:project_bella/widgets/big_text.dart';
-import 'package:project_bella/widgets/expandable_text_widget.dart';
+import 'package:project_Satya/controllers/popular_product_controller.dart';
+import 'package:project_Satya/controllers/recommended_product_controller.dart';
+import 'package:project_Satya/utils/app_constants.dart';
+import 'package:project_Satya/widgets/app_icon.dart';
+import 'package:project_Satya/widgets/big_text.dart';
+import 'package:project_Satya/widgets/expandable_text_widget.dart';
 import 'package:get/get.dart';
 import '../../controllers/cart_controller.dart';
 import '../../routes/route_helper.dart';
@@ -47,8 +47,9 @@ class RecommendedFoodDetail extends StatelessWidget {
                 GetBuilder<PopularProductController>(builder: (controller){
                   return GestureDetector(
                     onTap: (){
-                      if (controller.totalItems>=1)
+                      if (controller.totalItems>=1) {
                         Get.toNamed(RouteHelper.getCartPage());
+                      }
                     },
                     child: Stack(
                       children: [
@@ -80,12 +81,11 @@ class RecommendedFoodDetail extends StatelessWidget {
               ],
             ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(20),
+              preferredSize: const Size.fromHeight(20),
               child: Container(
 
-                child: Center(child: BigText(size: Dimensions.font26, text: product.name!)),
                 width: double.maxFinite,
-                padding: EdgeInsets.only(top: 5, bottom: 10),
+                padding: const EdgeInsets.only(top: 5, bottom: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -93,6 +93,8 @@ class RecommendedFoodDetail extends StatelessWidget {
                       topRight: Radius.circular(Dimensions.radius20)
                 )
                 ),
+
+                child: Center(child: BigText(size: Dimensions.font26, text: product.name!)),
               ) ,
             ),
             pinned: true,
@@ -143,7 +145,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                           backgroundColor: AppColors.mainColor,
                           icon: Icons.remove)
                   ),
-                  BigText(text: "\Rs.${product.price!} X  ${controller.inCartItems} " , color: AppColors.mainBlackColor,size: Dimensions.font26,),
+                  BigText(text: "Rs.${product.price!} X  ${controller.inCartItems} " , color: AppColors.mainBlackColor,size: Dimensions.font26,),
                   GestureDetector(
                       onTap: (){
                         controller.setQuantity(true);
@@ -188,7 +190,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
-                      child: BigText(text:"\Rs. ${product.price!} Add to cart" , color: Colors.white,),
+                      child: BigText(text:"Rs. ${product.price!} Add to cart" , color: Colors.white,),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.radius20),
                           color: AppColors.mainColor

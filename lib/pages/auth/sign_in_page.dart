@@ -1,13 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:project_bella/base/custom_loader.dart';
-import 'package:project_bella/pages/auth/sign_up_page.dart';
-import 'package:project_bella/utils/colors.dart';
-import 'package:project_bella/utils/dimensions.dart';
-import 'package:project_bella/widgets/app_text_field.dart';
-import 'package:project_bella/widgets/big_text.dart';
+import "package:project_Satya/base/custom_loader.dart";
+import 'package:project_Satya/pages/auth/sign_up_page.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
+import 'package:project_Satya/widgets/app_text_field.dart';
+import 'package:project_Satya/widgets/big_text.dart';
 
 import '../../base/show_custom_snackbar.dart';
 import '../../controllers/auth_controller.dart';
@@ -20,7 +19,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var phoneController = TextEditingController();
     var passwordController = TextEditingController();
-    void _login(AuthController authController){
+    void login(AuthController authController){
 
       String phone = phoneController.text.trim();
       String password = passwordController.text.trim();
@@ -52,14 +51,14 @@ class SignInPage extends StatelessWidget {
 
         body: GetBuilder<AuthController>(builder: (authController){
           return !authController.isLoading? SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 SizedBox(height: Dimensions.screenHeight*0.05,),
                 //app logo
-                Container(
+                SizedBox(
                   height: Dimensions.screenHeight*0.25,
-                  child: Center(
+                  child: const Center(
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 80,
@@ -125,7 +124,7 @@ class SignInPage extends StatelessWidget {
                 //Sign in
                 GestureDetector(
                   onTap:(){
-                    _login(authController);
+                    login(authController);
                   },
                   child: Container(
                     width: Dimensions.screenWidth/2,
@@ -146,14 +145,14 @@ class SignInPage extends StatelessWidget {
                 SizedBox(height: Dimensions.screenHeight*0.05,),
                 //sign up options
                 RichText(text: TextSpan(
-                    text: "Don\'t have an account?",
+                    text: "Don't have an account?",
                     style: TextStyle(
                         color: Colors.grey[500],
                         fontSize: Dimensions.font20
                     ),
                     children: [
                       TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap=()=>Get.to(()=>SignUpPage(), transition: Transition.fade),
+                          recognizer: TapGestureRecognizer()..onTap=()=>Get.to(()=>const SignUpPage(), transition: Transition.fade),
                           text: " Create",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,

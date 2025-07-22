@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_satya/controllers/location_controller.dart';
-import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_Satya/controllers/location_controller.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_webservice/src/places.dart';
 
@@ -13,7 +13,7 @@ class LocationDialogue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
     return Container(
       padding: EdgeInsets.all(Dimensions.width10),
       alignment: Alignment.topCenter,
@@ -25,7 +25,7 @@ class LocationDialogue extends StatelessWidget {
           width: Dimensions.screenWidth,
           child: TypeAheadField(
             textFieldConfiguration: TextFieldConfiguration(
-              controller: _controller,
+              controller: controller,
               textInputAction: TextInputAction.search,
               autofocus: true,
               textCapitalization: TextCapitalization.words,
@@ -38,7 +38,7 @@ class LocationDialogue extends StatelessWidget {
                     style: BorderStyle.none, width: 0
                   ),
                 ),
-                hintStyle: Theme.of(context).textTheme.headline2?.copyWith(
+                hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
                     color: Theme.of(context).disabledColor,
                     fontSize: Dimensions.font16
                 )
@@ -59,14 +59,14 @@ class LocationDialogue extends StatelessWidget {
                 padding: EdgeInsets.all(Dimensions.width10),
                 child: Row(
                   children: [
-                    Icon(Icons.location_on),
+                    const Icon(Icons.location_on),
                     Expanded(
                         child: Text(
                           suggestion.description!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline2?.copyWith(
-                            color: Theme.of(context).textTheme.bodyText1?.color,
+                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
                             fontSize: Dimensions.font16
                           ),
                         ))

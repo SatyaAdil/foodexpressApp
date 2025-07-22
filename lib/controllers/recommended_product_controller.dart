@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../data/repository/recommended_product_repo.dart';
 import '../models/products_model.dart';
@@ -20,7 +21,9 @@ class RecommendedProductController extends GetxController{
       _isLoaded=true;
       update();
     }else{
-      print(" could not get products recommended");
+      if (kDebugMode) {
+        print(" could not get products recommended");
+      }
 
 
     }

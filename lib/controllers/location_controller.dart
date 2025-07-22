@@ -4,10 +4,11 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_bella/data/api/api_checker.dart';
-import 'package:project_bella/data/repository/location_repo.dart';
-import 'package:project_bella/models/response_model.dart';
+import 'package:project_Satya/data/api/api_checker.dart';
+import 'package:project_Satya/data/repository/location_repo.dart';
+import 'package:project_Satya/models/response_model.dart';
 import '../models/address_model.dart';
+// ignore: depend_on_referenced_packages, implementation_imports
 import 'package:google_maps_webservice/src/places.dart';
 
 class LocationController extends GetxController implements GetxService{
@@ -16,8 +17,8 @@ class LocationController extends GetxController implements GetxService{
   bool _loading = false;
   late Position _position;
   late Position _pickPosition;
-  Placemark _placemark = Placemark();
-  Placemark _pickPlacemark = Placemark();
+  Placemark _placemark = const Placemark();
+  Placemark _pickPlacemark = const Placemark();
   Placemark get placemark=>_placemark;
   Placemark get pickPlacemark=> _pickPlacemark;
   List <AddressModel> _addressList=[];
@@ -70,9 +71,9 @@ class LocationController extends GetxController implements GetxService{
     if(notify){
       update();
     }
-    AddressModel _addressModel;
-    late Position _myPosition;
-    Position _test;
+    AddressModel addressModel;
+    late Position myPosition;
+    Position test;
   }
 
   void setMapController (GoogleMapController mapController){
@@ -85,36 +86,39 @@ class LocationController extends GetxController implements GetxService{
       update();
       try{
         if(fromAddress){
-          _position=Position(
+          var headingAccuracy;
+          _position= Position(
             latitude: position.target.latitude,
             longitude: position.target.longitude,
             timestamp: DateTime.now(),
             heading: 1, accuracy: 1, altitude: 1, speedAccuracy: 1, speed: 1,
+            altitudeAccuracy: 1.0, headingAccuracy: headingAccuracy,
           );
         }else{
           _pickPosition=Position(
             latitude: position.target.latitude,
             longitude: position.target.longitude,
             timestamp: DateTime.now(),
-            heading: 1, accuracy: 1, altitude: 1, speedAccuracy: 1, speed: 1,
+            heading: 1, accuracy: 1, altitude: 1, speedAccuracy: 1, speed: 1, altitudeAccuracy: 1.0, headingAccuracy: 1.0,
+
           );
         }
 
-        ResponseModel _responseModel =
+        ResponseModel responseModel =
             await getZone(position.target.latitude.toString(), position.target.longitude.toString(), false);
         /*
         if button value is false we are in the service area;
          */
-        _buttonDisabled = !_responseModel.isSuccess;
+        _buttonDisabled = !responseModel.isSuccess;
         if(_changeAddress){
-          String _address = await getAddressfromGeocode(
+          String address = await getAddressfromGeocode(
             LatLng(
               position.target.latitude,
               position.target.longitude
             )
           );
-          fromAddress?_placemark=Placemark(name: _address):
-          _pickPlacemark=Placemark(name: _address);
+          fromAddress?_placemark=Placemark(name: address):
+          _pickPlacemark=Placemark(name: address);
 
         }else{
           _changeAddress =true;
@@ -129,35 +133,36 @@ class LocationController extends GetxController implements GetxService{
     }
   }
 
+
   Future<String> getAddressfromGeocode(LatLng latlng) async {
-    String _address = "Unknown Location Found";
+    String address = "Unknown Location Found";
     Response response = await locationRepo.getAddressfromGeocode(latlng);
     if (response.body["status"]=='OK'){
-      _address = response.body["results"][0]['formatted_address'].toString();
+      address = response.body["results"][0]['formatted_address'].toString();
       //print("Printing Address "+_address);
 
     }else{
       print("Error getting the google api");
     }
       update();
-    return _address;
+    return address;
   }
 
   late Map<String, dynamic> _getAddress;
   Map get getAddress=>_getAddress;
 
   AddressModel getUserAddress(){
-    late AddressModel _addressModel;
+    late AddressModel addressModel;
     /*
     converting map using jsonDecode
      */
     _getAddress = jsonDecode(locationRepo.getUserAddress());
     try{
-        _addressModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
+        addressModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
     }catch(e){
       print(e);
     }
-    return _addressModel;
+    return addressModel;
   }
 
   void setAddressTypeIndex(int index){
@@ -220,7 +225,7 @@ class LocationController extends GetxController implements GetxService{
   }
 
   Future<ResponseModel> getZone(String lat, String lng, bool markerLoad) async {
-    late ResponseModel _responseModel;
+    late ResponseModel responseModel;
     if(markerLoad){
       _loading=true;
     }else{
@@ -230,10 +235,10 @@ class LocationController extends GetxController implements GetxService{
     Response response = await locationRepo.getZone(lat, lng);
     if(response.statusCode==200){
     _inZone=true;
-    _responseModel = ResponseModel(true, response.body["zone_id"].toString());
+    responseModel = ResponseModel(true, response.body["zone_id"].toString());
     }else{
       _inZone=false;
-      _responseModel = ResponseModel(true, response.statusText!);
+      responseModel = ResponseModel(true, response.statusText!);
     }
     if(markerLoad){
       _loading=false;
@@ -244,7 +249,7 @@ class LocationController extends GetxController implements GetxService{
     //print("Zone response code is "+response.statusCode.toString());//200, //404, //500
 
     update();
-    return _responseModel;
+    return responseModel;
   }
 
   Future<List<Prediction>> searchLocation(BuildContext context, String text) async {
@@ -266,16 +271,7 @@ class LocationController extends GetxController implements GetxService{
     PlacesDetailsResponse detail;
     Response response = await locationRepo.setLocation(placeID);
     detail = PlacesDetailsResponse.fromJson(response.body);
-    _pickPosition = Position(
-      latitude : detail.result.geometry!.location.lat,
-      longitude : detail.result.geometry!.location.lng,
-      timestamp: DateTime.now(),
-      accuracy: 1,
-      altitude: 1,
-      heading: 1,
-      speed: 1,
-      speedAccuracy: 1
-    );
+    _pickPosition = position;
     _pickPlacemark = Placemark(name:address);
     _changeAddress = false;
     if(!mapController.isNull){

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/base/custom_loader.dart';
-import 'package:project_bella/controllers/order_controller.dart';
-import 'package:project_bella/utils/colors.dart';
-import 'package:project_bella/utils/dimensions.dart';
+import 'package:project_Satya/base/custom_loader.dart';
+import 'package:project_Satya/controllers/order_controller.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 
 import '../../models/order_model.dart';
 import '../../utils/styles.dart';
@@ -30,7 +30,7 @@ class ViewOrder extends StatelessWidget {
                   itemCount: orderList.length,
                   itemBuilder: (context, index){
                     return InkWell(
-                      onTap: ()=>null,
+                      onTap: (){},
                       child: Column(
                         children: [
                           Container(
@@ -39,7 +39,7 @@ class ViewOrder extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("order ID",),
+                                      const Text("order ID",),
                                       SizedBox(width: Dimensions.width10/2,),
                                       Text('#${orderList[index].id.toString()}')
                                     ],
@@ -63,7 +63,7 @@ class ViewOrder extends StatelessWidget {
                                       ),
                                       SizedBox(height: Dimensions.height10/2),
                                       InkWell(
-                                        onTap: ()=>null,
+                                        onTap: (){},
                                         child: Container(
                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
                                           decoration: BoxDecoration(
@@ -75,7 +75,7 @@ class ViewOrder extends StatelessWidget {
                                             children: [
                                               Image.asset("assets/image/tracking.png", height: 15, width: 15,color: Theme.of(context).primaryColor,),
                                               SizedBox(width: Dimensions.width10/2,),
-                                              Text(
+                                              const Text(
                                                   "track order",)
 
                                             ],

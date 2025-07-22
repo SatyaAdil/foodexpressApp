@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_satya/controllers/auth_controller.dart';
-import 'package:project_satya/controllers/location_controller.dart';
-import 'package:project_satya/controllers/user_controller.dart';
-import 'package:project_satya/models/address_model.dart';
-import 'package:project_satya/pages/address/pick_address_map.dart';
-import 'package:project_satya/routes/route_helper.dart';
-import 'package:project_satya/utils/colors.dart';
-import 'package:project_satya/utils/dimensions.dart';
-import 'package:project_satya/widgets/app_text_field.dart';
-import 'package:project_satya/widgets/big_text.dart';
+import 'package:project_Satya/controllers/auth_controller.dart';
+import 'package:project_Satya/controllers/location_controller.dart';
+import 'package:project_Satya/controllers/user_controller.dart';
+import 'package:project_Satya/models/address_model.dart';
+import 'package:project_Satya/pages/address/pick_address_map.dart';
+import 'package:project_Satya/routes/route_helper.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
+import 'package:project_Satya/widgets/app_text_field.dart';
+import "package:project_Satya/widgets/big_text.dart";
 
 import '../../base/custom_app_bar.dart';
 import '../../widgets/app_icon.dart';
@@ -26,14 +26,14 @@ class AddAddressPage extends StatefulWidget {
 
 class _AddAddressPageState extends State<AddAddressPage> {
 
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _contactPersonName=TextEditingController();
   final TextEditingController _contactPersonNumber=TextEditingController();
   late bool _isLogged;
   CameraPosition _cameraPosition = const CameraPosition(target: LatLng(
       7.0873505, 79.8952425
   ), zoom: 17);
-  late LatLng _initialPosition = LatLng(
+  late LatLng _initialPosition = const LatLng(
       7.0873505, 79.8952425
   );
 
@@ -64,7 +64,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Address"
       ),
       body: GetBuilder<UserController>(builder: (userController){
@@ -80,7 +80,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
               '${locationController.placemark.locality??''}'
               '${locationController.placemark.postalCode??''}'
               '${locationController.placemark.country??''}';
-          print("address in my view is "+_addressController.text);
+          print("address in my view is ${_addressController.text}");
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,21 +168,21 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 SizedBox(height: Dimensions.height20,),
                 Padding(
                   padding: EdgeInsets.only(left: Dimensions.width20),
-                  child: BigText(text: "Delivery address"),
+                  child: const BigText(text: "Delivery address"),
                 ),
                 SizedBox(height: Dimensions.height10,),
                 AppTextField(textController: _addressController, hintText: "Your address", icon: Icons.map),
                 SizedBox(height: Dimensions.height20,),
                 Padding(
                   padding: EdgeInsets.only(left: Dimensions.width20),
-                  child: BigText(text: "Contact name"),
+                  child: const BigText(text: "Contact name"),
                 ),
                 SizedBox(height: Dimensions.height10,),
                 AppTextField(textController: _contactPersonName, hintText: "Your name", icon: Icons.person),
                 SizedBox(height: Dimensions.height20,),
                 Padding(
                   padding: EdgeInsets.only(left: Dimensions.width20),
-                  child: BigText(text: "Your number"),
+                  child: const BigText(text: "Your number"),
                 ),
                 SizedBox(height: Dimensions.height10,),
                 AppTextField(textController: _contactPersonNumber, hintText: "Your phone", icon: Icons.phone)
@@ -213,7 +213,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
 
                     GestureDetector(
                       onTap: (){
-                        AddressModel _addressModel =AddressModel(
+                        AddressModel addressModel =AddressModel(
                           addressType: locationController.addressTypeList[locationController.addressTypeIndex],
                           contactPersonName: _contactPersonName.text,
                           contactPersonNumber: _contactPersonNumber.text,
@@ -221,7 +221,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           latitude: locationController.position.latitude.toString(),
                           longitude: locationController.position.longitude.toString(),
                         );
-                      locationController.addAddress(_addressModel).then((response){
+                      locationController.addAddress(addressModel).then((response){
                         if(response.isSuccess){
                           Get.toNamed(RouteHelper.getInitial());
                           Get.snackbar("Address", "Added Successfully");
@@ -232,11 +232,11 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       },
                       child: Container(
                         padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
-                        child: BigText(text:"Save address" , color: Colors.white,size: 26,),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.mainColor
                         ),
+                        child: BigText(text:"Save address" , color: Colors.white,size: 26,),
                       ),
                     )
                   ],

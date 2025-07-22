@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bella/controllers/auth_controller.dart';
+import 'package:project_Satya/controllers/auth_controller.dart';
 import 'package:get/get.dart';
-import 'package:project_bella/pages/order/view_order.dart';
-import 'package:project_bella/utils/colors.dart';
+import 'package:project_Satya/pages/order/view_order.dart';
+import 'package:project_Satya/utils/colors.dart';
 
 import '../../base/custom_app_bar.dart';
 import '../../controllers/order_controller.dart';
@@ -34,10 +34,10 @@ class _OrderPageState extends State<OrderPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: CustomAppBar(title: "My orders"),
+      appBar: const CustomAppBar(title: "My orders"),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: Dimensions.screenWidth,
             child: TabBar(
               indicatorColor: Theme.of(context).primaryColor,

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:project_satya/base/custom_button.dart';
-import 'package:project_satya/controllers/location_controller.dart';
+import 'package:project_Satya/base/custom_button.dart';
+import 'package:project_Satya/controllers/location_controller.dart';
 import 'package:get/get.dart';
-import 'package:project_satya/pages/address/widget/search_location_dialogue_page.dart';
-import 'package:project_satya/routes/route_helper.dart';
-import 'package:project_satya/utils/colors.dart';
-import 'package:project_satya/utils/dimensions.dart';
+import 'package:project_Satya/pages/address/widget/search_location_dialogue_page.dart';
+import 'package:project_Satya/routes/route_helper.dart';
+import 'package:project_Satya/utils/colors.dart';
+import 'package:project_Satya/utils/dimensions.dart';
 
 class PickAddressMap extends StatefulWidget {
   final bool fromSignup;
@@ -31,7 +31,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
     // TODO: implement initState
     super.initState();
     if(Get.find<LocationController>().addressList.isEmpty){
-      _initialPosition=LatLng(7.0873505, 79.8952425);
+      _initialPosition=const LatLng(7.0873505, 79.8952425);
       _cameraPosition=CameraPosition(target: _initialPosition, zoom: 17);
     }else{
       if(Get.find<LocationController>().addressList.isNotEmpty){
@@ -74,7 +74,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                   Center(
                     child: !locationController.loading?Image.asset("assets/image/pick_marker.png",
                     height: 50, width: 50,
-                    ):CircularProgressIndicator()
+                    ):const CircularProgressIndicator()
                   ),
                   /*
                   showing and selecting address
@@ -96,7 +96,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                           children: [
                             Icon(Icons.location_on, size: 25,color: AppColors.yellowColor),
                             Expanded(child: Text(
-                              '${locationController.pickPlacemark.name??''}',
+                              locationController.pickPlacemark.name??'',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: Dimensions.font16
@@ -115,7 +115,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                       bottom: 80,
                       left: Dimensions.width20,
                       right: Dimensions.width20,
-                      child:  locationController.isLoading?Center(child: CircularProgressIndicator(),):CustomButton(
+                      child:  locationController.isLoading?const Center(child: CircularProgressIndicator(),):CustomButton(
 
                         buttonText: locationController.inZone? widget.fromAddress?'Pick Address':'Pick Location':'Service is not available in your area',
                         onPressed: (locationController.buttonDisabled||locationController.loading)?null:(){
