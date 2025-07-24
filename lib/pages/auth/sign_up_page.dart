@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:project_Satya/base/custom_loader.dart';
 import 'package:project_Satya/models/signup_body_model.dart';
 import 'package:project_Satya/routes/route_helper.dart';

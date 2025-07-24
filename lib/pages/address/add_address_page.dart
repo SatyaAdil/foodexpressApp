@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_Satya/controllers/auth_controller.dart';
 import 'package:project_Satya/controllers/location_controller.dart';
@@ -15,7 +13,6 @@ import 'package:project_Satya/widgets/app_text_field.dart';
 import "package:project_Satya/widgets/big_text.dart";
 
 import '../../base/custom_app_bar.dart';
-import '../../widgets/app_icon.dart';
 
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({Key? key}) : super(key: key);

@@ -122,7 +122,7 @@ class AccountPage extends StatelessWidget {
                           iconSize: Dimensions.height10*5/2,
                           size: Dimensions.height10*5,),
 
-                        bigText: BigText(text: "Messages",)
+                        bigText: BigText(text: "Messages",), icon: null, text: ''
                         ,),
                       SizedBox(height: Dimensions.height20,),
 
@@ -140,15 +140,17 @@ class AccountPage extends StatelessWidget {
                           }
 
                         },
-                        child: AccountWidget(
-                          appIcon :AppIcon(icon: Icons.logout,
-                            backgroundColor: Colors.redAccent,
-                            iconColor: Colors.white,
-                            iconSize: Dimensions.height10*5/2,
-                            size: Dimensions.height10*5,),
-
-                          bigText: BigText(text: "Logout",), icon: null, text: ''
-                          ,),
+                        child: widget(
+                          child: AccountWidget(
+                            appIcon :AppIcon(icon: Icons.logout,
+                              backgroundColor: Colors.redAccent,
+                              iconColor: Colors.white,
+                              iconSize: Dimensions.height10*5/2,
+                              size: Dimensions.height10*5,),
+                          
+                            bigText: BigText(text: "Logout",), icon: null, text: ''
+                            ,),
+                        ),
                       ),
                       SizedBox(height: Dimensions.height20,),
 
@@ -160,7 +162,7 @@ class AccountPage extends StatelessWidget {
             ],
           ),
         ):
-        CustomLoader());
+        const CustomLoader());
         } else {
           return Container(
 
