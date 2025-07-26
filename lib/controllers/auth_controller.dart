@@ -1,5 +1,4 @@
-// lib/controllers/auth_controller.dart
-import 'package:get/get.dart';
+import 'package:get/get.dart' show BoolExtension, GetxController, Rx, RxBool;
 import 'package:project_Satya/models/signup_body_model.dart';
 import '../models/user_model.dart';
 

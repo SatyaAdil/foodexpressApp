@@ -68,7 +68,7 @@ class CartHistory extends StatelessWidget {
                 const BigText(text: "Cart History",color: Colors.white,),
                 AppIcon(icon: Icons.shopping_cart_outlined,
                   iconColor: AppColors.mainColor,
-                  backgroundColor: AppColors.yellowColor,
+                  backgroundColor: AppColors.yellowColor, iconSize: null,
                 )
               ],
             ),
