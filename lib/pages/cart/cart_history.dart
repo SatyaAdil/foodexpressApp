@@ -62,20 +62,20 @@ class CartHistory extends StatelessWidget {
             color: AppColors.mainColor,
             width: double.maxFinite,
             padding: EdgeInsets.only(top: Dimensions.height45),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const BigText(text: "Cart History",color: Colors.white,),
+                BigText(text: "Cart History",color: Colors.white,),
                 AppIcon(icon: Icons.shopping_cart_outlined,
                   iconColor: AppColors.mainColor,
-                  backgroundColor: AppColors.yellowColor, iconSize: null,
+                  backgroundColor: AppColors.yellowColor, iconSize: 24.0,
                 )
               ],
             ),
           ),
 
           GetBuilder<CartController>(builder: (cartController){
-            return cartController.getCartHistoryList().length>0?
+            return cartController.getCartHistoryList().isNotEmpty?
             Expanded(child:
             Container(
               margin: EdgeInsets.only(

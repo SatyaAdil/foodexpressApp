@@ -58,7 +58,11 @@ class PopularFoodDetail extends StatelessWidget {
                   onTap: () => page == "cartpage" 
                     ? Get.toNamed(RouteHelper.getCartPage())
                     : Get.toNamed(RouteHelper.getInitial()),
-                  child: const AppIcon(icon: Icons.arrow_back_ios),
+                  child: const AppIcon(
+                    icon: Icons.arrow_back_ios,
+                    iconColor: Colors.black,
+                    iconSize: 24,
+                  ),
                 ),
                 GetBuilder<PopularProductController>(builder: (controller) {
                   return GestureDetector(
@@ -69,13 +73,18 @@ class PopularFoodDetail extends StatelessWidget {
                     },
                     child: Stack(
                       children: [
-                        const AppIcon(icon: Icons.shopping_cart_outlined),
+                        const AppIcon(
+                          icon: Icons.shopping_cart_outlined,
+                          iconColor: Colors.black,
+                          iconSize: 24,
+                        ),
                         if (controller.totalItems >= 1) ...[
-                          Positioned(
+                          const Positioned(
                             right: 0,
                             top: 0,
                             child: AppIcon(
                               icon: Icons.circle,
+                              iconSize: 20,
                               size: 20,
                               iconColor: Colors.transparent,
                               backgroundColor: AppColors.mainColor,
@@ -196,7 +205,7 @@ class PopularFoodDetail extends StatelessWidget {
                       color: AppColors.mainColor
                     ),
                     child: BigText(
-                      text: "\Rs. ${product.price!} | Add to cart",
+                      text: "Rs. ${product.price!} | Add to cart",
                       color: Colors.white,
                     ),
                   ),

@@ -69,7 +69,7 @@ class CartPage extends StatelessWidget {
           )),
 
           GetBuilder<CartController>(builder: (cartController){
-            return cartController.getItems.length>0?Positioned(
+            return cartController.getItems.isNotEmpty?Positioned(
                 top: Dimensions.height20*5,
                 left: Dimensions.width20,
                 right: Dimensions.width20,
@@ -107,7 +107,7 @@ class CartPage extends StatelessWidget {
                                                 colorText: Colors.white,
                                               );
                                             }else{
-                                              Get.toNamed(RouteHelper.getRecommendedFood(recommendedIndex, "cartpage"));
+                                              Get.toNamed(RouteHelper.getRecommendedProduct(recommendedIndex, "cartpage"));
                                             }
                                           }
                                         },
@@ -153,7 +153,7 @@ class CartPage extends StatelessWidget {
                                                             cartController.addItem(cartList[index].product!, -1);
                                                             print("being tapped");
                                                           },
-                                                          child: Icon(Icons.remove, color: AppColors.signColor,)),
+                                                          child: const Icon(Icons.remove, color: AppColors.signColor,)),
                                                       SizedBox(width: Dimensions.width10/2,),
                                                       BigText(text: cartList[index].quantity.toString()), //popularProduct.inCartItems.toString()),
                                                       SizedBox(width: Dimensions.width10/2,),
@@ -162,7 +162,7 @@ class CartPage extends StatelessWidget {
                                                             cartController.addItem(cartList[index].product!, 1);
                                                             print("being tapped 2");
                                                           },
-                                                          child: Icon(Icons.add, color: AppColors.signColor,)),
+                                                          child: const Icon(Icons.add, color: AppColors.signColor,)),
                                                     ],
                                                   ),
                                                 ),
@@ -197,7 +197,7 @@ class CartPage extends StatelessWidget {
                     topRight: Radius.circular(Dimensions.radius20*2),
                   )
               ),
-              child: cartController.getItems.length>0?Column(
+              child: cartController.getItems.isNotEmpty?Column(
                 children: [
                   InkWell(
                     onTap: ()=>showModalBottomSheet(
@@ -296,7 +296,7 @@ class CartPage extends StatelessWidget {
                         child: Row(
                           children: [
                             SizedBox(width: Dimensions.width10/2,),
-                            BigText(text: "\Rs.${cartController.totalAmount}"),
+                            BigText(text: "Rs.${cartController.totalAmount}"),
                             SizedBox(width: Dimensions.width10/2,),
 
                           ],
@@ -355,7 +355,7 @@ class CartPage extends StatelessWidget {
       if(Get.find<OrderController>().paymentIndex==0){
         Get.offNamed(RouteHelper.getOrderSuccessPage(orderID, "success"));
       }else{
-        Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.id));
+        Get.offNamed(RouteHelper.getPaymentPage(orderID, Get.find<UserController>().userModel!.userId));
 
       }
     }else{

@@ -77,7 +77,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
               '${locationController.placemark.locality??''}'
               '${locationController.placemark.postalCode??''}'
               '${locationController.placemark.country??''}';
-          print("address in my view is ${_addressController.text}");
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +96,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       GoogleMap(initialCameraPosition:
                       CameraPosition(target: _initialPosition, zoom: 17),
                         onTap: (latlng){
-                              Get.toNamed(RouteHelper.getPickAddressPage(),
+                              Get.toNamed(RouteHelper.getPickAddressRoute(),
                               arguments: PickAddressMap(
                                   fromSignup: false,
                                   fromAddress: true,
@@ -233,7 +232,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                             borderRadius: BorderRadius.circular(Dimensions.radius20),
                             color: AppColors.mainColor
                         ),
-                        child: BigText(text:"Save address" , color: Colors.white,size: 26,),
+                        child: const BigText(text:"Save address" , color: Colors.white,size: 26,),
                       ),
                     )
                   ],

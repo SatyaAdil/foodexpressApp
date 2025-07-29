@@ -33,7 +33,9 @@ class AuthController extends GetxController {
 
   registration(SignUpBody signUpBody) {}
 
-  bool userLoggedIn() {}
+  bool userLoggedIn() {
+    return _isLoggedIn.value;
+  }
 
   void clearSharedData() {}
 }

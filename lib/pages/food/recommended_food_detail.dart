@@ -10,7 +10,6 @@ import '../../controllers/cart_controller.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-import '../cart/cart_page.dart';
 
 
 class RecommendedFoodDetail extends StatelessWidget {
@@ -41,7 +40,11 @@ class RecommendedFoodDetail extends StatelessWidget {
                     }else{
                       Get.toNamed(RouteHelper.getInitial());
                     }                  },
-                  child: AppIcon(icon: Icons.clear),
+                  child: AppIcon(
+                    icon: Icons.clear,
+                    iconColor: Colors.white,
+                    iconSize: Dimensions.iconSize24,
+                  ),
                 ),
                 //AppIcon(icon: Icons.shopping_cart_outlined),
                 GetBuilder<PopularProductController>(builder: (controller){
@@ -53,14 +56,21 @@ class RecommendedFoodDetail extends StatelessWidget {
                     },
                     child: Stack(
                       children: [
-                        AppIcon(icon: Icons.shopping_cart_outlined,),
+                        AppIcon(
+                          icon: Icons.shopping_cart_outlined,
+                          iconColor: Colors.white,
+                          iconSize: Dimensions.iconSize24,
+                        ),
                         Get.find<PopularProductController>().totalItems>=1?
-                        Positioned(
+                        const Positioned(
                           right:0, top:0,
                           
-                            child: AppIcon(icon: Icons.circle, size: 20,
+                            child: AppIcon(
+                              icon: Icons.circle,
+                              iconSize: 20,
                               iconColor: Colors.transparent,
-                              backgroundColor: AppColors.mainColor,),
+                              backgroundColor: AppColors.mainColor,
+                            ),
 
                         ):
                         Container(),
@@ -112,8 +122,8 @@ class RecommendedFoodDetail extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  child : ExpandableTextWidget(text: product.description!,),
                   margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                  child : ExpandableTextWidget(text: product.description!,),
                 )
               ],
             )
@@ -179,7 +189,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimensions.radius20),
                         color: Colors.white
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite,
                       color: AppColors.mainColor,
                     ),
@@ -190,11 +200,11 @@ class RecommendedFoodDetail extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.only(top: Dimensions.height20, bottom: Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
-                      child: BigText(text:"Rs. ${product.price!} Add to cart" , color: Colors.white,),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.radius20),
                           color: AppColors.mainColor
                       ),
+                      child: BigText(text:"Rs. ${product.price!} Add to cart" , color: Colors.white,),
                     ),
                   )
                 ],

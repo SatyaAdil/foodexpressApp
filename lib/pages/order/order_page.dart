@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_Satya/controllers/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:project_Satya/pages/order/view_order.dart';
-import 'package:project_Satya/utils/colors.dart';
 
 import '../../base/custom_app_bar.dart';
 import '../../controllers/order_controller.dart';

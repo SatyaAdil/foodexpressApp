@@ -46,6 +46,8 @@ class AccountPage extends StatelessWidget {
                             children: [
                               // Name
                               AccountWidget(
+                                icon: Icons.person,
+                                text: userController.userModel?.name ?? "N/A",
                                 appIcon: AppIcon(
                                   icon: Icons.person,
                                   backgroundColor: AppColors.mainColor,
@@ -58,6 +60,8 @@ class AccountPage extends StatelessWidget {
                               SizedBox(height: Dimensions.height20),
                               // Phone
                               AccountWidget(
+                                icon: Icons.phone,
+                                text: userController.userModel?.phone ?? "N/A",
                                 appIcon: AppIcon(
                                   icon: Icons.phone,
                                   backgroundColor: AppColors.yellowColor,
@@ -70,6 +74,8 @@ class AccountPage extends StatelessWidget {
                               SizedBox(height: Dimensions.height20),
                               // Email
                               AccountWidget(
+                                icon: Icons.email,
+                                text: userController.userModel?.email ?? "N/A",
                                 appIcon: AppIcon(
                                   icon: Icons.email,
                                   backgroundColor: AppColors.yellowColor,
@@ -85,6 +91,10 @@ class AccountPage extends StatelessWidget {
                                 return GestureDetector(
                                   onTap: () => Get.offNamed(RouteHelper.getAddressPage()),
                                   child: AccountWidget(
+                                    icon: Icons.location_on,
+                                    text: userLoggedIn && locationController.addressList.isEmpty
+                                      ? "Fill in your address"
+                                      : "Your address",
                                     appIcon: AppIcon(
                                       icon: Icons.location_on,
                                       backgroundColor: AppColors.yellowColor,
@@ -103,6 +113,8 @@ class AccountPage extends StatelessWidget {
                               SizedBox(height: Dimensions.height20),
                               // Messages
                               AccountWidget(
+                                icon: Icons.message_outlined,
+                                text: "Messages",
                                 appIcon: AppIcon(
                                   icon: Icons.message_outlined,
                                   backgroundColor: Colors.redAccent,
@@ -110,7 +122,7 @@ class AccountPage extends StatelessWidget {
                                   iconSize: Dimensions.height10 * 5 / 2,
                                   size: Dimensions.height10 * 5,
                                 ),
-                                bigText: BigText(text: "Messages"),
+                                bigText: const BigText(text: "Messages"),
                               ),
                               SizedBox(height: Dimensions.height20),
                               // Logout
@@ -125,6 +137,8 @@ class AccountPage extends StatelessWidget {
                                   }
                                 },
                                 child: AccountWidget(
+                                  icon: Icons.logout,
+                                  text: "Logout",
                                   appIcon: AppIcon(
                                     icon: Icons.logout,
                                     backgroundColor: Colors.redAccent,
@@ -132,7 +146,7 @@ class AccountPage extends StatelessWidget {
                                     iconSize: Dimensions.height10 * 5 / 2,
                                     size: Dimensions.height10 * 5,
                                   ),
-                                  bigText: BigText(text: "Logout"),
+                                  bigText: const BigText(text: "Logout"),
                                 ),
                               ),
                             ],

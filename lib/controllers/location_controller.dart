@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
@@ -71,9 +73,6 @@ class LocationController extends GetxController implements GetxService{
     if(notify){
       update();
     }
-    AddressModel addressModel;
-    late Position myPosition;
-    Position test;
   }
 
   void setMapController (GoogleMapController mapController){
@@ -123,8 +122,8 @@ class LocationController extends GetxController implements GetxService{
         }else{
           _changeAddress =true;
         }
+      // ignore: empty_catches
       }catch(e){
-        print(e);
       }
       _loading=false;
       update();
@@ -142,7 +141,6 @@ class LocationController extends GetxController implements GetxService{
       //print("Printing Address "+_address);
 
     }else{
-      print("Error getting the google api");
     }
       update();
     return address;
@@ -159,8 +157,8 @@ class LocationController extends GetxController implements GetxService{
     _getAddress = jsonDecode(locationRepo.getUserAddress());
     try{
         addressModel = AddressModel.fromJson(jsonDecode(locationRepo.getUserAddress()));
+    // ignore: empty_catches
     }catch(e){
-      print(e);
     }
     return addressModel;
   }
@@ -181,7 +179,6 @@ class LocationController extends GetxController implements GetxService{
       responseModel = ResponseModel(true, message);
       await saveUserAddress(addressModel);
     }else{
-      print("Couldn't save the address");
       responseModel = ResponseModel(false, response.statusText!);
     }
     update();
@@ -274,6 +271,7 @@ class LocationController extends GetxController implements GetxService{
     _pickPosition = position;
     _pickPlacemark = Placemark(name:address);
     _changeAddress = false;
+    // ignore: deprecated_member_use
     if(!mapController.isNull){
       mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: LatLng(

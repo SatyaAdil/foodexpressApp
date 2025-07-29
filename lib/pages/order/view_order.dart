@@ -6,7 +6,6 @@ import 'package:project_Satya/utils/colors.dart';
 import 'package:project_Satya/utils/dimensions.dart';
 
 import '../../models/order_model.dart';
-import '../../utils/styles.dart';
 
 class ViewOrder extends StatelessWidget {
   final bool isCurrent;
@@ -33,59 +32,57 @@ class ViewOrder extends StatelessWidget {
                       onTap: (){},
                       child: Column(
                         children: [
-                          Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      const Text("order ID",),
-                                      SizedBox(width: Dimensions.width10/2,),
-                                      Text('#${orderList[index].id.toString()}')
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.mainColor,
-                                          borderRadius: BorderRadius.circular(Dimensions.radius20/4)
-                                        ),
-                                          padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
-                                          child: Text('${orderList[index].orderStatus}',
-                                             style: TextStyle(
-                                                color: Theme.of(context).cardColor,
-                                             ),
-                                          ),
-
-
+                                  const Text("order ID",),
+                                  SizedBox(width: Dimensions.width10/2,),
+                                  Text('#${orderList[index].id.toString()}')
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.mainColor,
+                                      borderRadius: BorderRadius.circular(Dimensions.radius20/4)
+                                    ),
+                                      padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
+                                      child: Text('${orderList[index].orderStatus}',
+                                         style: TextStyle(
+                                            color: Theme.of(context).cardColor,
+                                         ),
                                       ),
-                                      SizedBox(height: Dimensions.height10/2),
-                                      InkWell(
-                                        onTap: (){},
-                                        child: Container(
-                                         padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(Dimensions.radius20/4),
-                                            border: Border.all(width: 1, color: Theme.of(context).primaryColor)
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Image.asset("assets/image/tracking.png", height: 15, width: 15,color: Theme.of(context).primaryColor,),
-                                              SizedBox(width: Dimensions.width10/2,),
-                                              const Text(
-                                                  "track order",)
-
-                                            ],
-                                          )
-                                        ),
+                          
+                          
+                                  ),
+                                  SizedBox(height: Dimensions.height10/2),
+                                  InkWell(
+                                    onTap: (){},
+                                    child: Container(
+                                     padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.width10/2),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(Dimensions.radius20/4),
+                                        border: Border.all(width: 1, color: Theme.of(context).primaryColor)
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Image.asset("assets/image/tracking.png", height: 15, width: 15,color: Theme.of(context).primaryColor,),
+                                          SizedBox(width: Dimensions.width10/2,),
+                                          const Text(
+                                              "track order",)
+                          
+                                        ],
                                       )
-                                    ],
+                                    ),
                                   )
                                 ],
                               )
+                            ],
                           ),
                           SizedBox(
                             height: Dimensions.height10,
@@ -97,7 +94,7 @@ class ViewOrder extends StatelessWidget {
             ),
           );
         }else{
-          return CustomLoader();
+          return const CustomLoader();
         }
 
       }),

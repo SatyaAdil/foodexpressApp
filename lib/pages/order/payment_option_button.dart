@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:project_Satya/controllers/order_controller.dart';
 import 'package:project_Satya/utils/dimensions.dart';

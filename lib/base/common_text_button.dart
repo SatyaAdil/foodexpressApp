@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
@@ -18,6 +17,7 @@ class CommonTextButton extends StatelessWidget {
           BoxShadow(
               offset: const Offset(0, 5),
               blurRadius: 10,
+              // ignore: deprecated_member_use
               color: AppColors.mainColor.withOpacity(0.3)
           ),
         ],

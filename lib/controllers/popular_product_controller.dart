@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,7 +91,6 @@ class PopularProductController extends GetxController{
       _inCartItems = _cart.getQuantity(product);
 
       _cart.items.forEach((key, value) {
-        print("The id is ${value.id} The quantity is ${value.quantity}");
       });
 
     update();

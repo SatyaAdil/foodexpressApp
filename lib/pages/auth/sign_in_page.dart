@@ -50,7 +50,7 @@ class SignInPage extends StatelessWidget {
         backgroundColor: Colors.white,
 
         body: GetBuilder<AuthController>(builder: (authController){
-          return !authController.isLoading? SingleChildScrollView(
+          return (authController.isLoading ?? false) == false ? SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
@@ -165,7 +165,7 @@ class SignInPage extends StatelessWidget {
 
               ],
             ),
-          ):CustomLoader();
+          ):const CustomLoader();
         })
     );
   }

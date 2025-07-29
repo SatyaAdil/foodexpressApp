@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
@@ -31,7 +30,7 @@ class AppTextField extends StatelessWidget {
                   blurRadius: 3,
                   spreadRadius: 1,
                   offset: const Offset(1, 1),
-                  color: Colors.grey.withOpacity(0.2)
+                  color: Colors.grey.(0.2)
               )
             ]
         ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_Satya/base/custom_button.dart';
@@ -18,6 +17,7 @@ class PickAddressMap extends StatefulWidget {
   }) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _PickAddressMapState createState() => _PickAddressMapState();
 }
 
@@ -25,10 +25,11 @@ class _PickAddressMapState extends State<PickAddressMap> {
   late LatLng _initialPosition;
   late GoogleMapController _mapController;
   late CameraPosition _cameraPosition;
+  
+  bool get kDebugMode => null;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if(Get.find<LocationController>().addressList.isEmpty){
       _initialPosition=const LatLng(7.0873505, 79.8952425);
@@ -94,7 +95,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.location_on, size: 25,color: AppColors.yellowColor),
+                            const Icon(Icons.location_on, size: 25,color: AppColors.yellowColor),
                             Expanded(child: Text(
                               locationController.pickPlacemark.name??'',
                               style: TextStyle(
@@ -105,7 +106,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                               overflow: TextOverflow.ellipsis,
                             )),
                             SizedBox(width: Dimensions.width10,),
-                            Icon(Icons.search, size: 25, color:AppColors.yellowColor,)
+                            const Icon(Icons.search, size: 25, color:AppColors.yellowColor,)
                           ],
                         ),
                       ),
@@ -123,7 +124,12 @@ class _PickAddressMapState extends State<PickAddressMap> {
                               locationController.pickPlacemark.name!=null){
                             if(widget.fromAddress){
                               if(widget.googleMapController!=null){
-                                print("Now you can clicked on this");
+                                if (kDebugMode) {
+                                  if (kDebugMode) {
+                                    if (kDebugMode) {
+                                    }
+                                  }
+                                }
                                 widget.googleMapController!.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(
                                   locationController.pickPosition.latitude,
                                   locationController.pickPosition.longitude,

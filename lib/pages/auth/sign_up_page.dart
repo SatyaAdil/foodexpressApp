@@ -60,7 +60,6 @@ class SignUpPage extends StatelessWidget {
             password: password);
         authController.registration(signUpBody).then((status){
           if(status.isSuccess){
-          print("Success registration");
           Get.offNamed(RouteHelper.getInitial());
           }else{
            showCustomSnackBar(status.message);
@@ -73,7 +72,7 @@ class SignUpPage extends StatelessWidget {
       backgroundColor: Colors.white,
 
         body: GetBuilder<AuthController>(builder: (authController){
-          return !authController.isLoading?SingleChildScrollView(
+          return (authController.isLoading != true) ? SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
@@ -168,7 +167,7 @@ class SignUpPage extends StatelessWidget {
 
               ],
             ),
-          ):CustomLoader();
+          ):const CustomLoader();
         })
     );
 

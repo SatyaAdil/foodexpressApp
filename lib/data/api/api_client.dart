@@ -46,7 +46,6 @@ class ApiClient extends GetConnect implements GetxService{
       }
       return response;
     }catch(e){
-      print(e.toString());
       return Response(statusCode: 1, statusText: e.toString());
     }
   }

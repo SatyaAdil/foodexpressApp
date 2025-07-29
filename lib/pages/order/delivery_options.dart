@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:project_Satya/controllers/order_controller.dart';
 import 'package:project_Satya/utils/styles.dart';
-import 'package:get/get.dart';
 import '../../utils/dimensions.dart';
 
 class DeliveryOptions extends StatelessWidget {
@@ -23,7 +22,7 @@ class DeliveryOptions extends StatelessWidget {
       return Row(
         children: [
           Radio(
-            onChanged: (String? value)=>orderController.setDeliveryType(value!),
+            onChanged: (Object? value) => orderController.setDeliveryType(value as String),
             groupValue: orderController.orderType,
             value: value,
             activeColor: Theme.of(context).primaryColor,

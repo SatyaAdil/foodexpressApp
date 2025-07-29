@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:project_Satya/base/custom_button.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/colors.dart';

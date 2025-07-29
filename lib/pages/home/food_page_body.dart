@@ -1,5 +1,4 @@
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_Satya/controllers/popular_product_controller.dart';
@@ -61,7 +60,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     return _buildPageItem(position, popularProducts.popularProductList[position]);
                   }),
 
-          ):CircularProgressIndicator(
+          ):const CircularProgressIndicator(
             color: AppColors.mainColor,
           );
         }),
@@ -85,11 +84,11 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BigText(text: "Recommended"),
+              const BigText(text: "Recommended"),
               SizedBox(width: Dimensions.width10,),
               Container(
                 margin: const EdgeInsets.only(bottom: 1),
-                child: BigText(text: ".", color: Colors.black26,),
+                child: const BigText(text: ".", color: Colors.black26,),
               ),
               SizedBox(width: Dimensions.width10,),
               Container(
@@ -154,7 +153,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                     SmallText(text: "Bella Additional Special"),
                                     SizedBox(height: Dimensions.height10,),
 
-                                    Row(
+                                    const Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconAndTextWidget(icon: Icons.circle_sharp,
@@ -177,7 +176,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       ),
                     ),
                   );
-                }):CircularProgressIndicator(
+                }):const CircularProgressIndicator(
               color: AppColors.mainColor,
             );
           })

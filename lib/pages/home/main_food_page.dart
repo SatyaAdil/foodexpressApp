@@ -37,11 +37,11 @@ class _MainFoodPageState extends State<MainFoodPage> {
               children: [
                 Column(
                   children: [
-                    BigText(text:"Bella Verona", color:AppColors.mainColor),
+                    const BigText(text:"Bella Verona", color:AppColors.mainColor),
                     Row(
                       children: [
                         SmallText(text: "Ja ela", color: Colors.black54,),
-                        Icon(Icons.arrow_drop_down_rounded)
+                        const Icon(Icons.arrow_drop_down_rounded)
 
                       ],
                     )
@@ -52,11 +52,11 @@ class _MainFoodPageState extends State<MainFoodPage> {
                   child: Container(
                     width: Dimensions.height45,
                     height: Dimensions.height45,
-                    child: Icon(Icons.search, color: Colors.white, size: Dimensions.iconSize24),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(Dimensions.radius15),
                       color: AppColors.mainColor,
                     ),
+                    child: Icon(Icons.search, color: Colors.white, size: Dimensions.iconSize24),
                   ),
                 )
               ],
@@ -64,7 +64,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
           ),
         ),
         //Showing the body
-        Expanded(child: SingleChildScrollView(
+        const Expanded(child: SingleChildScrollView(
           child: FoodPageBody(),
         )),
       ],

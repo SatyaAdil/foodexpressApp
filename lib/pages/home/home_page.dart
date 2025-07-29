@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:project_Satya/pages/auth/sign_up_page.dart';
 import 'package:project_Satya/pages/cart/cart_history.dart';
 import 'package:project_Satya/pages/order/order_page.dart';
 import 'package:project_Satya/utils/colors.dart';
 
 import '../account/account_page.dart';
-import '../auth/sign_in_page.dart';
 import 'main_food_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,8 +20,8 @@ class _HomePageState extends State<HomePage> {
 
   List pages=[
     const MainFoodPage(),
-    OrderPage(),
-    CartHistory(),
+    const OrderPage(),
+    const CartHistory(),
     const AccountPage(),
   ];
   void onTapNav(int index){

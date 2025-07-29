@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_Satya/widgets/small_text.dart';
-
 import '../utils/colors.dart';
 import '../utils/dimensions.dart';
 import 'big_text.dart';
@@ -22,7 +20,7 @@ class AppColumn extends StatelessWidget {
         Row(
           children: [
             Wrap(
-              children: List.generate(5, (index) => Icon(Icons.star, color: AppColors.mainColor, size: 15,)),
+              children: List.generate(5, (index) => const Icon(Icons.star, color: AppColors.mainColor, size: 15,)),
             ),
             const SizedBox(width: 10,),
             SmallText(text: "4.5"),
@@ -34,7 +32,7 @@ class AppColumn extends StatelessWidget {
         ),
         //time and distance
         SizedBox(height: Dimensions.height20,),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconAndTextWidget(icon: Icons.circle_sharp,

@@ -1,4 +1,4 @@
-name: project_Satya
+project_Satya
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -31,6 +31,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+dependency_overrides:
+  google_api_headers: ^1.6.0
+
 
   get: ^4.6.5
   dots_indicator: ^2.1.0

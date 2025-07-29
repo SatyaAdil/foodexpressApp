@@ -40,7 +40,7 @@ Future<void> init()async {
 
 
   //controllers
-  Get.lazyPut(()=>AuthController(authRepo: Get.find()));
+  Get.lazyPut(()=>AuthController(authRepoImpl: Get.find()));
   Get.lazyPut(()=>UserController(userRepo: Get.find()));
   Get.lazyPut(()=>PopularProductController(popularProductRepo:Get.find()));
   Get.lazyPut(()=>RecommendedProductController(recommendedProductRepo:Get.find()));

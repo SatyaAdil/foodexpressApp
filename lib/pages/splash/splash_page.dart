@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:project_Satya/routes/route_helper.dart';
 import 'package:project_Satya/utils/dimensions.dart';
 
@@ -51,4 +48,13 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       ),
     );
   }
+}
+
+class Get {
+  static T find<T>() {
+    // Add your dependency retrieval logic here.
+    throw UnimplementedError('Get.find<$T>() is not implemented.');
+  }
+  
+  static void offNamed(String initial) {}
 }

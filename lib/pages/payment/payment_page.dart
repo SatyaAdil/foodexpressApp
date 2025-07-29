@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../../base/custom_app_bar.dart';
 import '../../models/order_model.dart';
 import '../../routes/route_helper.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/dimensions.dart';
+// ignore: depend_on_referenced_packages
+import 'package:webview_flutter/webview_flutter.dart';
+// ignore: depend_on_referenced_packages
+import 'package:get/get.dart';
 
 class PaymentPage extends StatefulWidget {
   final OrderModel orderModel;
@@ -34,6 +36,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => _exitApp(context),
       child: Scaffold(
