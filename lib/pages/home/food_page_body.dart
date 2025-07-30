@@ -102,8 +102,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         //recommended food
         //list of food and images
 
-          GetBuilder<RecommendedProductController>(builder: (recommendedProduct){
-            return recommendedProduct.isLoaded?ListView.builder(
+  GetBuilder<RecommendedProductController>(builder: (recommendedProduct){
+            return recommendedProduct.isLoaded ? ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: recommendedProduct.recommendedProductList.length,
@@ -214,8 +214,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           GestureDetector(
             onTap: (){
-
-              Get.toNamed(RouteHelper.getPopularFood(index, "home"));
+              Get.toNamed(RouteHelper.getRecommendedFood(index, "home"));
             },
             child: Container(
               height: Dimensions.pageViewContainer,

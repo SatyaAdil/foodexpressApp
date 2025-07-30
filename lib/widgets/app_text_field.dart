@@ -30,7 +30,7 @@ class AppTextField extends StatelessWidget {
                   blurRadius: 3,
                   spreadRadius: 1,
                   offset: const Offset(1, 1),
-                  color: Colors.grey.(0.2)
+                  color: Colors.grey.withAlpha(51) // 0.2 * 255 ≈ 51
               )
             ]
         ),

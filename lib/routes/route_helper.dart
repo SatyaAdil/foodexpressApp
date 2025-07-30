@@ -26,6 +26,26 @@ class RouteHelper {
   static String getOrderSuccessPage(String string, String s) {
     return '/order-success';
   }
+
+  static String getPickAddressRoute() {
+    return '/pick-address';
+  }
+
+  static String getRecommendedFood(int index, String s) {
+    return '/recommended-food/$index?page=$s';
+  }
+
+  static String getPaymentPage(String orderID, userId) {
+    return '/payment/$orderID?user=$userId';
+  }
+
+  static String getRecommendedProduct(int recommendedIndex, String s) {
+    return '/recommended-product/$recommendedIndex?page=$s';
+  }
+
+  static String getPopularFood(int popularIndex, String s) {
+    return '/popular-food/$popularIndex?page=$s';
+  }
 }
 
 

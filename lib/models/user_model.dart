@@ -4,6 +4,8 @@ class UserModel {
   final String phone;
   final String email;
 
+  String? userId;
+
   UserModel({
     required this.name,
     required this.phone,

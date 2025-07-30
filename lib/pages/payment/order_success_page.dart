@@ -8,7 +8,7 @@ import '../../utils/dimensions.dart';
 class OrderSuccessPage extends StatelessWidget {
   final String orderID;
   final int status;
-   const OrderSuccessPage({super.key, required this.orderID, required this.status});
+  const OrderSuccessPage({super.key, required this.orderID, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class OrderSuccessPage extends StatelessWidget {
               SizedBox(height: Dimensions.height10,),
               Padding(padding: EdgeInsets.all(Dimensions.height10),
                 child: CustomButton(buttonText: 'Back to Home',onPressed:
-                    ()=>Get.offNamed(RouteHelper.initial),),
+                    ()=>Navigator.pushReplacementNamed(context, RouteHelper.initial),),
               )
             ],
           ),

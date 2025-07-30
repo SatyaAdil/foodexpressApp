@@ -10,7 +10,6 @@ import 'package:project_Satya/widgets/big_text.dart';
 
 import '../../base/show_custom_snackbar.dart';
 import '../../controllers/auth_controller.dart';
-import '../../routes/route_helper.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -34,15 +33,10 @@ class SignInPage extends StatelessWidget {
         showCustomSnackBar("Password cannot be less than six characters", title: "Password");
 
       }else{
-
-
-        authController.login(phone, password).then((status){
-          if(status.isSuccess){
-            Get.toNamed(RouteHelper.getInitial());
-          }else{
-            showCustomSnackBar(status.message);
-          }
-        });
+        authController.login(phone, password);
+          // login is now handled inside the AuthController
+          // and will navigate to the appropriate screen
+          // error handling is now done in AuthController
       }
     }
 

@@ -151,7 +151,6 @@ class CartPage extends StatelessWidget {
                                                       GestureDetector(
                                                           onTap: (){
                                                             cartController.addItem(cartList[index].product!, -1);
-                                                            print("being tapped");
                                                           },
                                                           child: const Icon(Icons.remove, color: AppColors.signColor,)),
                                                       SizedBox(width: Dimensions.width10/2,),
@@ -160,7 +159,6 @@ class CartPage extends StatelessWidget {
                                                       GestureDetector(
                                                           onTap: (){
                                                             cartController.addItem(cartList[index].product!, 1);
-                                                            print("being tapped 2");
                                                           },
                                                           child: const Icon(Icons.add, color: AppColors.signColor,)),
                                                     ],

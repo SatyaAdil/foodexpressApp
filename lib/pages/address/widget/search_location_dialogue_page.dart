@@ -4,8 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_Satya/controllers/location_controller.dart';
 import 'package:project_Satya/utils/dimensions.dart';
 import 'package:get/get.dart';
-// ignore: implementation_imports
-import 'package:google_maps_webservice/src/places.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class LocationDialogue extends StatelessWidget {
   final GoogleMapController mapController;

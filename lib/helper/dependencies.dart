@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:project_Satya/controllers/auth_controller.dart';
+// import 'package:project_Satya/controllers/auth_controller.dart';
 import 'package:project_Satya/controllers/order_controller.dart';
 import 'package:project_Satya/data/repository/auth_repo.dart';
 import 'package:project_Satya/data/repository/order_repo.dart';
@@ -40,7 +40,7 @@ Future<void> init()async {
 
 
   //controllers
-  Get.lazyPut(()=>AuthController(authRepoImpl: Get.find()));
+  // Get.lazyPut(()=>AuthController(authRepoImpl: Get.find()));
   Get.lazyPut(()=>UserController(userRepo: Get.find()));
   Get.lazyPut(()=>PopularProductController(popularProductRepo:Get.find()));
   Get.lazyPut(()=>RecommendedProductController(recommendedProductRepo:Get.find()));

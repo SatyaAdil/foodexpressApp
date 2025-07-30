@@ -26,7 +26,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
   late GoogleMapController _mapController;
   late CameraPosition _cameraPosition;
   
-  bool get kDebugMode => null;
+bool get kDebugMode => false;
 
   @override
   void initState() {
@@ -124,12 +124,7 @@ class _PickAddressMapState extends State<PickAddressMap> {
                               locationController.pickPlacemark.name!=null){
                             if(widget.fromAddress){
                               if(widget.googleMapController!=null){
-                                if (kDebugMode) {
-                                  if (kDebugMode) {
-                                    if (kDebugMode) {
-                                    }
-                                  }
-                                }
+                                // Debug code removed
                                 widget.googleMapController!.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(
                                   locationController.pickPosition.latitude,
                                   locationController.pickPosition.longitude,
